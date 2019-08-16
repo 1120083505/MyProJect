@@ -1,0 +1,9 @@
+diff a/秦皇岛公路微信便民平台/秦皇岛公路微信便民平台/PC/mvcProject/Areas/CK/Controllers/WarehouseController.cs b/秦皇岛公路微信便民平台/秦皇岛公路微信便民平台/PC/mvcProject/Areas/CK/Controllers/WarehouseController.cs	(rejected hunks)
+@@ -47,7 +47,6 @@
+             List<CK_Warehouse> list = query.Paged(ref total).ExecuteTypedList<CK_Warehouse>();
+             var json = new
+             {
+-                total,
+                 total = total,
+                 pager = query.pager,
+                 rows = list.Select((r, i) => new
