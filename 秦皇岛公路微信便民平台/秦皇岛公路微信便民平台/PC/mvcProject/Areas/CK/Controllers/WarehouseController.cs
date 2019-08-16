@@ -52,8 +52,8 @@ namespace mvcProject.Areas.CK.Controllers
                 rows = list.Select((r, i) => new
                 {
                     RowNumber = (i++) + (pager.page - 1) * pager.rows + 1,
-                    Id = r.Id,
-                    Name = r.Name,
+                    r.Id,
+                    r.Name,
                     Area = r.Area,
                     Ardess = r.Ardess,
                     Stock = r.Stock,
