@@ -1,0 +1,77 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+} 
+@model  ZrSoft.Sys_Rating 
+<script> 
+    layui.use(['form', 'layedit', 'laydate'], function () { 
+        var form = layui.form() 
+        , layer = layui.layer; 
+        //监听提交 
+        form.on('submit(Accept)', function (data) { 
+            var json = data.field; 
+            json["Id"] = "@Model.Id"; 
+            $.ajax({ 
+                url: "@Url.Action("Edit")", 
+                type: "Post", 
+                data: json, 
+                dataType: "json", 
+                success: function (data) { 
+                    window.parent.callBack(data); 
+                } 
+            }); 
+            return false; 
+        }); 
+    }); 
+</script> 
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;"> 
+    <legend> 
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a> @Resource.lang.Sys_Rating </legend>
+</fieldset> 
+<form class="layui-form" action=""> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Rating_Type 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='Type' name='Type' type="number" class="layui-input" lay-verify=""  lay-verify="number"  autocomplete="off" placeholder="@Model.Type" value='@Model.Type'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Rating_Name 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='Name' name='Name'  type="text" lay-verify="" autocomplete="off" placeholder="@Model.Name" class="layui-input"  value='@Model.Name'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Rating_Memo 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input  id='Memo' name='Memo' type="text" lay-verify="" autocomplete="off" placeholder="@Model.Memo" class="layui-input" data-options="multiline:true" style="height:80px;" value="@Model.Memo" >
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Rating_EditAdminId 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='EditAdminId' name='EditAdminId'  type="text" lay-verify="" autocomplete="off" placeholder="@Model.EditAdminId" class="layui-input"  value='@Model.EditAdminId'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Rating_EditPubDate 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='EditPubDate' name='EditPubDate' type="text"  class="layui-input" lay-verify="date" lay-verify="" autocomplete="off" placeholder="@Model.EditPubDate"  missingmessage="日期不能为空" onclick="layui.laydate({elem: this})" editable="false" value='@Model.EditPubDate'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <div class="layui-input-block"> 
+            <button class="layui-btn" lay-submit="" lay-filter="Accept">@Resource.lang.Accept</button> 
+            <button type="reset" class="layui-btn layui-btn-primary">@Resource.lang.Reset</button> 
+        </div> 
+    </div> 
+</form> 

@@ -1,0 +1,105 @@
+﻿@using Core
+@{
+    ViewBag.Title = "Resource.lang.SP_SaleMain";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+<hr />
+<form style="" class="layui-form">
+    <div class="layui-input-inline">
+        <input id='OpeningTime' name='OpeningTime' type="text" lay-verify="date" placeholder="请选择时间" autocomplete="off" onclick="layui.laydate({elem: this})" class="layui-input">
+    </div>
+    <button class="layui-btn layui-btn-primary SearchBtn" id="btnSearch"><i class="layui-icon">&#xe651;</i>@Resource.lang.Search</button>
+    <button class="layui-btn layui-btn-primary SearchBtn" type="reset" id="btnClear"><i class="layui-icon">&#xe641;</i>@Resource.lang.Reset</button>
+</form>
+<table class="layui-table">
+    <colgroup>
+        <col width="20">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+    </colgroup>
+    <thead>
+        <tr class="">
+            <th>月份</th>
+            <th>销售总金额</th>
+            <th>入库金额</th>
+            <th>总利润</th>
+        </tr>
+    </thead>
+    <tbody ng-controller="listController">
+        <tr ng-repeat="x in data" id="{{x.Id}}" ng-dblclick="RowsDbClick(x.Id)">
+            <td>{{x.Month}}</td>
+            <td>{{x.AllSaleSum}}</td>
+            <td>{{x.AllReceiptSum}}</td>
+            <td>{{x.NetProfit}}</td>
+        </tr>
+    </tbody>
+</table>
+<div id="paged" style="margin: 0px; padding: 0px; text-align: center"></div>
+<script type="text/javascript">   
+    $(document).ready(function () {
+        paged(1);
+        $("#btnSearch").click(function () {
+            searchcount = 0;
+            paged(1);
+            return false;
+        });
+    });
+    var paged, searchcount = 0, totalPages = 0;
+    var myApp = angular.module("list", []);
+    layui.use(['form', 'layedit', 'laydate', 'element', 'laypage'], function () {
+        layer = layui.layer;
+    });
+    myApp.controller('listController', function ($scope, $http) {
+        $scope.RowsDbClick = function (id) {
+            //显示详情
+            Detail(id);
+        }
+        paged = $scope.GetData = function (page) {
+            var queryStr = $('form').serialize();
+            //alert(queryStr);
+            if (searchcount == 1) {
+                searchcount++;
+            }
+            else {
+                $http.post('@Url.Action("GetList")', { page: page, queryStr: queryStr })
+                    .success(function (d) {
+                        //alert(JSON.stringify(d))
+                        $scope.data = d.rows;
+                        searchcount++;
+                        if (searchcount == 1) {
+                            CeatePage(d.pager.totalPages, 1);
+                        }
+                    });
+            }
+        };
+    });
+    myApp.controller('SaleMainController', function ($scope, $http) {
+           $.ajax({
+                url: '/SP/SaleMain/GetAllList',
+                type: 'Post',
+                dataType: 'json',
+                async:false,
+            success: function (d) {
+                $scope.data = d.rows;
+            }
+        });
+    });
+    myApp.controller('CustomerController', function ($scope, $http) {
+           $.ajax({
+                url: '/SP/Customer/GetAllList',
+                type: 'Post',
+                dataType: 'json',
+                async:false,
+            success: function (d) {
+                $scope.data = d.rows;
+            }
+        });
+    });
+</script>

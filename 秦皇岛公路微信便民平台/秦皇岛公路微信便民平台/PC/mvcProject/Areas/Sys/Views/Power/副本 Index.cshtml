@@ -1,0 +1,219 @@
+﻿@using Core;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="/Content/themes/@(Core.LoginInfo.Theme == null ? "default" : Core.LoginInfo.Theme)/easyui.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/easyui")
+
+</head>
+<body style="padding: 0px; margin: 0px;">
+    <div class="mvctool bg" style="margin-bottom: 1px;">
+        @MvcHtmlString.Create(printControl.PowerLinkBtn(@Url.Action("")))
+    </div>
+    <div id="modalwindow" class="easyui-window" data-options="modal:true,closed:true,minimizable:false,shadow:false"></div>
+    <table style="width: 100%; height: 95%;">
+        <tbody>
+            <tr>
+                <td style="width: 240px; padding-right: 3px; vertical-align: top">
+                    <table id="RoleList"></table>
+                </td>
+                <td style="padding-right: 3px; vertical-align: top">
+                    <table id="ModuleList"></table>
+                </td>
+                <td style="vertical-align: top; padding: 2px; width: 280px;">
+                    <table id="OperateList"></table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        //ifram 返回
+        function frameReturnByClose() {
+            $("#modalwindow").window('close');
+        }
+        function frameReturnByReload(flag) {
+            if (flag) {
+                $('#List').treegrid({
+                    url: '@Url.Action("GetList")',
+                    queryParams: { id: '0' }
+                });
+                $("#OperateList").datagrid('load');
+            }
+            else {
+                $("#List").treegrid('reload');
+                $("#OperateList").datagrid('reload');
+            }
+        }
+        function frameReturnByMes(mes) {
+            $.messageBox5s('提示', mes);
+        }
+        var ifrSrc = "@MvcHtmlString.Create(printControl.ifrSrc())";
+        $('#RoleList').datagrid({
+            title: '角色',
+            url: '/sys/role/GetAllList',
+            sortName: 'Id',
+            sortOrder: 'Asc',
+            idField: 'Id',
+            width: 230,
+            methord: 'post',
+            height: $(window).height() - 41,
+            fitColumns: true,
+            striped: true, //奇偶行是否区分
+            rownumbers: true,//行号
+            singleSelect: true,//单选模式
+            columns: [[
+                { field: 'Id', title: '', width: 80, hidden: true },
+                { field: 'Name', title: '名称', width: 120, sortable: false }
+            ]],
+            onClickRow: function (row) {
+                var Rrow = $('#ModuleList').datagrid('getSelected');
+                if (Rrow != null) {
+                    $('#OperateList').datagrid({
+                        url: '/sys/power/GetList',
+                        queryParams: { RoleId: $('#RoleList').datagrid('getSelected').Id, ModuleId: Rrow.Id }
+                    });
+                }
+
+            }
+        });
+        $(function () {
+            $('#ModuleList').treegrid({
+                title: "模块",
+                url: '/sys/module/GetList',
+                queryParams: { id: '0' },
+                sortName: 'Id',
+                sortOrder: 'desc',
+                idField: 'Id',
+                treeField: 'Name',
+                width: SetGridWidthSub(550),
+                methord: 'post',
+                height: $(window).height() - 41,
+                fitColumns: true,
+                rownumbers: true,//行号
+                singleSelect: true,//单选模式
+                columns: [[
+                    { field: 'Id', title: 'Id', width: 60, hidden: false },
+                    { field: 'Name', title: '模块名称', width: 120, sortable: false },
+                    { field: 'EnName', title: '英文名称', width: 60, sortable: false },
+                    { field: 'Url', title: '地址', width: 200, sortable: false },
+                    { field: 'Sort', title: '排序', width: 40, sortable: false },
+                    { field: 'Memo', title: '备注', width: 200, sortable: false }
+                ]],
+                onClickRow: function (row) {
+                    var Rrow = $('#RoleList').datagrid('getSelected');
+                    if (Rrow != null) {
+                        $('#OperateList').datagrid({
+                            url: '/sys/power/GetList',
+                            queryParams: { RoleId: Rrow.Id, ModuleId: row.Id }
+                        });
+                    }
+                    else {
+                        $.messageBox5s('提示', '@Tip.PleaseSelectRoleFrist');
+                        $('#ModuleList').datagrid('clearSelections');
+                    }
+
+                },
+                onDblClickRow: function (row) {
+                    $(this).treegrid("toggle", row.Id);
+                }
+            });
+            $('#OperateList').datagrid({
+                title: "操作权限",
+                sortName: 'Sort',
+                sortOrder: 'desc',
+                height: $(window).height() - 41,
+                idField: 'Id',
+                rownumbers: true,//行号
+                singleSelect: true,//单选模式
+                striped: true,
+                columns: [[
+                    { field: 'Id', title: '', width: 80, hidden: true },
+                    { field: 'Name', title: '操作名称', width: 80, sortable: false },
+                    { field: 'KeyCode', title: '编码', width: 80, sortable: false },
+                    {
+                        field: 'Icon', title: '图标', width: 40, formatter: function (value) {
+                            value = value.replace("icon-", "");
+                            return "<img src='/content/icons/icon/" + value + ".png' title='" + value + "' />";
+                        }
+                    }, {
+                        field: 'IsHas', title: "授权", align: 'center', width: 30, formatter: function (value) {
+                            if (value) {
+                                return "<input type='checkbox' checked='checked' value=" + value + " />";
+                            } else {
+                                return "<input type='checkbox' value=" + value + " />";
+                            }
+                        }
+                    }
+
+                ]]
+            });
+            $(window).resize(function () {
+                AutoSize();
+            });
+            $(document).ready(function () {
+                AutoSize();
+            });
+            $("#btnSave").click(function () {
+                var OkIds = "";
+                var NoIds = "";
+                var changeRows = 0;
+                var rows = $("#OperateList").datagrid("getRows"); //这段代码是获取当前页的所有行。
+                for (var i = 0; i < rows.length; i++) {
+                    var IsChecked = $("td[field='IsHas'] input").eq(i).prop("checked");
+                    if (IsChecked != rows[i].IsHas) {
+                        if (IsChecked) {
+                            OkIds += rows[i].Id + ","
+                        }
+                        else {
+                            NoIds += "'" + rows[i].Id + "',"
+                        }
+                        changeRows++;
+                    }
+                }
+                if (changeRows > 0) {
+                    //alert(changeRows);
+                    $.ajax({
+                        url: "@Url.Action("UpdatePower")",
+                        type: "Post",
+                        data: { OkIds: OkIds, NoIds: NoIds, RoleId: $('#RoleList').datagrid('getSelected').Id },
+                        dataType: "json",
+                        success: function (data) {
+                            data = eval("(" + data + ")");
+                            var Rrow = $('#ModuleList').datagrid('getSelected');
+                            if (Rrow != null) {
+                                $('#OperateList').datagrid({
+                                    url: '/sys/power/GetList',
+                                    queryParams: { RoleId: $('#RoleList').datagrid('getSelected').Id, ModuleId: Rrow.Id }
+                                });
+                            }
+                            $.messageBox5s('提示', data.Memo);
+                        }
+                    });
+                }
+                else {
+                    $.messageBox5s('提示', '@Tip.NoChange');
+                }
+            });
+        });
+        function AutoSize() {
+            $('#OperateList').datagrid('resize', {
+                width: 300,
+                height: SetGridHeightSub(42)
+            }).datagrid('resize', {
+                width: 300,
+                height: SetGridHeightSub(42)
+            });
+            $('#ModuleList,#RoleList').datagrid('resize', {
+                height: SetGridHeightSub(42)
+            }).datagrid('resize', {
+                height: SetGridHeightSub(42)
+            });
+        }
+    </script>
+
+</body>
+</html>

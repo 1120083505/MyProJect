@@ -1,0 +1,394 @@
+﻿@using Core
+@using System.Data
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>自用销售系统</title>
+
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link href="~/lib/layui/font/iconfont.css" rel="stylesheet" />
+    <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/lib/layui/layui.js"></script>
+    <script src="/lib/assets/js/jquery.js"></script>
+    <script src="~/Scripts/layout-index.js"></script>
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/lib/assets/css/bootstrap.css" />
+    @*    <link rel="stylesheet" href="/lib/assets/css/font-awesome.css" />*@
+    <link href="~/lib/layui/font/iconfont.css" rel="stylesheet" />
+    <!-- page specific plugin styles -->
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/lib/assets/css/ace-fonts.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="/lib/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+    <!--[if lte IE 9]>
+            <link rel="stylesheet" href="/lib/assets/css/ace-part2.css" class="ace-main-stylesheet" />
+        <![endif]-->
+    <!--[if lte IE 9]>
+          <link rel="stylesheet" href="/lib/assets/css/ace-ie.css" />
+        <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="/lib/assets/js/ace-extra.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+        <script src="/lib/assets/js/html5shiv.js"></script>
+        <script src="/lib/assets/js/respond.js"></script>
+        <![endif]-->
+    @*<script src="./js/live2d.js"></script>*@
+
+    @*<script src="~/Content/Live2D_SDK_WebGL_2.1.00_1_en/lib/live2d.min.js"></script>*@
+    <script type="text/javascript" charset="utf-8" src="https://files.cnblogs.com/files/liuzhou1/L2Dwidget.0.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://files.cnblogs.com/files/liuzhou1/L2Dwidget.min.js"></script>
+    <script type="text/javascript">
+        //loadlive2d("live2d", "~/Content/Live2D_SDK_WebGL_2.1.00_1_en/model.json");
+        L2Dwidget.init({
+            "display": {
+                "superSample": 2,
+                "width": 200,
+                "height": 400,
+                "position": "right",
+                "hOffset": 0,
+                "vOffset": 0
+            }
+        });
+    </script>
+    <script>
+        layui.use(['form', 'layedit', 'laydate', 'element'], function () {
+            var form = layui.form()
+            , layer = layui.layer;
+        });
+        $(document).ready(function () {
+            resizeFun();
+            $(window).resize(function () {
+                resizeFun();
+            });
+        });
+        function resizeFun() {
+            var h = $(window).height() - $(".navbar").height() - $(".breadcrumbs").height() -10;
+            $("iframe").height(h);
+        }
+        function btnOut() {
+            layer.confirm('确定注销本系统？', {
+                btn: ['注销', '取消'] //按钮
+            }, function () {
+                $.ajax({
+                    url: '@Url.Action("signout")',
+                    type: "post",
+                    success: function () {
+                        window.location.href = "/account";
+                    }
+                });
+            }, function () {
+            });
+        }
+    </script>
+    <style>
+        .page-content {
+            padding: 0px;
+        }
+
+        .button {
+            background-color: #438eb9;
+            width: 121px;
+            height: 30px;
+            margin-top: 13px;
+            color: white;
+            /*text-align:center;*/
+            border: none;
+            margin: 0 auto;
+        }
+
+        .ace-nav > li.grey > a {
+            background: #39799e;
+        }
+
+        .ace-nav > li.open.grey > a {
+            background: #39799e;
+        }
+
+        .ace-nav > li.grey > a:hover, .ace-nav > li.grey > a:focus, .ace-nav > li.open.grey > a {
+            background: #39799e;
+        }
+    </style>
+</head>
+
+<body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+        <script type="text/javascript">
+            try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="navbar-container" id="navbar-container">
+            <!-- #section:basics/sidebar.mobile.toggle -->
+            <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+                <span class="sr-only">Toggle sidebar</span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- /section:basics/sidebar.mobile.toggle -->
+            <div class="navbar-header pull-left">
+                <!-- #section:basics/navbar.layout.brand -->
+                <a href="#" class="navbar-brand">
+                    <small>
+                        <i class="fa fa-leaf"></i>
+                        自用销售系统
+                    </small>
+                </a>
+
+                <!-- /section:basics/navbar.layout.brand -->
+                <!-- #section:basics/navbar.toggle -->
+                <!-- /section:basics/navbar.toggle -->
+            </div>
+
+            <!-- #section:basics/navbar.dropdown -->
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li>
+                        <button type="button" class="button" style="background-color:#438eb9" onClick="location.href = '/Home/index'">
+                            <img src="~/Content/images/home.png" style="width:25px;height:25px" />   首页
+                        </button>
+
+                    </li>
+                    <li class="grey">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <img style="width: 18%; margin-right: 10px;" src="~/Content/images/new_03.png" />
+                            <label style="font-size: 12px;">@LoginInfo.AdminName</label>
+                            @*<i style="font-size: 12px; margin-left: 10px;" class="layui-icon">&#xe693;</i>*@
+                        </a>
+                    </li>
+                    <li>
+                        <button type="button" class="button" onClick="ModifyPassword()">
+                            <img src="~/Content/icons/search.png" style="width:25px;height:25px" />   修改密码
+                        </button>
+
+                    </li>
+
+
+                    <!-- #section:basics/navbar.user_menu -->
+                    <li class="light-blue" onclick="btnOut()">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            @*<img class="nav-user-photo" src="/lib/assets/avatars/user.jpg" alt="Jason's Photo" />
+                                <span class="user-info">
+                                    <small>Welcome,</small>
+                                    Jason
+                                </span>
+
+                                <i class="ace-icon fa fa-caret-down"></i>*@
+                            <img style="width: 33%;" src="~/Content/images/new_09.png" />
+                            <label style="font-size: 12px;margin-left:2px">退出</label>
+
+                        </a>
+                    </li>
+                    <!-- /section:basics/navbar.user_menu -->
+                </ul>
+            </div>
+
+            <!-- /section:basics/navbar.dropdown -->
+        </div>
+        <!-- /.navbar-container -->
+    </div>
+
+    <!-- /section:basics/navbar.layout -->
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+
+        <!-- #section:basics/sidebar -->
+        <div id="sidebar" class="sidebar                  responsive">
+            <script type="text/javascript">
+                try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+            </script>
+
+            <div class="sidebar-shortcuts" id="sidebar-shortcuts" style="display:none">
+                <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                    <button class="btn btn-success">
+                        <i class="ace-icon fa icon-upload" title="icon-upload"></i>
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="ace-icon fa fa-signal"></i>
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="ace-icon fa fa-signal"></i>
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="ace-icon fa fa-signal"></i>
+                    </button>
+
+                    <button class="btn btn-info">
+                        <i class="ace-icon fa fa-pencil"></i>
+                    </button>
+
+                    <!-- #section:basics/sidebar.layout.shortcuts -->
+                    <button class="btn btn-warning">
+                        <i class="ace-icon fa fa-users"></i>
+                    </button>
+
+                    <button class="btn btn-danger">
+                        <i class="ace-icon fa fa-cogs"></i>
+                    </button>
+                    <button class="btn btn-danger">
+                        <i class="ace-icon fa fa-cogs"></i>
+                    </button>
+
+                    <!-- /section:basics/sidebar.layout.shortcuts -->
+                </div>
+
+                <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                    <span class="btn btn-success"></span>
+
+                    <span class="btn btn-info"></span>
+
+                    <span class="btn btn-warning"></span>
+
+                    <span class="btn btn-danger"></span>
+                    <span class="btn btn-danger"></span>
+                    <span class="btn btn-danger"></span>
+                    <span class="btn btn-danger"></span>
+                    <span class="btn btn-danger"></span>
+                </div>
+            </div>
+            <!-- /.sidebar-shortcuts -->
+
+            <ul class="nav nav-list">
+                @*<li class="">
+                        <a href="/icon/" target="main">
+                            <i class="menu-icon fa icon-pic"></i>
+                            <span class="menu-text"><i class="menu-icon fa icon-sousuo"></i>内置图标</span>
+                        </a>
+                        <b class="arrow"></b>
+
+                    </li>*@
+                @MvcHtmlString.Create(mvcProject.App_Code.NodeHelper.GetMenuHtml())
+            </ul>
+            <!-- /.nav-list -->
+            <!-- #section:basics/sidebar.layout.minimize -->
+            <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+                <i class="ace-icon fa  icon-arrowleft" data-icon1="ace-icon fa icon-arrowleft" data-icon2="ace-icon fa  icon-arrowright"></i>
+            </div>
+
+            <!-- /section:basics/sidebar.layout.minimize -->
+            <script type="text/javascript">
+                try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+            </script>
+        </div>
+
+        <!-- /section:basics/sidebar -->
+        <div class="main-content">
+            <iframe name="main" width='100%' height='98%' scrolling='auto' frameborder='0' ' src='/SP/SalesOutlet'></iframe>
+        </div>
+    </div>
+    <!-- /.main-content -->
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="layui-icon menu-icon fa  icon-feiji"></i>
+    </a>
+    @*<canvas id="live2d" width="280" height="250"></canvas>*@
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <!--[if !IE]> -->
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='/assets/js/jquery.js'>" + "<" + "/script>");
+    </script>
+
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script type="text/javascript">
+     window.jQuery || document.write("<script src='/assets/js/jquery1x.js'>"+"<"+"/script>");
+    </script>
+    <![endif]-->
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='/assets/js/jquery.mobile.custom.js'>" + "<" + "/script>");
+    </script>
+    <script src="/lib/assets/js/bootstrap.js"></script>
+
+    <!-- page specific plugin scripts -->
+    <!-- ace scripts -->
+    <script src="/lib/assets/js/ace/elements.scroller.js"></script>
+    <script src="/lib/assets/js/ace/elements.colorpicker.js"></script>
+    <script src="/lib/assets/js/ace/elements.fileinput.js"></script>
+    <script src="/lib/assets/js/ace/elements.typeahead.js"></script>
+    <script src="/lib/assets/js/ace/elements.wysiwyg.js"></script>
+    <script src="/lib/assets/js/ace/elements.spinner.js"></script>
+    <script src="/lib/assets/js/ace/elements.treeview.js"></script>
+    <script src="/lib/assets/js/ace/elements.wizard.js"></script>
+    <script src="/lib/assets/js/ace/elements.aside.js"></script>
+    <script src="/lib/assets/js/ace/ace.js"></script>
+    <script src="/lib/assets/js/ace/ace.ajax-content.js"></script>
+    <script src="/lib/assets/js/ace/ace.touch-drag.js"></script>
+    <script src="/lib/assets/js/ace/ace.sidebar.js"></script>
+    <script src="/lib/assets/js/ace/ace.sidebar-scroll-1.js"></script>
+    <script src="/lib/assets/js/ace/ace.submenu-hover.js"></script>
+    <script src="/lib/assets/js/ace/ace.widget-box.js"></script>
+    <script src="/lib/assets/js/ace/ace.settings.js"></script>
+    <script src="/lib/assets/js/ace/ace.settings-rtl.js"></script>
+    <script src="/lib/assets/js/ace/ace.settings-skin.js"></script>
+    <script src="/lib/assets/js/ace/ace.widget-on-reload.js"></script>
+    <script src="/lib/assets/js/ace/ace.searchbox-autocomplete.js"></script>
+
+    <!-- inline scripts related to this page -->
+    <!-- the following scripts are used in demo only for onpage help and you don't need them -->
+    <link rel="stylesheet" href="/lib/assets/css/ace.onpage-help.css" />
+    <link rel="stylesheet" href="/lib/assets/js/themes/sunburst.css" />
+
+    <script type="text/javascript">ace.vars['base'] = '..';</script>
+    <script src="/lib/assets/js/ace/elements.onpage-help.js"></script>
+    <script src="/lib/assets/js/ace/ace.onpage-help.js"></script>
+    <script src="/lib/assets/js/rainbow.js"></script>
+    <script src="/lib/assets/js/language/generic.js"></script>
+    <script src="/lib/assets/js/language/html.js"></script>
+    <script src="/lib/assets/js/language/css.js"></script>
+    <script src="/lib/assets/js/language/javascript.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".nav-list .islast").click(function () {
+                $(".nav-list li").removeClass("active");
+                $(this).parents('li').addClass("active");
+                $(this).addClass("active");
+            });
+        });
+        function ModifyPassword() {
+            lIndex = layer.open({
+                type: 2,
+                title: '修改密码',
+                shadeClose: true,
+                shade: 0.3,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['350px', '500px'],
+                content: '@Url.Action("ModifyPassword")'
+            });
+            if ($.UserMobileAgent())
+                layer.full(lIndex);
+        }
+        function callBack(data) {
+            Alert(data);
+            if (data.Status == 1) {
+                layer.close(lIndex);
+                searchcount = 0;
+                paged(1);
+            }
+        }
+        function Alert(data) {
+            layer.msg(data.Memo, { icon: data.Status == 0 ? 2 : 1, time: 3 * 1000 });
+        }
+        function closeLayer() {
+            layer.close(lIndex);
+        }
+    </script>
+</body>
+</html>

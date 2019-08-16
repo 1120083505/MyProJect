@@ -1,0 +1,62 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+} 
+@model  ZrSoft.Sys_Custody 
+<script src="~/lib/angular.js"></script> 
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+    });
+</script> 
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;"> 
+    <legend> 
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a>  @Resource.lang.Sys_Custody</legend> 
+</fieldset> 
+<form class="layui-form layui-form-pane" action=""> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Custody_Name</label><div class="layui-input-block"> 
+                    <label name="@Model.Name" class="layui-input">@Model.Name</label> 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Custody_InfoId</label><div class="layui-input-block"> 
+                    <label name="@Model.InfoId" class="layui-input">@Model.InfoId</label> 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Custody_Phone</label><div class="layui-input-block"> 
+                    <label name="@Model.Phone" class="layui-input">@Model.Phone</label> 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Custody_FaxPhone</label><div class="layui-input-block"> 
+                    <label name="@Model.FaxPhone" class="layui-input">@Model.FaxPhone</label> 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Custody_Email</label><div class="layui-input-block"> 
+                    <label name="@Model.Email" class="layui-input">@Model.Email</label> 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Custody_Address</label><div class="layui-input-block"> 
+                    <label name="@Model.Address" class="layui-input">@Model.Address</label> 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Custody_Grade</label><div class="layui-input-block"> 
+                    <label name="@Model.Grade" class="layui-input">@Model.Grade</label> 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Custody_Memo</label><div class="layui-input-block"> 
+                    <label name="@Model.Memo" class="layui-input">@Model.Memo</label> 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Custody_Discount</label><div class="layui-input-block"> 
+                    <label name="@Model.Discount" class="layui-input">@Model.Discount</label> 
+        </div>
+    </div> 
+</form> 

@@ -1,0 +1,133 @@
+﻿@using Core 
+@{ 
+    ViewBag.Title = "等级说明_Index"; 
+    Layout = "~/Views/Shared/_Index_Layout.cshtml"; 
+} 
+<div class="mvctool"> 
+   @MvcHtmlString.Create(printControl.PowerLinkBtn(@Url.Action(""))) 
+</div> 
+<div id="sp"> 
+    <div id="SearchPanel" style="padding: 2px; overflow: hidden;"> 
+        <form> 
+            @MvcHtmlString.Create(printControl.SerachType()) 
+            <span> 
+                <label for="Type">类别：</label><input id='Type' name='Type' class="easyui-numberbox" ></span> 
+            <span> 
+                <label for="Name">名称：</label><input id="Name" name="Name" class="easyui-textbox" /></span> 
+            <span> 
+                <label for="Memo">备注：</label><input id="Memo" name="Memo" class="easyui-textbox" /></span> 
+            <span> 
+                <label for="AdminId">：</label><input id="AdminId" name="AdminId" class="easyui-textbox" /></span> 
+            <span> 
+                <label for="PubDate">：</label><input id='PubDate' name='PubDate'  class="easyui-datebox" editable="false" ></span> 
+            <span> 
+                <label for="EditAdminId">：</label><input id="EditAdminId" name="EditAdminId" class="easyui-textbox" /></span> 
+            <span> 
+                <label for="EditPubDate">：</label><input id='EditPubDate' name='EditPubDate'  class="easyui-datebox" editable="false" ></span> 
+        </form> 
+    </div> 
+</div> 
+<table id="List"></table> 
+<script type="text/javascript"> 
+    function frameReturnByClose() { 
+        $('#modalwindow').window('close'); 
+    } 
+    function frameReturnByReload(flag) { 
+        if (flag) { 
+            $('#List').datagrid('load'); 
+        } 
+        else { 
+            $('#List').datagrid('reload'); 
+        } 
+    } 
+    function frameReturnByMes(mes) { 
+        $.messageBox5s('提示', mes); 
+    } 
+    var ifrSrc = "@MvcHtmlString.Create(printControl.ifrSrc())"; 
+    $(function () { 
+        $('#List').datagrid({ 
+            url: '@Url.Action("GetList")', 
+            queryParams: { queryStr: $("#sp form").serialize()}, 
+            sortName: 'Id', 
+            sortOrder: 'Asc', 
+            idField: 'Id', 
+            width: SetGridWidthSub(12), 
+            methord: 'post', 
+            height: SetGridHeightSub(), 
+            fitColumns: false, 
+            pageSize: 15, 
+            pageList: [15, 20, 30, 40, 50], 
+            pagination: true, 
+            striped: true, //奇偶行是否区分 
+            rownumbers: true,//行号 
+            singleSelect: true,//单选模式 
+            showFooter:true,//底部行 
+            columns: [[ 
+                { field: 'Id', title: '', width: 80, hidden: true }, 
+                { field: 'Type', title: '类别', width: 120, sortable: true }, 
+                { field: 'Name', title: '名称', width: 120, sortable: true }, 
+                { field: 'Memo', title: '备注', width: 120, sortable: true }, 
+                { field: 'AdminId', title: '', width: 120, sortable: true }, 
+                { field: 'PubDate', title: '', width: 120, sortable: true }, 
+                { field: 'EditAdminId', title: '', width: 120, sortable: true }, 
+                { field: 'EditPubDate', title: '', width: 120, sortable: true } 
+            ]] 
+        }); 
+ 
+        $('#btnCreate').click(function () { 
+            $('#modalwindow').html($.format(ifrSrc, '@Url.Action("Create")')) 
+                .window({ title: $(this).text(), width:600, height: 350, iconCls: 'icon-add' }).window('open'); 
+        }); 
+        $('#btnEdit').click(function () { 
+            var row = $('#List').datagrid('getSelected'); 
+            if (row != null) { 
+                $('#modalwindow').html($.format(ifrSrc, '@Url.Action("Edit/")' + row.Id)) 
+                .window({ title: $(this).text(), width: 600, height: 350, iconCls: 'icon-edit' }).window('open'); 
+ 
+            } 
+            else { 
+                $.messageBox5s('提示', '@Tip.NoSelect'); 
+            } 
+        }); 
+        $('#btnDelete').click(function () { 
+            var row = $('#List').datagrid('getSelected'); 
+            if (row != null) { 
+                $.messager.confirm('提示', '@Tip.WantDeleteTheSelectedRecords', function (r) { 
+                    if (r) { 
+                        $.post('@Url.Action("Delete/")' + row.Id, function (data) { 
+                            if (data.Status == 1) 
+                                $('#List').datagrid('load'); 
+                            $.messageBox5s('提示', data.Memo); 
+                        }, 'json'); 
+                        $('#List').datagrid('clearSelections'); 
+ 
+                    } 
+                }); 
+            } 
+            else { 
+                $.messageBox5s('提示', '@Tip.NoSelect'); 
+            } 
+        }); 
+        $('#BtnQuery').click(function () { 
+            var queryStr = $('#sp form').serialize(); 
+            //queryStr = decodeURIComponent(queryStr, true); 
+            if (queryStr == null) { 
+                queryStr = '%'; 
+            } 
+            $('#List').datagrid('load', { queryStr: queryStr, dataType: 'json' }); 
+ 
+        }); 
+            $('#btnExport').click(function () { 
+            var queryStr = $('#sp form').serialize(); 
+            //queryStr = decodeURIComponent(queryStr, true); 
+            queryStr = escape(queryStr); 
+            var url = '@Url.Action("Export")'; 
+            $('#modalwindow').html($.format(ifrSrc, '/export?url=' + url + '&queryStr=' + queryStr)) 
+              .window({ title: " ", width: 300, height: 200, minimizable: false, collapsible: false, maximizable: false, iconCls: 'icon-printer' }).window('open'); 
+        }); 
+    }); 
+</script> 
+ 
+ 
+ 
+ 

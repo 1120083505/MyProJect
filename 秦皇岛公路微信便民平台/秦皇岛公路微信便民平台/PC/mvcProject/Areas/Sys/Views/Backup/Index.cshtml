@@ -1,0 +1,325 @@
+﻿@using Core
+
+@{
+    ViewBag.Title = "数据库备份";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+
+<div class="mvctool">
+    @MvcHtmlString.Create(printControl.PowerLinkBtn(@Url.Action("")))
+</div>
+<hr />
+<table class="layui-table">
+    <colgroup>
+        <col  style="width:50px;">
+        @*<col width="50">*@
+        <col width="300">
+        <col width="300">
+        <col width="300">
+    </colgroup>
+    <thead>
+        <tr class="">
+            <th>
+                <input id="checkOrNoAll" type="checkbox">
+            </th>
+            @*<th>@Resource.lang.SortNo</th>*@
+            <th>文件名</th>
+            <th>备份时间</th>
+            <th>大小(M)</th>
+        </tr>
+    </thead>
+    <tbody ng-controller="listController">
+        <tr ng-repeat="x in data" id="{{x.Id}}">
+            <td>
+                <input id="check{{ x.RowNumber }}" value="{{x.Id}}" class="checkList" type="checkbox" name="checkList">
+            </td>
+            @*<td style="text-align: center">{{ x.RowNumber}}</td>*@
+            <td>{{x.Name}}</td>
+            <td>{{x.Date}}</td>
+            <td>{{x.Size}}</td>
+        </tr>
+    </tbody>
+</table>
+<div id="paged" style="margin: 0px; padding: 0px; text-align: center"></div>
+<script type="text/javascript">
+    function callBack(data) {
+        Alert(data);
+        if (data.Status == 1) {
+            layer.close(lIndex);
+            searchcount = 0;
+            paged(1);
+        }
+    }
+    function Alert(data) {
+        layer.msg(data.Memo, { icon: data.Status == 0 ? 2 : 1, time: 3 * 1000 });
+    }
+    function closeLayer() {
+        layer.close(lIndex);
+    }
+    var layer, lIndex, ids = [];
+    var paged, searchcount = 0, totalPages = 0;
+    layui.use(['form', 'layedit', 'laydate', 'element', 'laypage'], function () {
+        layer = layui.layer;
+    });
+    function CeatePage(pages, curr) {
+        layui.use(['laypage'], function () {
+            layer = layui.layer;
+            layui.laypage({
+                cont: 'paged'
+              , pages: pages //总页数 
+                , curr: curr
+                , groups: 5 //连续显示分页数 
+                  , skip: true
+                  , jump: function (obj, first) {
+                      var curr = obj.curr;
+                      paged(curr);
+                  }
+            , prev: '<em><</em>'
+            , next: '<em>></em>'
+            , first: '<em>@Resource.lang.FristPage</em>'
+            , last: '<em>@Resource.lang.LastPage</em>'
+            });
+        });
+    }
+    $(document).ready(function () {
+        paged(1);
+        $("#btnSearch").click(function () {
+            searchcount = 0;
+            paged(1);
+            return false;
+        });
+        $('#btnCreate').click(function () {
+            lIndex = layer.open({
+                type: 2,
+                title: '@Resource.lang.Create',
+                shadeClose: true,
+                shade: 0.3,
+                maxmin: true, //开启最大化最小化按钮 
+                area: ['893px', '600px'],
+                content: '@Url.Action("Create")'
+            });
+        });
+        $('#btnEdit').click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                lIndex = layer.open({
+                    type: 2,
+                    title: '@Resource.lang.Edit',
+                    shadeClose: true,
+                    shade: 0.3,
+                    maxmin: true, //开启最大化最小化按钮 
+                    area: ['893px', '600px'],
+                    content: '@Url.Action("Edit/")' + ids[0]
+                });
+            }
+        });
+        $("#btnDelete").click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                layer.confirm('@Resource.lang.tip_Do_Dell', {
+                    btn: ['@Resource.lang.OK', '@Resource.lang.Cancel'] //按钮 
+                }, function () {
+                    $.post('@Url.Action("Delete")', { id: ids.join(',') }, function (data) {
+                        callBack(data);
+                    }, 'json');
+                }, function () {
+                });
+            }
+        });
+
+        $("#btnReturnBack").click(function () {
+            ids = GetCheckedIds();
+            if (ids.length != null) {
+                layer.confirm('@Tip.WantReturnDateBase', {
+                    btn: ['@Resource.lang.OK', '@Resource.lang.Cancel'] //按钮 
+                 }, function () {
+                     $.post('@Url.Action("ReturnBack")', { id: ids[0] }, function (data) {
+                        callBack(data);
+                    }, 'json');
+                }, function () {
+                });
+            }
+            else {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+        });
+        $("#btnDownLoad").click(function () {
+            ids = GetCheckedIds();
+            if (ids.length != null) {
+                window.open("/backup/" + ids[0]);
+            }
+            else {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+        });
+
+
+    });
+    var myApp = angular.module("list", []);
+    myApp.controller('listController', function ($scope, $http) {
+        paged = $scope.GetData = function (page) {
+            var queryStr = $('form').serialize();
+            //alert(queryStr);  
+            if (searchcount == 1) {
+                searchcount++;
+            }
+            else {
+                $http.post('@Url.Action("GetList")', { page: page, queryStr: queryStr })
+                    .success(function (d) {
+                        $scope.data = d.rows;
+                        searchcount++;
+                        if (searchcount == 1) {
+                            CeatePage(1, 1);
+                        }
+                    });
+            }
+        };
+    });
+    myApp.controller('BackController', function ($scope, $http) {
+        $http.post('/Sys/Back/GetList')
+           .success(function (d) {
+               $scope.data = d.rows;
+           });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div id="sp">
+    <div id="SearchPanel" style="padding: 2px; overflow: hidden;">
+    </div>
+</div>
+<table id="List"></table>
+<script type="text/javascript">
+    function frameReturnByClose() {
+        $("#modalwindow").window('close');
+    }
+    function frameReturnByReload(flag) {
+        if (flag) {
+            $("#List").datagrid('load');
+        }
+        else {
+            $("#List").datagrid('reload');
+        }
+    }
+    function frameReturnByMes(mes) {
+        $.messageBox5s('提示', mes);
+    }
+    var ifrSrc = "@MvcHtmlString.Create(printControl.ifrSrc())";
+    $(function () {
+        $('#List').datagrid({
+            url: '@Url.Action("GetList")',
+            sortName: 'Id',
+            sortOrder: 'Asc',
+            idField: 'Id',
+            width: SetGridWidthSub(12),
+            methord: 'post',
+            height: SetGridHeightSub(),
+            fitColumns: false,
+
+            striped: true, //奇偶行是否区分
+            rownumbers: true,//行号
+            singleSelect: true,//单选模式
+            columns: [[
+                { field: 'Id', title: '', width: 80, hidden: true },
+                { field: 'Name', title: '文件名称', width: 200, sortable: true },
+                { field: 'Date', title: '备份时间', width: 120, sortable: true },
+                { field: 'Size', title: '大小(M)', width: 80, sortable: true }
+            ]]
+        });
+
+        $("#btnCreate").click(function () {
+            $("#modalwindow").html($.format(ifrSrc, "@Url.Action("Create")"))
+                .window({ title: $(this).text(), width: 480, height: 280, iconCls: 'icon-add' }).window('open');
+        });
+        $("#btnEdit").click(function () {
+            var row = $('#List').datagrid('getSelected');
+            if (row != null) {
+                $("#modalwindow").html($.format(ifrSrc, "@Url.Action("Edit")?id=" + row.Id))
+                .window({ title: $(this).text(), width: 480, height: 280, iconCls: 'icon-edit' }).window('open');
+
+            }
+            else {
+                $.messageBox5s('提示', '@Tip.NoSelect');
+            }
+        });
+        $("#btnDelete").click(function () {
+            var row = $('#List').datagrid('getSelected');
+            if (row != null) {
+                $.messager.confirm('提示', '@Tip.WantDeleteTheSelectedRecords', function (r) {
+                    if (r) {
+                        $.post("@Url.Action("Delete")?id=" + row.Id, function (data) {
+                            data = eval("(" + data + ")");
+                            if (data.Status == 1)
+                                $("#List").datagrid('load');
+                            $.messageBox5s('提示', data.Memo);
+                        }, "json");
+                        $('#List').datagrid('clearSelections');
+
+                    }
+                });
+            }
+            else {
+                $.messageBox5s('提示', '@Tip.NoSelect');
+            }
+        });
+        $("#btnReturnBack").click(function () {
+            var row = $('#List').datagrid('getSelected');
+            if (row != null) {
+                $.messager.confirm('提示', '@Tip.WantReturnDateBase', function (r) {
+                    if (r) {
+                        $.post("@Url.Action("ReturnBack")?id=" + row.Id, function (data) {
+                            data = eval("(" + data + ")");
+                            if (data.Status == 1)
+                                $("#List").datagrid('load');
+                            $.messageBox5s('提示', data.Memo);
+                        }, "json");
+                        $('#List').datagrid('clearSelections');
+
+                    }
+                });
+            }
+            else {
+                $.messageBox5s('提示', '@Tip.NoSelect');
+            }
+        });
+        $("#btnDownLoad").click(function () {
+            var row = $('#List').datagrid('getSelected');
+            if (row != null) {
+                window.open("/backup/" + row.Id, "_blank");
+            }
+            else {
+                $.messageBox5s('提示', '@Tip.NoSelect');
+            }
+        });
+        $("#BtnQuery").click(function () {
+            var queryStr = $("#sp form").serialize();
+            queryStr = decodeURIComponent(queryStr, true);
+            if (queryStr == null) {
+                queryStr = "%";
+            }
+            $("#List").datagrid("load", { queryStr: queryStr, dataType: "json" });
+
+        });
+    });
+</script>*@

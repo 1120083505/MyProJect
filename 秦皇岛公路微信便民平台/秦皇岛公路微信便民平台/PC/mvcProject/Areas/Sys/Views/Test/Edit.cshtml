@@ -1,0 +1,100 @@
+﻿@model  ZrSoft.Sys_Test 
+ 
+@{ 
+    ViewBag.Title = "Sys_Test _Create"; 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+} 
+<script type="text/javascript">
+    $(function () {
+        $("#btnSave").click(function () {
+            if ($("form").form("validate")) {
+                $.ajax({
+                    url: "@Url.Action("Edit")",
+                    type: "Post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.Status == 1) {
+                            window.parent.frameReturnByMes(data.Memo);
+                            window.parent.frameReturnByReload(true);
+                            window.parent.frameReturnByClose();
+                        }
+                        else {
+                            window.parent.frameReturnByMes(data.Memo);
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+        $("#btnReturn").click(function () {
+            window.parent.frameReturnByClose();
+        });
+    });
+</script> 
+<div class="mvctool bg"> 
+    <a href="#" class="easyui-linkbutton" id="btnSave" data-options="iconCls:'icon-disk',plain:true">保存</a> 
+    <a href="#" class="easyui-linkbutton" id="btnReturn" data-options="iconCls:'icon-undo',plain:true">返回</a> 
+</div> 
+@using (Html.BeginForm()) 
+{ 
+    @Html.HiddenFor(model => model.Id) 
+    @Html.HiddenFor(model => model.PubDate) 
+    @Html.HiddenFor(model => model.AdminId) 
+    <table class="fromEditTable"> 
+        <tbody> 
+            <tr> 
+                <td style="width: 100px; text-align: right;"> 
+                    @Html.Label(Resource.lang.Create)
+                    @Html.LabelFor(model => model.Name)： 
+                </td> 
+                <td  class='required'> 
+                    <input id='Name' name='Name' class="easyui-textbox"  value='@Model.Name'  data-options="required:true"> 
+                </td> 
+                <td style="text-align: left;"></td> 
+            </tr> 
+ 
+            <tr> 
+                <td style="width: 100px; text-align: right;"> 
+                    @Html.LabelFor(model => model.Title)： 
+         
+                </td> 
+                <td  class='required'> 
+                    <input id='Title' name='Title' class="easyui-textbox"  value='@Model.Title'  data-options="required:true"> 
+                </td> 
+                <td style="text-align: left;"></td> 
+            </tr> 
+ 
+            <tr> 
+                <td style="width: 100px; text-align: right;"> 
+                    @Html.LabelFor(model => model.price)： 
+                </td> 
+                <td  class='required'> 
+                    <input id='price' name='price' class="easyui-numberbox" precision="2" data-options="required:true" value='@Model.price'> 
+                </td> 
+                <td style="text-align: left;"></td> 
+            </tr> 
+ 
+            <tr> 
+                <td style="width: 100px; text-align: right;"> 
+                    @Html.LabelFor(model => model.count)： 
+                </td> 
+                <td  class='required'> 
+                    <input id='count' name='count' class="easyui-numberbox"  data-options="required:true" value='@Model.count'> 
+                </td> 
+                <td style="text-align: left;"></td> 
+            </tr> 
+ 
+            <tr> 
+                <td style="width: 100px; text-align: right;"> 
+                    @Html.LabelFor(model => model.OtherMemo)： 
+                </td> 
+                <td  > 
+                    <input  id='OtherMemo' name='OtherMemo' class="easyui-textbox" required="false" data-options="multiline:true" style="height:80px;" value="@Model.OtherMemo" >
+                </td> 
+                <td style="text-align: left;"></td> 
+            </tr> 
+ 
+        </tbody> 
+</table> 
+} 

@@ -1,0 +1,111 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+} 
+<script src="~/lib/angular.js"></script>
+@model  ZrSoft.Sys_Custody 
+<script>
+    var myApp = angular.module('Create', []);
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+        //监听提交 
+        form.on('submit(Accept)', function (data) {
+            var json = data.field;
+            json["Id"] = "@Model.Id";
+            $.ajax({
+                url: "@Url.Action("Edit")",
+                type: "Post",
+                data: json,
+                dataType: "json",
+                success: function (data) {
+                    window.parent.callBack(data);
+                }
+            });
+            return false;
+        });
+    });
+</script> 
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;"> 
+    <legend> 
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a> @Resource.lang.Sys_Custody </legend>
+</fieldset> 
+<form class="layui-form" action=""> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Custody_Name 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='Name' name='Name'  type="text" lay-verify="required" autocomplete="off" placeholder="@Model.Name" class="layui-input"  value='@Model.Name'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Custody_InfoId 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='InfoId' name='InfoId'  type="text" lay-verify="" autocomplete="off" placeholder="@Model.InfoId" class="layui-input"  value='@Model.InfoId'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Custody_Phone 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='Phone' name='Phone'  type="text" lay-verify="" autocomplete="off" placeholder="@Model.Phone" class="layui-input"  value='@Model.Phone'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Custody_FaxPhone 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='FaxPhone' name='FaxPhone'  type="text" lay-verify="" autocomplete="off" placeholder="@Model.FaxPhone" class="layui-input"  value='@Model.FaxPhone'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Custody_Email 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='Email' name='Email'  type="text" lay-verify="" autocomplete="off" placeholder="@Model.Email" class="layui-input"  value='@Model.Email'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Custody_Address 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='Address' name='Address'  type="text" lay-verify="" autocomplete="off" placeholder="@Model.Address" class="layui-input"  value='@Model.Address'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Custody_Grade 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='Grade' name='Grade'  type="text" lay-verify="" autocomplete="off" placeholder="@Model.Grade" class="layui-input"  value='@Model.Grade'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Custody_Memo 
+                </label> 
+        <div class="layui-input-block"> 
+                    <textarea id='Memo' name='Memo' placeholder="@Resource.lang.Sys_Custody_Memo" class="layui-textarea">@Model.Memo</textarea>  
+         </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Resource.lang.Sys_Custody_Discount 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='Discount' name='Discount'  type="text" lay-verify="" autocomplete="off" placeholder="@Model.Discount" class="layui-input"  value='@Model.Discount'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <div class="layui-input-block"> 
+            <button class="layui-btn" lay-submit="" lay-filter="Accept">@Resource.lang.Accept</button> 
+            <button type="reset" class="layui-btn layui-btn-primary">@Resource.lang.Reset</button> 
+        </div> 
+    </div> 
+</form> 

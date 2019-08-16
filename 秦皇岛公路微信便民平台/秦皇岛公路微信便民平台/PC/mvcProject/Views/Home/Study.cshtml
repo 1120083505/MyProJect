@@ -1,0 +1,503 @@
+﻿@{
+    ViewBag.Title = "Study";
+    Layout = null;
+}
+<meta name="viewport" content="width=device-width,height=device-height, user-scalable=no,initial-scale=1, minimum-scale=1, maximum-scale=1,target-densitydpi=device-dpi ">
+<link href="~/Content/themes/bootstrap/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<script src="~/Content/themes/bootstrap/js/jquery.js"></script>
+<link href="~/Content/themes/bootstrap/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Content/themes/bootstrap/js/bootstrap.min.js"></script>
+<link href="~/Content/themes/bootstrap/mui.min.css" rel="stylesheet" />
+<script src="~/Content/themes/bootstrap/js/mui.min.js"></script>
+<script src="~/Content/themes/bootstrap/js/mui.pullToRefresh.js"></script>
+<script src="~/Content/themes/bootstrap/js/mui.pullToRefresh.material.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .contentstudy {
+        width: 100%;
+        height: 100%;
+    }
+
+    #myTab li {
+        width: 33%;
+        height: 53px;
+        font-size: 17px;
+    }
+
+        #myTab li a {
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            line-height: 53px;
+            padding: 0;
+        }
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+        color: #555;
+        cursor: default;
+        background-color: #fff;
+        border-bottom: 5px solid #FD8E3C;
+    }
+
+    .neirong {
+        width: 100%;
+        height: 100px;
+        padding: 5px;
+    }
+
+    .tupian {
+        height: 100%;
+        width: 38%;
+        float: left;
+    }
+
+        .tupian img {
+            width: 100%;
+            height: 100%;
+        }
+
+    .wenzi {
+        width: 62%;
+        float: right;
+        height: 50%;
+        padding-left: 5px;
+    }
+
+    .jc {
+        font-weight: bold;
+    }
+
+    .bjc {
+        overflow: hidden;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .mui-bar ~ .mui-content .mui-fullscreen {
+        top: 44px;
+        height: auto;
+    }
+
+    .mui-pull-top-tips {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        margin-left: -25px;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        z-index: 1;
+    }
+
+    .mui-bar ~ .mui-pull-top-tips {
+        top: 24px;
+    }
+
+    .mui-pull-top-wrapper {
+        width: 42px;
+        height: 42px;
+        display: block;
+        text-align: center;
+        background-color: #efeff4;
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        background-clip: padding-box;
+        box-shadow: 0 4px 10px #bbb;
+        overflow: hidden;
+    }
+
+    .mui-pull-top-tips.mui-transitioning {
+        -webkit-transition-duration: 200ms;
+        transition-duration: 200ms;
+    }
+
+    .mui-pull-top-tips .mui-pull-loading {
+        /*-webkit-backface-visibility: hidden;
+                -webkit-transition-duration: 400ms;
+                transition-duration: 400ms;*/
+        margin: 0;
+    }
+
+    .mui-pull-top-wrapper .mui-icon,
+    .mui-pull-top-wrapper .mui-spinner {
+        margin-top: 7px;
+    }
+
+        .mui-pull-top-wrapper .mui-icon.mui-reverse {
+            /*-webkit-transform: rotate(180deg) translateZ(0);*/
+        }
+
+    .mui-pull-bottom-tips {
+        text-align: center;
+        background-color: #efeff4;
+        font-size: 15px;
+        line-height: 40px;
+        color: #777;
+    }
+
+    .mui-pull-top-canvas {
+        overflow: hidden;
+        background-color: #fafafa;
+        border-radius: 40px;
+        box-shadow: 0 4px 10px #bbb;
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
+    }
+
+        .mui-pull-top-canvas canvas {
+            width: 40px;
+        }
+
+    .mui-slider-indicator.mui-segmented-control {
+        background-color: #efeff4;
+    }
+
+    .mui-content {
+        width: 100% !important;
+    }
+
+    .mui-scroll {
+        width: 100% !important;
+    }
+
+    .mui-table-view-cell {
+        padding: 5px;
+    }
+</style>
+<div class="contentstudy">
+    <div id="myCarousel" class="carousel slide">
+        <!-- 轮播（Carousel）指标 -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- 轮播（Carousel）项目 -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="~/Content/images/1.jpg" alt="First slide" />
+            </div>
+            <div class="item">
+                <img src="~/Content/images/2.jpg" alt="Second slide" />
+            </div>
+            <div class="item">
+                <img src="~/Content/images/3.jpg" alt="Third slide" />
+            </div>
+            <div class="item">
+                <img src="~/Content/images/4.jpg" alt="Third slide" />
+            </div>
+        </div>
+        <!-- 轮播（Carousel）导航 -->
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev"></a>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next"></a>
+    </div>
+    <div class="mui-content">
+        <div id="slider" class="mui-slider mui-fullscreen">
+            <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                <div class="mui-scroll">
+                    <a class="mui-control-item mui-active" href="#item1mobile" style="width: 33%;padding: 0;">
+                        第一个
+                    </a>
+                    <a class="mui-control-item" href="#item2mobile" style="width: 34%;padding: 0;">
+                        第二个
+                    </a>
+                    <a class="mui-control-item" href="#item3mobile" style="width: 33%;padding: 0;">
+                        第三个
+                    </a>
+                </div>
+            </div>
+            <div class="mui-slider-group">
+                <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+                    <div id="scroll1" class="mui-scroll-wrapper">
+                        <div class="mui-scroll  xunhuan1">
+                            <ul class="mui-table-view">
+                                <li class="mui-table-view-cell">
+                                    <div class="neirong">
+                                        <div class="tupian">
+                                            <img src="" />
+                                        </div>
+                                        <div class="wenzi jc">
+
+                                        </div>
+                                        <div class="wenzi bjc">
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="mui-table-view-cell">
+                                    <div class="neirong">
+                                        <div class="tupian">
+                                            <img src="" />
+                                        </div>
+                                        <div class="wenzi jc">
+
+                                        </div>
+                                        <div class="wenzi bjc">
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="mui-table-view-cell">
+                                    <div class="neirong">
+                                        <div class="tupian">
+                                            <img src="" />
+                                        </div>
+                                        <div class="wenzi jc">
+
+                                        </div>
+                                        <div class="wenzi bjc">
+
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="item2mobile" class="mui-slider-item mui-control-content">
+                    <div class="mui-scroll-wrapper">
+                        <div class="mui-scroll xunhuan2">
+                            <ul class="mui-table-view">
+                                <li class="mui-table-view-cell">
+                                    <div class="neirong">
+                                        <div class="tupian">
+                                            <img src="" />
+                                        </div>
+                                        <div class="wenzi jc">
+
+                                        </div>
+                                        <div class="wenzi bjc">
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="mui-table-view-cell">
+                                    <div class="neirong">
+                                        <div class="tupian">
+                                            <img src="" />
+                                        </div>
+                                        <div class="wenzi jc">
+
+                                        </div>
+                                        <div class="wenzi bjc">
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="mui-table-view-cell">
+                                    <div class="neirong">
+                                        <div class="tupian">
+                                            <img src="" />
+                                        </div>
+                                        <div class="wenzi jc">
+
+                                        </div>
+                                        <div class="wenzi bjc">
+
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="item3mobile" class="mui-slider-item mui-control-content">
+                    <div class="mui-scroll-wrapper">
+                        <div class="mui-scroll xunhuan3">
+                            <ul class="mui-table-view">
+                                <li class="mui-table-view-cell">
+                                    <div class="neirong">
+                                        <div class="tupian">
+                                            <img src="" />
+                                        </div>
+                                        <div class="wenzi jc">
+
+                                        </div>
+                                        <div class="wenzi bjc">
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="mui-table-view-cell">
+                                    <div class="neirong">
+                                        <div class="tupian">
+                                            <img src="" />
+                                        </div>
+                                        <div class="wenzi jc">
+
+                                        </div>
+                                        <div class="wenzi bjc">
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="mui-table-view-cell">
+                                    <div class="neirong">
+                                        <div class="tupian">
+                                            <img src="" />
+                                        </div>
+                                        <div class="wenzi jc">
+
+                                        </div>
+                                        <div class="wenzi bjc">
+
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            var a = document.getElementById("myCarousel").offsetHeight;
+            $("#slider").css("top", a + "px")
+        })
+        mui.init();
+        (function ($) {
+            //阻尼系数
+            var deceleration = mui.os.ios ? 0.003 : 0.0009;
+            $('.mui-scroll-wrapper').scroll({
+                bounce: false,
+                indicators: true, //是否显示滚动条
+                deceleration: deceleration
+            });
+            $.ready(function () {
+                //循环初始化所有下拉刷新，上拉加载。
+                $.each(document.querySelectorAll('.mui-slider-group .xunhuan1'), function (index, pullRefreshEl) {
+                    $(pullRefreshEl).pullToRefresh({
+                        down: {
+                            callback: function () {
+                                location.reload();
+                            }
+                        },
+                        up: {
+                            callback: function () {
+                                var self = this;
+                                setTimeout(function () {
+                                    var ul = self.element.querySelector('.mui-table-view');
+                                    ul.appendChild(createFragment1(ul, index, 5));
+                                    self.endPullUpToRefresh();
+                                }, 1000);
+                            }
+                        }
+                    });
+                });
+                $.each(document.querySelectorAll('.mui-slider-group .xunhuan2'), function (index, pullRefreshEl) {
+                    $(pullRefreshEl).pullToRefresh({
+                        down: {
+                            callback: function () {
+                                location.reload();
+                            }
+                        },
+                        up: {
+                            callback: function () {
+                                var self = this;
+                                setTimeout(function () {
+                                    var ul = self.element.querySelector('.mui-table-view');
+                                    ul.appendChild(createFragment2(ul, index, 5));
+                                    self.endPullUpToRefresh();
+                                }, 1000);
+                            }
+                        }
+                    });
+                });
+                $.each(document.querySelectorAll('.mui-slider-group .xunhuan3'), function (index, pullRefreshEl) {
+                    $(pullRefreshEl).pullToRefresh({
+                        down: {
+                            callback: function () {
+                                location.reload();
+                            }
+                        },
+                        up: {
+                            callback: function () {
+                                var self = this;
+                                setTimeout(function () {
+                                    var ul = self.element.querySelector('.mui-table-view');
+                                    ul.appendChild(createFragment3(ul, index, 5));
+                                    self.endPullUpToRefresh();
+                                }, 1000);
+                            }
+                        }
+                    });
+                });
+                var createFragment1 = function (ul, index, count, reverse) {
+                    var length = ul.querySelectorAll('li').length;
+                    var fragment = document.createDocumentFragment();
+                    var li;
+                    for (var i = 0; i < count; i++) {
+                        li = document.createElement('li');
+                        li.className = 'mui-table-view-cell';
+                        li.innerHTML = '<div class="neirong">' +
+                                                '<div class="tupian">' +
+                                                    '<img src="" />' +
+                                                '</div>' +
+                                                '<div class="wenzi jc">2' +
+
+                                                '</div>' +
+                                                '<div class="wenzi bjc">' +
+
+                                                '</div>' +
+                                           '</div> ';
+                        fragment.appendChild(li);
+                    }
+                    return fragment;
+                };
+                var createFragment2 = function (ul, index, count, reverse) {
+                    var length = ul.querySelectorAll('li').length;
+                    var fragment = document.createDocumentFragment();
+                    var li;
+                    for (var i = 0; i < count; i++) {
+
+                        li = document.createElement('li');
+                        li.className = 'mui-table-view-cell';
+                        li.innerHTML = '<div class="neirong">' +
+                                                '<div class="tupian">' +
+                                                    '<img src="" />' +
+                                                '</div>' +
+                                                '<div class="wenzi jc">3' +
+
+                                                '</div>' +
+                                                '<div class="wenzi bjc">' +
+
+                                                '</div>' +
+                                           '</div> ';
+                        fragment.appendChild(li);
+                    }
+                    return fragment;
+                };
+                var createFragment3 = function (ul, index, count, reverse) {
+                    var length = ul.querySelectorAll('li').length;
+                    var fragment = document.createDocumentFragment();
+                    var li;
+                    for (var i = 0; i < count; i++) {
+                        li = document.createElement('li');
+                        li.className = 'mui-table-view-cell';
+                        li.innerHTML = '<div class="neirong">' +
+                                                '<div class="tupian">' +
+                                                    '<img src="" />' +
+                                                '</div>' +
+                                                '<div class="wenzi jc">4' +
+
+                                                '</div>' +
+                                                '<div class="wenzi bjc">' +
+
+                                                '</div>' +
+                                           '</div> ';
+                        fragment.appendChild(li);
+                    }
+                    return fragment;
+                };
+            });
+        })(mui);
+    </script>
+</div>

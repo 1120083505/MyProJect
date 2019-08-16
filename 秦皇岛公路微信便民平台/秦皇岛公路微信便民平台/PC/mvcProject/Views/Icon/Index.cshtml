@@ -1,0 +1,346 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+    ViewBag.Title = "change icon";
+}
+<link href="~/lib/layui/font/iconfont.css" rel="stylesheet" />
+<style>
+    .h {
+    }
+
+    .layui-icon {
+        margin: 2px;
+        cursor: pointer;
+    }
+
+    .selected {
+        color: #FF5722;
+        font-weight: bolder;
+        text-decoration: dashed;
+    }
+    .selectedP {
+        background-color:#E7E4E4;
+        border-radius:100%;
+    }
+
+    .site-doc-icon {
+        margin-bottom: 0px;
+        font-size: 0;
+        padding: 2px;
+        overflow-y: auto;
+    }
+
+        .site-doc-icon li {
+            display: inline-block;
+            vertical-align: middle;
+            width: 50px;
+            line-height: 25px;
+            padding: 10px 0;
+            margin-right: -1px;
+            margin-bottom: -1px;
+            border: 1px solid #e2e2e2;
+            font-size: 14px;
+            text-align: center;
+            color: #666;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+        }
+
+            .site-doc-icon li .layui-icon {
+                display: inline-block;
+                font-size: 24px;
+            }
+
+            .site-doc-icon li .name,
+            .site-doc-icon li .fontclass {
+                display: none;
+            }
+
+            .site-doc-icon li:hover {
+                background-color: #f2f2f2;
+                /*color: #000;*/
+                color: #1E9FFF;
+                font-weight: bolder;
+            }
+
+    .layui-elem-quote {
+        padding: 5px;
+        margin: 0px;
+    }
+</style>
+<script>
+    var layer;
+    layui.use(['form', 'layedit', 'laydate', 'element', 'laypage'], function () {
+        layer = layui.layer;
+    });
+    var json = { unicode: "", fontclass: "" };
+    $(document).ready(function () {
+        switch(@ViewBag.Icon)
+        {
+            case 1:
+                $("[title='@ViewBag.SelectIcon']").addClass("selected").addClass("selectedP");
+                json["fontclass"] = "@ViewBag.SelectIcon";
+                break;
+            case 2:
+                $("[code='@ViewBag.SelectIcon']").addClass("selected").addClass("selectedP");
+                json["unicode"] = "&#x"+"@ViewBag.SelectIcon";
+                break;
+        }
+        $("ul .layui-icon").click(function () {
+            $(".layui-icon").removeClass("selected");
+            $("li").removeClass("selectedP");
+            $(this).addClass("selected");
+            $(this).parent().addClass("selectedP");
+            json["unicode"] = "&#x" + $(this).attr("code");
+            json["fontclass"] = $(this).attr("title");
+            console.log("checked:"+JSON.stringify(json));
+        });
+        ChangeSize = function () {
+            var h = $(window).height();
+            $(".site-doc-icon").height(h - $(".layui-elem-quote").height() - 20);
+        }
+        ChangeSize();
+        $(window).resize(function () {
+            ChangeSize();
+        });
+        $("#btnAccept").click(function () {
+            console.log(json);
+            if (json.unicode == ""&json.fontclass=="") {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                //回传选中图标
+                window.parent.CallBackIcon(json);
+            }
+        });
+    });
+
+</script>
+
+
+<blockquote class="layui-elem-quote" style="border-bottom: 1px solid #E8E3E3">
+    <button class="layui-btn layui-btn-primary" id="btnAccept"><i class="layui-icon">&#xe613;</i>@Resource.lang.Accept</button>
+</blockquote>
+<ul class="site-doc-icon">
+
+    <li><i class="layui-icon" code="e70e;" title="icon-edit">&#xe70e;</i></li>
+    <li><i class="layui-icon" code="e656;" title="icon-roundcheckfill">&#xe656;</i></li>
+    <li><i class="layui-icon" code="e657;" title="icon-roundcheck">&#xe657;</i></li>
+    <li><i class="layui-icon" code="e65a;" title="icon-roundrightfill">&#xe65a;</i></li>
+    <li><i class="layui-icon" code="e65b;" title="icon-roundright">&#xe65b;</i></li>
+    <li><i class="layui-icon" code="e69b;" title="icon-pic">&#xe69b;</i></li>
+    <li><i class="layui-icon" code="e6c4;" title="icon-weibo">&#xe6c4;</i></li>
+    <li><i class="layui-icon" code="e6ca;" title="icon-friendadd">&#xe6ca;</i></li>
+    <li><i class="layui-icon" code="e6cb;" title="icon-friendfamous">&#xe6cb;</i></li>
+    <li><i class="layui-icon" code="e6cc;" title="icon-friend">&#xe6cc;</i></li>
+    <li><i class="layui-icon" code="e6d3;" title="icon-present">&#xe6d3;</i></li>
+    <li><i class="layui-icon" code="e6d4;" title="icon-squarecheckfill">&#xe6d4;</i></li>
+    <li><i class="layui-icon" code="e6d5;" title="icon-square">&#xe6d5;</i></li>
+    <li><i class="layui-icon" code="e6d6;" title="icon-squarecheck">&#xe6d6;</i></li>
+    <li><i class="layui-icon" code="e6db;" title="icon-notificationforbidfill">&#xe6db;</i></li>
+    <li><i class="layui-icon" code="e6ed;" title="icon-recharge">&#xe6ed;</i></li>
+    <li><i class="layui-icon" code="e6ef;" title="icon-voice">&#xe6ef;</i></li>
+    <li><i class="layui-icon" code="e6f0;" title="icon-voicefill">&#xe6f0;</i></li>
+    <li><i class="layui-icon" code="e6f1;" title="icon-friendfavor">&#xe6f1;</i></li>
+    <li><i class="layui-icon" code="e61a;" title="icon-edit1">&#xe61a;</i></li>
+    <li><i class="layui-icon" code="e725;" title="icon-focus">&#xe725;</i></li>
+    <li><i class="layui-icon" code="e726;" title="icon-friendfill">&#xe726;</i></li>
+    <li><i class="layui-icon" code="e652;" title="icon-iconoffice">&#xe652;</i></li>
+    <li><i class="layui-icon" code="e604;" title="icon-answer">&#xe604;</i></li>
+    <li><i class="layui-icon" code="e605;" title="icon-app">&#xe605;</i></li>
+    <li><i class="layui-icon" code="e606;" title="icon-browser">&#xe606;</i></li>
+    <li><i class="layui-icon" code="e608;" title="icon-camera">&#xe608;</i></li>
+    <li><i class="layui-icon" code="e60a;" title="icon-cart">&#xe60a;</i></li>
+    <li><i class="layui-icon" code="e60d;" title="icon-computer">&#xe60d;</i></li>
+    <li><i class="layui-icon" code="e611;" title="icon-deliver">&#xe611;</i></li>
+    <li><i class="layui-icon" code="e658;" title="icon-upload">&#xe658;</i></li>
+    <li><i class="layui-icon" code="e6ad;" title="icon-selected">&#xe6ad;</i></li>
+    <li><i class="layui-icon" code="e6ae;" title="icon-set">&#xe6ae;</i></li>
+    <li><i class="layui-icon" code="e72c;" title="icon-picfill">&#xe72c;</i></li>
+    <li><i class="layui-icon" code="e730;" title="icon-markfill">&#xe730;</i></li>
+    <li><i class="layui-icon" code="e731;" title="icon-mark">&#xe731;</i></li>
+    <li><i class="layui-icon" code="e735;" title="icon-peoplefill">&#xe735;</i></li>
+    <li><i class="layui-icon" code="e736;" title="icon-people">&#xe736;</i></li>
+    <li><i class="layui-icon" code="e737;" title="icon-servicefill">&#xe737;</i></li>
+    <li><i class="layui-icon" code="e738;" title="icon-repair">&#xe738;</i></li>
+    <li><i class="layui-icon" code="e740;" title="icon-communityfill">&#xe740;</i></li>
+    <li><i class="layui-icon" code="e741;" title="icon-community">&#xe741;</i></li>
+    <li><i class="layui-icon" code="e74a;" title="icon-calendar">&#xe74a;</i></li>
+    <li><i class="layui-icon" code="e74b;" title="icon-cut">&#xe74b;</i></li>
+    <li><i class="layui-icon" code="e600;" title="icon-31wode">&#xe600;</i></li>
+    <li><i class="layui-icon" code="e601;" title="icon-31shangsheng">&#xe601;</i></li>
+    <li><i class="layui-icon" code="e602;" title="icon-31haoyou">&#xe602;</i></li>
+    <li><i class="layui-icon" code="e6c9;" title="icon-print">&#xe6c9;</i></li>
+    <li><i class="layui-icon" code="e74d;" title="icon-backwardfill">&#xe74d;</i></li>
+    <li><i class="layui-icon" code="e74e;" title="icon-forwardfill">&#xe74e;</i></li>
+    <li><i class="layui-icon" code="e74f;" title="icon-playfill">&#xe74f;</i></li>
+    <li><i class="layui-icon" code="e750;" title="icon-stop">&#xe750;</i></li>
+    <li><i class="layui-icon" code="e667;" title="icon-mac">&#xe667;</i></li>
+    <li><i class="layui-icon" code="e668;" title="icon-windows">&#xe668;</i></li>
+    <li><i class="layui-icon" code="e669;" title="icon-android">&#xe669;</i></li>
+    <li><i class="layui-icon" code="e75d;" title="icon-upload1">&#xe75d;</i></li>
+    <li><i class="layui-icon" code="e765;" title="icon-shake">&#xe765;</i></li>
+    <li><i class="layui-icon" code="e702;" title="icon-dollar">&#xe702;</i></li>
+    <li><i class="layui-icon" code="e767;" title="icon-add">&#xe767;</i></li>
+    <li><i class="layui-icon" code="e768;" title="icon-move">&#xe768;</i></li>
+    <li><i class="layui-icon" code="e6cd;" title="icon-edit2">&#xe6cd;</i></li>
+    <li><i class="layui-icon" code="e623;" title="icon-xinzeng">&#xe623;</i></li>
+    <li><i class="layui-icon" code="e77b;" title="icon-sound">&#xe77b;</i></li>
+    <li><i class="layui-icon" code="e77c;" title="icon-sponsorfill">&#xe77c;</i></li>
+    <li><i class="layui-icon" code="e78b;" title="icon-my">&#xe78b;</i></li>
+    <li><i class="layui-icon" code="e78c;" title="icon-myfill">&#xe78c;</i></li>
+    <li><i class="layui-icon" code="e7a1;" title="icon-create">&#xe7a1;</i></li>
+    <li><i class="layui-icon" code="e613;" title="icon-duigou">&#xe613;</i></li>
+    <li><i class="layui-icon" code="e727;" title="icon-jiahao">&#xe727;</i></li>
+    <li><i class="layui-icon" code="e729;" title="icon-jiahao2fill">&#xe729;</i></li>
+    <li><i class="layui-icon" code="e747;" title="icon-qingchu">&#xe747;</i></li>
+    <li><i class="layui-icon" code="e754;" title="icon-sousuoleimu">&#xe754;</i></li>
+    <li><i class="layui-icon" code="e76f;" title="icon-xiangshang3">&#xe76f;</i></li>
+    <li><i class="layui-icon" code="e774;" title="icon-xiangxia5">&#xe774;</i></li>
+    <li><i class="layui-icon" code="e776;" title="icon-xiangyou2">&#xe776;</i></li>
+    <li><i class="layui-icon" code="e77a;" title="icon-xiangzuo2">&#xe77a;</i></li>
+    <li><i class="layui-icon" code="e618;" title="icon-wxbbaobiao">&#xe618;</i></li>
+    <li><i class="layui-icon" code="e619;" title="icon-wxbbiaowang">&#xe619;</i></li>
+    <li><i class="layui-icon" code="e61e;" title="icon-wxbzhanghu">&#xe61e;</i></li>
+    <li><i class="layui-icon" code="e61f;" title="icon-wxbzhuye">&#xe61f;</i></li>
+    <li><i class="layui-icon" code="e620;" title="icon-wxbsousuotuiguang">&#xe620;</i></li>
+    <li><i class="layui-icon" code="e624;" title="icon-wxbdingwei">&#xe624;</i></li>
+    <li><i class="layui-icon" code="e73f;" title="icon-exl">&#xe73f;</i></li>
+    <li><i class="layui-icon" code="e742;" title="icon-pdf">&#xe742;</i></li>
+    <li><i class="layui-icon" code="e743;" title="icon-zip">&#xe743;</i></li>
+    <li><i class="layui-icon" code="e63f;" title="icon-gouwuche">&#xe63f;</i></li>
+    <li><i class="layui-icon" code="e640;" title="icon-gouwuchetianjia">&#xe640;</i></li>
+    <li><i class="layui-icon" code="e641;" title="icon-cuowu">&#xe641;</i></li>
+    <li><i class="layui-icon" code="e645;" title="icon-lajixiang">&#xe645;</i></li>
+    <li><i class="layui-icon" code="e648;" title="icon-naozhong">&#xe648;</i></li>
+    <li><i class="layui-icon" code="e649;" title="icon-saoyisao">&#xe649;</i></li>
+    <li><i class="layui-icon" code="e64b;" title="icon-shezhi">&#xe64b;</i></li>
+    <li><i class="layui-icon" code="e64c;" title="icon-shengyin">&#xe64c;</i></li>
+    <li><i class="layui-icon" code="e64d;" title="icon-shijian">&#xe64d;</i></li>
+    <li><i class="layui-icon" code="e64e;" title="icon-shouhuodizhi">&#xe64e;</i></li>
+    <li><i class="layui-icon" code="e64f;" title="icon-shouye">&#xe64f;</i></li>
+    <li><i class="layui-icon" code="e651;" title="icon-sousuo">&#xe651;</i></li>
+    <li><i class="layui-icon" code="e653;" title="icon-tishi">&#xe653;</i></li>
+    <li><i class="layui-icon" code="e654;" title="icon-wancheng">&#xe654;</i></li>
+    <li><i class="layui-icon" code="e659;" title="icon-wodefankui">&#xe659;</i></li>
+    <li><i class="layui-icon" code="e65c;" title="icon-xiala">&#xe65c;</i></li>
+    <li><i class="layui-icon" code="e662;" title="icon-yijianfankui">&#xe662;</i></li>
+    <li><i class="layui-icon" code="e664;" title="icon-zhengque">&#xe664;</i></li>
+    <li><i class="layui-icon" code="e665;" title="icon-xiaoxizhongxin">&#xe665;</i></li>
+    <li><i class="layui-icon" code="e666;" title="icon-lingcunwei">&#xe666;</i></li>
+    <li><i class="layui-icon" code="e647;" title="icon-duanxin">&#xe647;</i></li>
+    <li><i class="layui-icon" code="e64a;" title="icon-xinxi">&#xe64a;</i></li>
+    <li><i class="layui-icon" code="e655;" title="icon-daohang">&#xe655;</i></li>
+    <li><i class="layui-icon" code="e65d;" title="icon-dizhi">&#xe65d;</i></li>
+    <li><i class="layui-icon" code="e65e;" title="icon-feiji">&#xe65e;</i></li>
+    <li><i class="layui-icon" code="e65f;" title="icon-geren">&#xe65f;</i></li>
+    <li><i class="layui-icon" code="e660;" title="icon-huobiduihuan">&#xe660;</i></li>
+    <li><i class="layui-icon" code="e661;" title="icon-kongdiao">&#xe661;</i></li>
+    <li><i class="layui-icon" code="e663;" title="icon-qian">&#xe663;</i></li>
+    <li><i class="layui-icon" code="e66a;" title="icon-shijian1">&#xe66a;</i></li>
+    <li><i class="layui-icon" code="e66b;" title="icon-shoucang">&#xe66b;</i></li>
+    <li><i class="layui-icon" code="e66c;" title="icon-jiesuo">&#xe66c;</i></li>
+    <li><i class="layui-icon" code="e66d;" title="icon-tingchechang">&#xe66d;</i></li>
+    <li><i class="layui-icon" code="e66e;" title="icon-wuxianwangluo">&#xe66e;</i></li>
+    <li><i class="layui-icon" code="e672;" title="icon-xiangji">&#xe672;</i></li>
+    <li><i class="layui-icon" code="e681;" title="icon-tabshouqi">&#xe681;</i></li>
+    <li><i class="layui-icon" code="e68e;" title="icon-shanchu">&#xe68e;</i></li>
+    <li><i class="layui-icon" code="e68f;" title="icon-shezhi1">&#xe68f;</i></li>
+    <li><i class="layui-icon" code="e692;" title="icon-shouji">&#xe692;</i></li>
+    <li><i class="layui-icon" code="e694;" title="icon-tianqi">&#xe694;</i></li>
+    <li><i class="layui-icon" code="e695;" title="icon-tupian">&#xe695;</i></li>
+    <li><i class="layui-icon" code="e696;" title="icon-xitongcaidan">&#xe696;</i></li>
+    <li><i class="layui-icon" code="e697;" title="icon-xitongfanhui">&#xe697;</i></li>
+    <li><i class="layui-icon" code="e6a7;" title="icon-radiobutton">&#xe6a7;</i></li>
+    <li><i class="layui-icon" code="e6af;" title="icon-pinglun">&#xe6af;</i></li>
+    <li><i class="layui-icon" code="e6ce;" title="icon-shouye1">&#xe6ce;</i></li>
+    <li><i class="layui-icon" code="e6cf;" title="icon-tixing">&#xe6cf;</i></li>
+    <li><i class="layui-icon" code="e6dd;" title="icon-dixiaofei">&#xe6dd;</i></li>
+    <li><i class="layui-icon" code="e6e6;" title="icon-suoding">&#xe6e6;</i></li>
+    <li><i class="layui-icon" code="e6f2;" title="icon-baoxue">&#xe6f2;</i></li>
+    <li><i class="layui-icon" code="e6f3;" title="icon-baoyu">&#xe6f3;</i></li>
+    <li><i class="layui-icon" code="e6f4;" title="icon-duoyun">&#xe6f4;</i></li>
+    <li><i class="layui-icon" code="e6f5;" title="icon-leidian">&#xe6f5;</i></li>
+    <li><i class="layui-icon" code="e6f6;" title="icon-qing">&#xe6f6;</i></li>
+    <li><i class="layui-icon" code="e6f7;" title="icon-xiaoxue">&#xe6f7;</i></li>
+    <li><i class="layui-icon" code="e6f8;" title="icon-xiaoyu">&#xe6f8;</i></li>
+    <li><i class="layui-icon" code="e6f9;" title="icon-yin">&#xe6f9;</i></li>
+    <li><i class="layui-icon" code="e6fa;" title="icon-zhenxue">&#xe6fa;</i></li>
+    <li><i class="layui-icon" code="e6fb;" title="icon-zhenyu">&#xe6fb;</i></li>
+    <li><i class="layui-icon" code="e6fc;" title="icon-zhongxue">&#xe6fc;</i></li>
+    <li><i class="layui-icon" code="e6fd;" title="icon-zhongyu">&#xe6fd;</i></li>
+    <li><i class="layui-icon" code="e6ff;" title="icon-fanhui">&#xe6ff;</i></li>
+    <li><i class="layui-icon" code="e706;" title="icon-bingbao">&#xe706;</i></li>
+    <li><i class="layui-icon" code="e709;" title="icon-wu">&#xe709;</i></li>
+    <li><i class="layui-icon" code="e70a;" title="icon-yuxue">&#xe70a;</i></li>
+    <li><i class="layui-icon" code="e718;" title="icon-safari">&#xe718;</i></li>
+    <li><i class="layui-icon" code="e62c;" title="icon-iconfontriyongbaihuo">&#xe62c;</i></li>
+    <li><i class="layui-icon" code="e634;" title="icon-iconfontphone">&#xe634;</i></li>
+    <li><i class="layui-icon" code="e639;" title="icon-iconfontjixieqimo">&#xe639;</i></li>
+    <li><i class="layui-icon" code="e63a;" title="icon-iconfontshumajiadian">&#xe63a;</i></li>
+    <li><i class="layui-icon" code="e642;" title="icon-iconfontwujingongju">&#xe642;</i></li>
+    <li><i class="layui-icon" code="e66f;" title="icon-yingckjian">&#xe66f;</i></li>
+    <li><i class="layui-icon" code="e71c;" title="icon-yanzhengma">&#xe71c;</i></li>
+    <li><i class="layui-icon" code="e684;" title="icon-jushoucanggift">&#xe684;</i></li>
+    <li><i class="layui-icon" code="e685;" title="icon-liwu">&#xe685;</i></li>
+    <li><i class="layui-icon" code="e7b6;" title="icon-profilelight">&#xe7b6;</i></li>
+    <li><i class="layui-icon" code="e687;" title="icon-yuyin">&#xe687;</i></li>
+    <li><i class="layui-icon" code="e77d;" title="icon-discoverline">&#xe77d;</i></li>
+    <li><i class="layui-icon" code="e77e;" title="icon-discovershape">&#xe77e;</i></li>
+    <li><i class="layui-icon" code="e783;" title="icon-homeline">&#xe783;</i></li>
+    <li><i class="layui-icon" code="e787;" title="icon-announcement">&#xe787;</i></li>
+    <li><i class="layui-icon" code="e7bb;" title="icon-information2">&#xe7bb;</i></li>
+    <li><i class="layui-icon" code="e7cc;" title="icon-scan">&#xe7cc;</i></li>
+    <li><i class="layui-icon" code="e7cd;" title="icon-setting">&#xe7cd;</i></li>
+    <li><i class="layui-icon" code="e610;" title="icon-danxuan02">&#xe610;</i></li>
+    <li><i class="layui-icon" code="e612;" title="icon-danxuan01">&#xe612;</i></li>
+    <li><i class="layui-icon" code="e728;" title="icon-txt">&#xe728;</i></li>
+    <li><i class="layui-icon" code="e7bd;" title="icon-mail">&#xe7bd;</i></li>
+    <li><i class="layui-icon" code="e6c3;" title="icon-icondoc">&#xe6c3;</i></li>
+    <li><i class="layui-icon" code="e7cb;" title="icon-exit">&#xe7cb;</i></li>
+    <li><i class="layui-icon" code="e68d;" title="icon-all">&#xe68d;</i></li>
+    <li><i class="layui-icon" code="e690;" title="icon-cart1">&#xe690;</i></li>
+    <li><i class="layui-icon" code="e691;" title="icon-set1">&#xe691;</i></li>
+    <li><i class="layui-icon" code="e693;" title="icon-arrowdown">&#xe693;</i></li>
+    <li><i class="layui-icon" code="e698;" title="icon-arrowleft">&#xe698;</i></li>
+    <li><i class="layui-icon" code="e699;" title="icon-arrowright">&#xe699;</i></li>
+    <li><i class="layui-icon" code="e69a;" title="icon-arrowup">&#xe69a;</i></li>
+    <li><i class="layui-icon" code="e69c;" title="icon-favorite">&#xe69c;</i></li>
+    <li><i class="layui-icon" code="e69d;" title="icon-good">&#xe69d;</i></li>
+    <li><i class="layui-icon" code="e69e;" title="icon-close">&#xe69e;</i></li>
+    <li><i class="layui-icon" code="e6a0;" title="icon-refresh">&#xe6a0;</i></li>
+    <li><i class="layui-icon" code="e6a2;" title="icon-map">&#xe6a2;</i></li>
+    <li><i class="layui-icon" code="e6a3;" title="icon-account">&#xe6a3;</i></li>
+    <li><i class="layui-icon" code="e6a4;" title="icon-search">&#xe6a4;</i></li>
+    <li><i class="layui-icon" code="e6a5;" title="icon-download">&#xe6a5;</i></li>
+    <li><i class="layui-icon" code="e6a6;" title="icon-compass">&#xe6a6;</i></li>
+    <li><i class="layui-icon" code="e6a8;" title="icon-comments">&#xe6a8;</i></li>
+    <li><i class="layui-icon" code="e6a9;" title="icon-down">&#xe6a9;</i></li>
+    <li><i class="layui-icon" code="e6aa;" title="icon-up">&#xe6aa;</i></li>
+    <li><i class="layui-icon" code="e6b0;" title="icon-play">&#xe6b0;</i></li>
+    <li><i class="layui-icon" code="e6b1;" title="icon-error">&#xe6b1;</i></li>
+    <li><i class="layui-icon" code="e6b2;" title="icon-prompt">&#xe6b2;</i></li>
+    <li><i class="layui-icon" code="e6b3;" title="icon-success">&#xe6b3;</i></li>
+    <li><i class="layui-icon" code="e6b5;" title="icon-stop1">&#xe6b5;</i></li>
+    <li><i class="layui-icon" code="e6b6;" title="icon-help">&#xe6b6;</i></li>
+    <li><i class="layui-icon" code="e6b7;" title="icon-time">&#xe6b7;</i></li>
+    <li><i class="layui-icon" code="e6b9;" title="icon-add1">&#xe6b9;</i></li>
+    <li><i class="layui-icon" code="e6ba;" title="icon-minus">&#xe6ba;</i></li>
+    <li><i class="layui-icon" code="e6bc;" title="icon-link">&#xe6bc;</i></li>
+    <li><i class="layui-icon" code="e6bd;" title="icon-atm">&#xe6bd;</i></li>
+    <li><i class="layui-icon" code="e6be;" title="icon-skip">&#xe6be;</i></li>
+    <li><i class="layui-icon" code="e6bf;" title="icon-attachment">&#xe6bf;</i></li>
+    <li><i class="layui-icon" code="e6c0;" title="icon-browse">&#xe6c0;</i></li>
+    <li><i class="layui-icon" code="e6c2;" title="icon-phone">&#xe6c2;</i></li>
+    <li><i class="layui-icon" code="e6c5;" title="icon-bad">&#xe6c5;</i></li>
+    <li><i class="layui-icon" code="e6c8;" title="icon-erweima1688">&#xe6c8;</i></li>
+    <li><i class="layui-icon" code="e6d0;" title="icon-renminbi1688">&#xe6d0;</i></li>
+    <li><i class="layui-icon" code="e717;" title="icon-DOC">&#xe717;</i></li>
+    <li><i class="layui-icon" code="e62e;" title="icon-peizhishujuyuan">&#xe62e;</i></li>
+    <li><i class="layui-icon" code="e632;" title="icon-zhuzhuangtu">&#xe632;</i></li>
+    <li><i class="layui-icon" code="e635;" title="icon-bingtu">&#xe635;</i></li>
+    <li><i class="layui-icon" code="e636;" title="icon-zhexiantu">&#xe636;</i></li>
+    <li><i class="layui-icon" code="e637;" title="icon-biaoge">&#xe637;</i></li>
+    <li><i class="layui-icon" code="e638;" title="icon-liucheng">&#xe638;</i></li>
+    <li><i class="layui-icon" code="e670;" title="icon-zengjia">&#xe670;</i></li>
+    <li><i class="layui-icon" code="e671;" title="icon-shanjian">&#xe671;</i></li>
+</ul>

@@ -1,0 +1,138 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+}
+<script src="~/lib/angular.js"></script>
+<script src="~/Scripts/Picture.js"></script>
+<script src="~/Scripts/jquery.uploadify-v2.1.4/jquery.uploadify.v2.1.4.min.js"></script>
+<script src="~/Scripts/jquery.uploadify-v2.1.4/swfobject.js"></script>
+<link href="~/Scripts/jquery.uploadify-v2.1.4/uploadify.css" rel="stylesheet" />
+<script src="~/Scripts/ueditor1_4_3-utf8-net/ueditor.config.js"></script>
+<script src="~/Scripts/ueditor1_4_3-utf8-net/ueditor.all.min.js"></script>
+<script src="~/Scripts/EditPicture.js"></script>
+@model  ZrSoft.VHighWayRoad
+<script> 
+    $(function () {
+        monpic();
+        $("#dizhi").hide();
+        if ('@Model.Type' == "201803300918449193-458e-8p2fvn" || '@Model.Type' == "201803300918449193-458e-8p2fvn") {
+            $("#dizhi").show();
+        }
+    })
+         var myApp = angular.module('Create', []);   
+    layui.use(['form', 'layedit', 'laydate'], function () { 
+        var form = layui.form() 
+        , layer = layui.layer;
+        var theEditor = "";
+        theEdiotr = UE.getEditor('Conetent',
+        {
+            initialFrameWidth: 'auto',
+            initialFrameHeight: 300
+        });
+        //监听提交 
+        form.on('submit(Accept)', function (data) { 
+            var cont = theEdiotr.getContent();
+            $("#Conetent").val(cont);
+            var json = data.field; 
+            json["Id"] = "@Model.Id"; 
+            $.ajax({ 
+                url: "@Url.Action("Edit")", 
+                type: "Post", 
+                data: json, 
+                dataType: "json", 
+                success: function (data) { 
+                    window.parent.callBack(data); 
+                } 
+            }); 
+            return false; 
+        });
+        var form_1 = layui.form()
+            , layer = layui.layer;
+        form.on('select(Type)', function (data) {
+            if (data.value == "201803300918449193-458e-8p2fvn" || data.value == "201803300918449193-458e-8p2fvn") {
+                $("#dizhi").show();
+            }
+        });
+    });
+    myApp.controller('HighWayRoadTypeController', function ($scope, $http) {
+        $.ajax({
+            url: '/WeChat/HighWayRoadType/GetAllList',
+            type: 'Post',
+            dataType: 'json',
+            async: false,
+            success: function (d) {
+                $scope.data = d.rows;
+            }
+        });
+    });
+    myApp.controller('sptypeController', function ($scope, $http) {
+        $.ajax({
+            url: "/sys/Admin/GetAllList",
+            type: "POST",
+            async: false,
+            success: function (d) {
+                $scope.data = d.rows;
+            }
+        });
+    });
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a> @Resource.lang.WeChat_HighwayRoad </legend>
+</fieldset>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.WeChat_HighwayRoad_Title
+        </label>
+        <div class="layui-input-block">
+            <input id='Title' name='Title'  type="text"lay-verify="required" autocomplete="off" placeholder="@Model.Title" class="layui-input"  value='@Model.Title'>
+        </div>
+    </div>
+    
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.WeChat_HighwayRoad_Conetent
+        </label>
+        <div class="layui-input-block">
+            <textarea id='Conetent' name='Conetent'  type="text" lay-verify="" autocomplete="off" placeholder="@Model.Conetent" class="layui-textarea" >@Model.Conetent </textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.WeChat_HighwayRoad_Type
+        </label>
+        <div class="layui-input-block">
+            <select id='Type' name='Type'  ng-controller="HighWayRoadTypeController" lay-verify="required" lay-filter="Type"  ng-init="selected = '@Model.Type'" ng-model="selected">
+                <option>@Resource.lang.Select@Resource.lang.WeChat_HighwayRoad_Type</option>
+                <option ng-repeat="x in data" value="{{x.Id}}">{{x.Name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item" id="dizhi">
+        <label class="layui-form-label">
+            @Resource.lang.WeChat_HighwayRoad_Address
+        </label>
+        <div class="layui-input-block">
+            <input id='Address' name='Address'  type="text" autocomplete="off" placeholder="@Model.Address" class="layui-input"  value='@Model.Address'>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            图片
+        </label>
+        <div class="layui-input-block" style="float: left; margin: 0">
+            <input id="Moneypic" name="Moneypic" style="margin-top: 5px;" type="hidden" />
+            <div id="img" style="float: left; margin-left: 96px; margin-top: -103px;">
+            </div>
+            <input id="FileName" name="FileName" type="hidden" value="@ViewBag.FileName" lay-verify="required"/>
+            <input id="FileUrl" name="FileUrl" type="hidden" value="@ViewBag.FileUrl" />
+            <input id="FileType" name="FileType" type="hidden" value="@ViewBag.FileType" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="Accept">@Resource.lang.Accept</button>
+            <button type="reset" class="layui-btn layui-btn-primary">@Resource.lang.Reset</button>
+        </div>
+    </div>
+</form>

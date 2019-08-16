@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+@model  ZrSoft.CK_Warehouse
+<script src="~/lib/angular.js"></script>
+<script>
+
+     var myApp = angular.module('Create', []);
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+        //监听提交
+        form.on('submit(Accept)', function (data) {
+            var json = data.field;
+            $.ajax({
+               url: "@Url.Action("Create")",
+                type: "Post",
+                data: json,
+                dataType: "json",
+                success: function (data) {
+                    window.parent.callBack(data);
+                }
+            });
+            return false;
+        });
+    });
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back">&#xe6ff;</a>@Resource.lang.CK_Warehouse
+    </legend>
+</fieldset>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_Name</label>
+        <div class="layui-input-block">
+            <input id='Name' name='Name' type="text" lay-verify="" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.CK_Warehouse_Name" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_Area</label>
+        <div class="layui-input-block">
+            <input id='Area' name='Area' type="number" lay-verify="" lay-verify="number" placeholder="@Resource.lang.CK_Warehouse_Area" autocomplete="off" class="layui-input" precision="2">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_Ardess</label>
+        <div class="layui-input-block">
+            <input id='Ardess' name='Ardess' type="text" lay-verify="" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.CK_Warehouse_Ardess" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_Stock</label>
+        <div class="layui-input-block">
+            <input id='Stock' name='Stock' type="text" lay-verify="" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.CK_Warehouse_Stock" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_Memo</label>
+        <div class="layui-input-block">
+            <textarea id='Memo' name='Memo' placeholder="@Resource.lang.CK_Warehouse_Memo" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="Accept">@Resource.lang.Accept</button>
+            <button type="reset" class="layui-btn layui-btn-primary">@Resource.lang.Reset</button>
+        </div>
+    </div>
+</form>

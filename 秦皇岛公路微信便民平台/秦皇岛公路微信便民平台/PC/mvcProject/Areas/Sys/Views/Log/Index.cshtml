@@ -1,0 +1,200 @@
+﻿@using Core 
+@{ 
+    ViewBag.Title = "操作日志_Index"; 
+    Layout = "~/Views/Shared/_Index_Layout.cshtml"; 
+} 
+
+<form style="" class="layui-form"> 
+    <div class="layui-input-inline"> 
+                    <input id='ModuleName' name='ModuleName' type="text" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.Sys_Log_ModuleName" class="layui-input" > 
+    </div> 
+    <div class="layui-input-inline"> 
+                    <input id='OperateName' name='OperateName' type="text" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.Sys_Log_OperateName" class="layui-input" > 
+    </div> 
+    <div class="layui-input-inline"> 
+                    <input id='OperateMemo' name='OperateMemo' type="text" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.Sys_Log_OperateMemo" class="layui-input" > 
+    </div> 
+    <div class="layui-input-inline"> 
+                    <input id='PubDate' name='PubDate' type="text" lay-verify="date" placeholder="@Resource.lang.Input  @Resource.lang.Sys_Log_PubDate" autocomplete="off" onclick="layui.laydate({ elem: this })" class="layui-input"> 
+    </div> 
+    @*<div class="layui-input-inline"> 
+                    <input id='AdminId' name='AdminId' type="text" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.Sys_Log_AdminId" class="layui-input" > 
+    </div> *@
+     <div class="layui-input-inline">
+        <select name="AdminId" ng-controller="AdminController">
+            <option value="">@Resource.lang.Select @Resource.lang.Sys_Log_AdminId</option>
+            <option ng-repeat="x in data" value="{{ x.Id}}">{{ x.RealName}}</option>
+        </select>
+    </div>
+    <div class="layui-input-inline"> 
+                    <input id='IP' name='IP' type="text" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.Sys_Log_IP" class="layui-input" > 
+    </div> 
+    <button class="layui-btn layui-btn-primary SearchBtn" id="btnSearch"><i class="layui-icon">&#xe651;</i>@Resource.lang.Search</button> 
+    <button class="layui-btn layui-btn-primary SearchBtn" type="reset" id="btnClear"><i class="layui-icon">&#xe641;</i>@Resource.lang.Reset</button> 
+</form> 
+<table class="layui-table"> 
+    <colgroup> 
+        <col width="20"> 
+        <col width="50"> 
+        <col width="150"> 
+        <col width="150"> 
+        <col width="150"> 
+        <col width="150"> 
+        <col width="150"> 
+        <col width="150"> 
+    </colgroup> 
+    <thead> 
+        <tr class=""> 
+            <th> 
+                <input id="checkOrNoAll" type="checkbox"> 
+            </th> 
+            <th>@Resource.lang.SortNo</th> 
+            <th>@Resource.lang.Sys_Log_ModuleName</th> 
+            <th>@Resource.lang.Sys_Log_OperateName</th> 
+            <th>@Resource.lang.Sys_Log_OperateMemo</th> 
+            <th>@Resource.lang.Sys_Log_PubDate</th> 
+            <th>@Resource.lang.Sys_Log_AdminId</th> 
+            <th>@Resource.lang.Sys_Log_IP</th> 
+        </tr> 
+    </thead> 
+    <tbody ng-controller="listController"> 
+        <tr ng-repeat="x in data" id="{{x.Id}}"> 
+            <td> 
+                <input id="check{{ x.RowNumber }}" value="{{x.Id}}" class="checkList" type="checkbox" name="checkList"> 
+            </td> 
+            <td style="text-align: center">{{ x.RowNumber}}</td> 
+            <td>{{x.ModuleName}}</td> 
+            <td>{{x.OperateName}}</td> 
+            <td>{{x.OperateMemo}}</td> 
+            <td>{{x.PubDate}}</td> 
+            <td>{{x.AdminId}}</td> 
+            <td>{{x.IP}}</td> 
+        </tr> 
+    </tbody> 
+</table> 
+<div id="paged" style="margin: 0px; padding: 0px; text-align: center"></div>  
+<script type="text/javascript">
+    function callBack(data) {
+        Alert(data);
+        if (data.Status == 1) {
+            layer.close(lIndex);
+            searchcount = 0;
+            paged(1);
+        }
+    }
+    function Alert(data) {
+        layer.msg(data.Memo, { icon: data.Status == 0 ? 2 : 1, time: 3 * 1000 });
+    }
+    function closeLayer() {
+        layer.close(lIndex);
+    }
+    var layer, lIndex, ids = [];
+    var paged, searchcount = 0, totalPages = 0;
+    layui.use(['form', 'layedit', 'laydate', 'element', 'laypage'], function () {
+        layer = layui.layer;
+    });
+    function CeatePage(pages, curr) {
+        layui.use(['laypage'], function () {
+            layer = layui.layer;
+            layui.laypage({
+                cont: 'paged'
+              , pages: pages //总页数 
+                , curr: curr
+                , groups: 5 //连续显示分页数 
+                  , skip: true
+                  , jump: function (obj, first) {
+                      var curr = obj.curr;
+                      paged(curr);
+                  }
+            , prev: '<em><</em>'
+            , next: '<em>></em>'
+            , first: '<em>@Resource.lang.FristPage</em>'
+            , last: '<em>@Resource.lang.LastPage</em>'
+            });
+        });
+    }
+    $(document).ready(function () {
+        paged(1);
+        $("#btnSearch").click(function () {
+            searchcount = 0;
+            paged(1);
+            return false;
+        });
+        $('#btnCreate').click(function () {
+            lIndex = layer.open({
+                type: 2,
+                title: '@Resource.lang.Create',
+                shadeClose: true,
+                shade: 0.3,
+                maxmin: true, //开启最大化最小化按钮 
+                area: ['893px', '600px'],
+                content: '@Url.Action("Create")'
+            });
+        });
+        $('#btnEdit').click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                lIndex = layer.open({
+                    type: 2,
+                    title: '@Resource.lang.Edit',
+                    shadeClose: true,
+                    shade: 0.3,
+                    maxmin: true, //开启最大化最小化按钮 
+                    area: ['893px', '600px'],
+                    content: '@Url.Action("Edit/")' + ids[0]
+                });
+            }
+        });
+        $("#btnDelete").click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                layer.confirm('@Resource.lang.tip_Do_Dell', {
+                    btn: ['@Resource.lang.OK', '@Resource.lang.Cancel'] //按钮 
+                }, function () {
+                    $.post('@Url.Action("Delete")', { id: ids.join(',') }, function (data) {
+                        callBack(data);
+                    }, 'json');
+                }, function () {
+                });
+            }
+        });
+    });
+    var myApp = angular.module("list", []);
+    myApp.controller('listController', function ($scope, $http) {
+        paged = $scope.GetData = function (page) {
+            var queryStr = $('form').serialize();
+            //alert(queryStr);  
+            if (searchcount == 1) {
+                searchcount++;
+            }
+            else {
+                $http.post('@Url.Action("GetList")', { page: page, queryStr: queryStr })
+                    .success(function (d) {
+                        $scope.data = d.rows;
+                        searchcount++;
+                        if (searchcount == 1) {
+                            CeatePage(d.pager.totalPages, 1);
+                        }
+                    });
+            }
+        };
+    });
+    myApp.controller('LogController', function ($scope, $http) {
+        $http.post('/Sys/Log/GetListAll')
+           .success(function (d) {
+               $scope.data = d.rows;
+           });
+    });
+    myApp.controller('AdminController', function ($scope, $http) {
+        $http.post('/sys/Admin/GetListall')
+           .success(function (d) {
+               $scope.data = d.rows;
+           });
+    });
+</script> 

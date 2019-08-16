@@ -1,0 +1,333 @@
+﻿@using Core
+@{ 
+    ViewBag.Title = " _Index";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml"; 
+}
+@Styles.Render("~/Content/css")
+@*<div style="padding-top: 10px;">
+    @MvcHtmlString.Create(printControl.PowerLinkBtn(@Url.Action("")))
+</div>
+<hr />*@
+<link href="~/lib/layui/font/iconfont.css" rel="stylesheet" />
+<link href="/Content/themes/default/easyui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.easyui.js"></script>
+<style type="text/css">
+    .layui-field-title {
+        border: 5px solid #F5F5F5;
+    }
+
+    .LogTree {
+        border-top: 1px solid #e2e2e2;
+        margin-top: 5px;
+    }
+
+    .LefInfo {
+        border-top: 5px solid #F2F2F2;
+    }
+
+    .ShoCont {
+        margin-top: 10px;
+        font-family: 黑体,隶书;
+    }
+
+    .sizeSty {
+        font-family: 宋体;
+    }
+    .mvctol {
+    margin:5px 0px 0px 5px;
+    }
+</style>
+<input type="hidden" value="" id="OperateId" />
+
+@*<div class="mvctool">
+    @MvcHtmlString.Create(printControl.PowerLinkBtn(@Url.Action("")))
+</div>*@
+<fieldset id="step1" class="layui-elem-field layui-field-title" style="float: left; margin-left: 5px; width: 20%;">
+    <div class="mvctol">
+        <a href="#" class="layui-btn layui-btn-primary  layui-btn-small" id="btnCreate"><i class="layui-icon">&#xe670;</i>新增</a>
+        <a href="#" class="layui-btn layui-btn-primary  layui-btn-small" id="btnEdit"><i class="layui-icon">&#xe670;</i>编辑</a>
+
+    </div>
+    <div style="padding: 5px;" class="LogTree">
+        <ul id="tt" class="easyui-tree" data-options="dnd:true">
+        </ul>
+    </div>
+    <div class="LefInfo" data-ng-controller="listController">
+        <p data-ng-repeat="x in data" class="ShoCont" style="color: #4D94BC;">{{x.Name}}</p>
+        <p data-ng-repeat="x in data" class="ShoCont">英文名称：<span class="sizeSty">{{x.EnName}}</span></p>
+        <p data-ng-repeat="x in data" class="ShoCont">显示：<span class="sizeSty">{{x.IsShow}}</span></p>
+        <p data-ng-repeat="x in data" class="ShoCont">链接：<span class="sizeSty">{{x.Url}}</span></p>
+        <p data-ng-repeat="x in data" class="ShoCont">排序：<span class="sizeSty">{{x.Sort}}</span></p>
+    </div>
+</fieldset>
+<fieldset id="step2" class="layui-elem-field layui-field-title" style="float: left; margin-left: 5px; width: 75%;">
+    <div class="mvctol">
+        <a href="#" class="layui-btn layui-btn-primary  layui-btn-small" id="btnOperateCreate"><i class="layui-icon">&#xe670;</i>新增操作</a>
+        <a href="#" class="layui-btn layui-btn-primary  layui-btn-small" id="btnOperateEdit"><i class="layui-icon">&#xe670;</i>编辑操作</a>
+        <a href="#" class="layui-btn layui-btn-primary  layui-btn-small" id="btnOperateDelete"><i class="layui-icon">&#xe670;</i>删除操作</a>
+    </div>
+    <table class="layui-table" style="width:100%" title="@Resource.lang.Sys_ModuleOperate">
+        <colgroup>
+            @*<col width="50">*@
+            <col width="20">
+            <col width="160">
+            <col width="160">
+            <col width="165">
+            <col width="165">
+            <col width="165">
+        </colgroup>
+        <thead>
+            <tr class="">
+                @*<th>@Resource.lang.SortNo</th>*@
+                <th>
+                    <input id="checkOrNoAll" type="checkbox">
+                </th>
+                <th>@Resource.lang.Sys_ModuleOperate_Name</th>
+                <th>@Resource.lang.Sys_ModuleOperate_KeyCode</th>
+                <th>@Resource.lang.Sys_ModuleOperate_IsBtn</th>
+                <th>@Resource.lang.Sys_ModuleOperate_Sort</th>
+                <th>@Resource.lang.Sys_ModuleOperate_Icon</th>
+            </tr>
+        </thead>
+        <tbody ng-controller="OperateListController" ng-click="GetOperateId(this.id)">
+            <tr ng-repeat="y in data">
+                <td>
+                    <input id="check{{ y.RowNumber }}" value="{{y.Id}}" class="checkList" type="checkbox" name="checkList">
+                </td>
+                @*<td style="text-align: center">{{ x.RowNumber}}</td>*@
+                <td hidden>{{y.Id}}</td>
+                <td>{{y.Name}}</td>
+                <td>{{y.KeyCode}}</td>
+                <td>{{y.IsBtn}}</td>
+                <td>{{y.Sort}}</td>
+                <td><span class="layui-icon">{{y.Icon}}</span></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+<div id="paged" style="margin: 0px; padding: 0px; text-align: center"></div>
+<script type="text/javascript">
+    function GetOperateId(id) {
+        //myApp.controller('OperateListController', function ($scope, $http) {
+        //    $http.post('/Sys/Module/GetOperateList'), { ModuleID:id }
+        //       .success(function (d) {
+        //           $scope.data = d.rows;
+        //       });
+        //});
+    }
+    //定义全局变量  GetOperateF 在angularjs中使用
+    var GetOperateF;
+    var LeftData;
+
+    var MouId = "";
+    var MouName = "";
+    var Num = 2;//判断节点
+    function GetOperate(id) {
+        //调用方法
+        GetOperateF(id);
+    }
+    function GetLeft(id) {
+        LeftData(id);
+    }
+    function callBack(data) {
+        Alert(data);
+        if (data.Status == 1) {
+            layer.close(lIndex);
+            LoadTree();
+        }
+    }
+    function callBack_1(data) {
+        Alert(data);
+        if (data.Status == 1) {
+            layer.close(lIndex);
+            GetOperate(MouId);
+        }
+    }
+    function Alert(data) {
+        layer.msg(data.Memo, { icon: data.Status == 0 ? 2 : 1, time: 3 * 1000 });
+    }
+    function closeLayer() {
+        layer.close(lIndex);
+    }
+    var layer, lIndex, ids = [];
+    var paged, searchcount = 0, totalPages = 0;
+    layui.use(['form', 'layedit', 'laydate', 'element', 'laypage'], function () {
+        layer = layui.layer;
+    });
+
+    function CeatePage(pages, curr) {
+        layui.use(['laypage'], function () {
+            layer = layui.layer;
+            layui.laypage({
+                cont: 'paged'
+              , pages: pages //总页数 
+                , curr: curr
+                , groups: 5 //连续显示分页数 
+                  , skip: true
+                  , jump: function (obj, first) {
+                      var curr = obj.curr;
+                      paged(curr);
+                  }
+            , prev: '<em><</em>'
+            , next: '<em>></em>'
+            , first: '<em>@Resource.lang.FristPage</em>'
+            , last: '<em>@Resource.lang.LastPage</em>'
+            });
+        });
+    }
+    function LoadTree()
+    {
+        $('#tt').tree({
+            lines: true,
+            animate: true,
+            method: "post",
+            url: '/module/GetMenuList_1/',
+            onlyleafcheck: true,
+            onClick: function (node) {
+                if ($('#tt').tree('isLeaf', node.target)) {
+                    Num = 1;
+                } else {
+                    Num = 2;
+                }
+                MouId = node.id;
+                MouName = node.text;
+                GetLeft(node.id);
+                GetOperate(node.id);
+            }
+        });
+    }
+    $(document).ready(function () {
+        $(".LogTree").height(window.innerHeight * 2 / 3 - 20);
+        $("#step1").height(window.innerHeight - 45);
+        $("#step2").height(window.innerHeight - 45);
+        //paged(1);
+        LoadTree();
+        $("#btnSearch").click(function () {
+            searchcount = 0;
+            paged(1);
+            return false;
+        });
+        $('#btnCreate').click(function () {
+            if (Num == 1) {
+                layer.msg('最后一项不允许再进行添加子项！');
+            } else if (Num == 2) {
+                lIndex = layer.open({
+                    type: 2,
+                    title: '@Resource.lang.Create',
+                    shadeClose: true,
+                    shade: 0.3,
+                    maxmin: true, //开启最大化最小化按钮 
+                    area: ['893px', '600px'],
+                    content: '/Sys/module/Create?id=' + MouId
+                });
+            }
+        });
+        $('#btnEdit').click(function () {
+            if (!MouId) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                lIndex = layer.open({
+                    type: 2,
+                    title: '@Resource.lang.Edit',
+                    shadeClose: true,
+                    shade: 0.3,
+                    maxmin: true, //开启最大化最小化按钮 
+                    area: ['893px', '600px'],
+                    content: '@Url.Action("Edit/")' + MouId
+                });
+            }
+        });
+        $("#btnDelete").click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                layer.confirm('@Resource.lang.tip_Do_Dell', {
+                    btn: ['@Resource.lang.OK', '@Resource.lang.Cancel'] //按钮 
+                }, function () {
+                    $.post('@Url.Action("Delete")', { id: ids.join(',') }, function (data) {
+                        callBack(data);
+                    }, 'json');
+                }, function () {
+                });
+            }
+        });
+
+        $("#btnOperateCreate").click(function () {
+            if (Num == 1) {
+                lIndex = layer.open({
+                    type: 2,
+                    title: '@Resource.lang.Create',
+                    shadeClose: true,
+                    shade: 0.3,
+                    maxmin: true, //开启最大化最小化按钮
+                    area: ['893px', '600px'],
+                    content: '@Url.Action("OperateCreate/")' + MouId
+                });
+            } else {
+                layer.msg('请选择菜单！');
+            }
+
+        });
+        $("#btnOperateEdit").click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('您未选中任何数据');
+            }
+            else {
+                lIndex = layer.open({
+                    type: 2,
+                    title: '@Resource.lang.Edit',
+                    shadeClose: true,
+                    shade: 0.3,
+                    maxmin: true, //开启最大化最小化按钮
+                    area: ['893px', '600px'],
+                    content: '@Url.Action("OperateEdit/")' + ids[0]
+                });
+            }
+        });
+        $("#btnOperateDelete").click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('您未选中任何数据');
+            }
+            else {
+                layer.confirm('@Resource.lang.tip_Do_Dell', {
+                    btn: ['@Resource.lang.OK', '@Resource.lang.Cancel'] //按钮
+                }, function () {
+                    $.post('@Url.Action("OperateDelete")', { id: ids.join(',') }, function (data) {
+                        callBack(data);
+                    }, 'json');
+                }, function () {
+
+                });
+            }
+        });
+
+    });
+    //定义全局module
+    var myApp = angular.module("list", []);
+    myApp.controller('listController', function ($scope, $http) {
+
+        LeftData = $scope.GetOperate = function (id) {
+            $http.post('/Sys/Module/NewGetOperateList_1', { Id: id })
+                   .success(function (d) {
+                       $scope.data = d.rows;
+                   });
+        }
+
+    });
+    //调用的方法不可在function中定义 在function中定义GetOperateF 直接调用就好
+    myApp.controller('OperateListController', function ($scope, $http, $sce) {
+        GetOperateF = $scope.GetOperate = function (id) {
+            $http.post('/Sys/Module/NewGetOperateList', { ModuleID: id })
+                   .success(function (d) {
+                       //var str = "&#x" + d.rows[0].Icon;
+                       $scope.data = d.rows;
+                       //$scope.detailDesc = $sce.trustAsHtml(str);
+                   });
+        }
+    });
+</script>

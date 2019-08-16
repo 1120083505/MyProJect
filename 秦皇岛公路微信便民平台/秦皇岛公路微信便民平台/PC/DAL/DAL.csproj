@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{517C409C-C7AA-43C0-9DE8-BDBE968E9315}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DAL</RootNamespace>
+    <AssemblyName>DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SubSonic">
+      <HintPath>..\mvcProject\bin\SubSonic.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\mvcProject\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Version.cs" />
+    <Compile Include="Assist_FileManagement.cs" />
+    <Compile Include="Assist_Honor.cs" />
+    <Compile Include="Assist_News.cs" />
+    <Compile Include="Assist_Regulations.cs" />
+    <Compile Include="Assist_Resources.cs" />
+    <Compile Include="CK_Warehouse.cs" />
+    <Compile Include="CRM_UserInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SPs.cs" />
+    <Compile Include="SP_BankAccount.cs" />
+    <Compile Include="SP_Customer.cs" />
+    <Compile Include="SP_SaleMain.cs" />
+    <Compile Include="SP_ShangPin.cs" />
+    <Compile Include="SP_ShangPinInfo.cs" />
+    <Compile Include="SP_sptype.cs" />
+    <Compile Include="Sys_Admin.cs" />
+    <Compile Include="Sys_Custody.cs" />
+    <Compile Include="Sys_Dictionaries.cs" />
+    <Compile Include="Sys_Log.cs" />
+    <Compile Include="Sys_Module.cs" />
+    <Compile Include="Sys_ModuleOperate.cs" />
+    <Compile Include="Sys_Power.cs" />
+    <Compile Include="Sys_Rating.cs" />
+    <Compile Include="Sys_Role.cs" />
+    <Compile Include="Sys_Test.cs" />
+    <Compile Include="VHighWayRoad.cs" />
+    <Compile Include="Vlog.cs" />
+    <Compile Include="VModuleOperate.cs" />
+    <Compile Include="VSP_BankAccount.cs" />
+    <Compile Include="VSP_SaleMain.cs" />
+    <Compile Include="VSP_ShangPin.cs" />
+    <Compile Include="VSP_ShangPinInfo.cs" />
+    <Compile Include="VSys_Admin.cs" />
+    <Compile Include="VWeChat_ActivityInfo.cs" />
+    <Compile Include="VWeChat_DrunkenRoad.cs" />
+    <Compile Include="VWeChat_HighwayDynamic.cs" />
+    <Compile Include="VWeChat_HighwayNous.cs" />
+    <Compile Include="VWeChat_RoadInformation.cs" />
+    <Compile Include="VWeChat_TwoLearnTodo.cs" />
+    <Compile Include="VWeChat_ZhengCeFagui.cs" />
+    <Compile Include="WeChat_ActivityInfo.cs" />
+    <Compile Include="WeChat_DrunkenRoad.cs" />
+    <Compile Include="WeChat_HighwayDynamic.cs" />
+    <Compile Include="WeChat_HighwayNous.cs" />
+    <Compile Include="WeChat_HighwayRoad.cs" />
+    <Compile Include="WeChat_HighWayRoadType.cs" />
+    <Compile Include="WeChat_PublicReport.cs" />
+    <Compile Include="WeChat_RoadInformation.cs" />
+    <Compile Include="WeChat_RoadVoteInfo.cs" />
+    <Compile Include="WeChat_TwoLearnTodo.cs" />
+    <Compile Include="WeChat_ZhengCeFagui.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

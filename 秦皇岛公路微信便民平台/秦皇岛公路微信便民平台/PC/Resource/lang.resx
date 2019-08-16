@@ -1,0 +1,1314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="tip_SelectOne" xml:space="preserve">
+    <value>只能选择一条进行编辑</value>
+  </data>
+
+  <data name="Welcome" xml:space="preserve">
+    <value>欢迎</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>登陆</value>
+  </data>
+  <data name="SortNo" xml:space="preserve">
+    <value>序</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>请选择</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>请输入</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>查找</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>详情</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>详情</value>
+  </data>
+  <data name="AddDisease" xml:space="preserve">
+    <value>添加病害</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="Enter" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Attendance" xml:space="preserve">
+    <value>考勤</value>
+  </data>
+  <data name="Issued" xml:space="preserve">
+    <value>下发</value>
+  </data>
+  <data name="Startbh" xml:space="preserve">
+    <value>开始任务</value>
+  </data>
+  <data name="ToExamine" xml:space="preserve">
+    <value>审核</value>
+  </data>
+  <data name="FristPage" xml:space="preserve">
+    <value>首</value>
+  </data>
+  <data name="LastPage" xml:space="preserve">
+    <value>末</value>
+  </data>
+  <data name="ReturnBack" xml:space="preserve">
+    <value>还原</value>
+  </data>
+  <data name="DownLoad" xml:space="preserve">
+    <value>下载</value>
+  </data>
+  <data name="Outgoing" xml:space="preserve">
+    <value>出库</value>
+  </data>
+  <data name="AddMap" xml:space="preserve">
+    <value>新增地图</value>
+  </data>
+  <data name="EditMap" xml:space="preserve">
+    <value>编辑地图</value>
+  </data>
+  <data name="SeatchMap" xml:space="preserve">
+    <value>综合查询</value>
+  </data>
+  <data name="Boos" xml:space="preserve">
+    <value>总局</value>
+  </data>
+  <data name="tip_OperateSucceed" xml:space="preserve">
+    <value>操作成功</value>
+  </data>
+  <data name="tip_OperateFail" xml:space="preserve">
+    <value>操作失败</value>
+  </data>
+  <data name="tip_NoSelect" xml:space="preserve">
+    <value>未选中任何数据</value>
+  </data>
+  <data name="tip_Do_Dell" xml:space="preserve">
+    <value>确定删除?</value>
+  </data>
+  <data name="tip_SearchCount" xml:space="preserve">
+    <value>共查到 {0} 条数据</value>
+  </data>
+  <data name="CountCustodyName" xml:space="preserve">
+    <value>管养单位</value>
+  </data>
+  <data name="CountRouteNo" xml:space="preserve">
+    <value>路线编号</value>
+  </data>
+  <data name="CountName" xml:space="preserve">
+    <value>路线名称</value>
+  </data>
+  <data name="CountRouteStarEnd" xml:space="preserve">
+    <value>路线起止桩号</value>
+  </data>
+  <data name="CountSectionStarEnd" xml:space="preserve">
+    <value>路段</value>
+  </data>
+  <data name="CountStarPoint" xml:space="preserve">
+    <value>起始点</value>
+  </data>
+  <data name="CountEndPoint" xml:space="preserve">
+    <value>终止点</value>
+  </data>
+  <data name="CountInsDate" xml:space="preserve">
+    <value>巡查日期</value>
+  </data>
+  <data name="CountWeather" xml:space="preserve">
+    <value>天气</value>
+  </data>
+  <data name="CountPaveMentType" xml:space="preserve">
+    <value>病害类型</value>
+  </data>
+  <data name="CountDamTypeName" xml:space="preserve">
+    <value>病害名称</value>
+  </data>
+  <data name="CountDegree" xml:space="preserve">
+    <value>损坏程度</value>
+  </data>
+  <data name="CountRange" xml:space="preserve">
+    <value>数量</value>
+  </data>
+  <data name="CountCompany" xml:space="preserve">
+    <value>数量单位</value>
+  </data>
+  <data name="CountDisLocation" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="CountMehtod" xml:space="preserve">
+    <value>处置及修复方法</value>
+  </data>
+
+
+  <data name="CountCounty" xml:space="preserve">
+    <value>指标\县市</value>
+  </data>
+  <data name="CountHighway" xml:space="preserve">
+    <value>公路</value>
+  </data>
+  <data name="CountTeachGrade" xml:space="preserve">
+    <value>其中按技术等级分	</value>
+  </data>
+  <data name="CountAdminleave" xml:space="preserve">
+    <value>其中按技术等级分	</value>
+  </data>
+
+
+  <data name="CountSumCustodyName" xml:space="preserve">
+    <value>管养单位</value>
+  </data>
+  <data name="CountSumRouteNo" xml:space="preserve">
+    <value>路线编号</value>
+  </data>
+  <data name="CountSumName" xml:space="preserve">
+    <value>路线名称</value>
+  </data>
+  <data name="CountSumRouteStarEnd" xml:space="preserve">
+    <value>项目起止桩号	</value>
+  </data>
+  <data name="CountSumDamTypeName" xml:space="preserve">
+    <value>病害名称</value>
+  </data>
+  <data name="CountSumCompany" xml:space="preserve">
+    <value>单位</value>
+  </data>
+  <data name="CountSumRange" xml:space="preserve">
+    <value>病害数量	</value>
+  </data>
+  <data name="CountMehtod" xml:space="preserve">
+    <value>处置及修复方法</value>
+  </data>
+  <data name="CountSumPrice" xml:space="preserve">
+    <value>定额综合单价</value>
+  </data>
+  <data name="CountSumCountPrice" xml:space="preserve">
+    <value>工程造价</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>上报</value>
+  </data>
+
+  <data name="PatrolRecord" xml:space="preserve">
+    <value>巡查列表</value>
+  </data>
+  <data name="DiseaseRecord" xml:space="preserve">
+    <value>病害列表</value>
+  </data>
+  <data name="BeforeRepair" xml:space="preserve">
+    <value>修复前</value>
+  </data>
+  <data name="RepairTime" xml:space="preserve">
+    <value>修复时</value>
+  </data>
+  <data name="AfterRepair" xml:space="preserve">
+    <value>修复后</value>
+  </data>
+
+ 
+
+
+
+  <data name="Sys_Admin" xml:space='preserve'> 
+ <value> 管理员</value> 
+ </data>
+  <data name="Sys_Admin_Id" xml:space='preserve'> 
+ <value> Id</value> 
+ </data>
+  <data name="Sys_Admin_CusName" xml:space='preserve'> 
+ <value>管养单位</value> 
+ </data>
+  <data name="Sys_Admin_LoginName" xml:space='preserve'> 
+ <value>登录名称</value> 
+ </data>
+  <data name="Sys_Admin_LoginPwd" xml:space='preserve'> 
+ <value>密码</value> 
+ </data>
+  <data name="Sys_Admin_RealName" xml:space='preserve'> 
+ <value>真实姓名</value> 
+ </data>
+  <data name="Sys_Admin_IsLogin" xml:space='preserve'> 
+ <value>登陆状态</value> 
+ </data>
+  <data name="Sys_Admin_RoleId" xml:space='preserve'> 
+ <value>角色名称</value> 
+ </data>
+  <data name="Sys_Admin_Email" xml:space='preserve'> 
+ <value>Email</value> 
+ </data>
+  <data name="Sys_Admin_PubDate" xml:space='preserve'> 
+ <value> PubDate</value> 
+ </data>
+  <data name="Sys_Admin_PowerType" xml:space='preserve'> 
+ <value>权限类别</value> 
+ </data>
+  <data name="Sys_Admin_Address" xml:space='preserve'> 
+ <value>地址</value> 
+ </data>
+  <data name="Sys_Admin_Phone" xml:space='preserve'> 
+ <value>联系电话</value> 
+ </data>
+  <data name="Sys_Role" xml:space='preserve'> 
+ <value> 角色</value> 
+ </data>
+  <data name="Sys_Role_Id" xml:space='preserve'> 
+ <value> Id</value> 
+ </data>
+  <data name="Sys_Role_Name" xml:space='preserve'> 
+ <value>角色名称</value> 
+ </data>
+  <data name="Sys_Role_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="Sys_Role_PubDate" xml:space='preserve'> 
+ <value>操作日期</value> 
+ </data>
+  <data name="Sys_Module" xml:space='preserve'> 
+ <value>Sys_Module</value> 
+ </data>
+  <data name="Sys_Module_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="Sys_Module_Name" xml:space='preserve'> 
+ <value>模块名称</value> 
+ </data>
+  <data name="Sys_Module_EnName" xml:space='preserve'> 
+ <value>英文名称</value> 
+ </data>
+  <data name="Sys_Module_ParentId" xml:space='preserve'> 
+ <value>父级菜单ID</value> 
+ </data>
+  <data name="Sys_Module_Url" xml:space='preserve'> 
+ <value>链接</value> 
+ </data>
+  <data name="Sys_Module_Icon" xml:space='preserve'> 
+ <value>图标样式</value> 
+ </data>
+  <data name="Sys_Module_IsLast" xml:space='preserve'> 
+ <value>是否为最后</value> 
+ </data>
+  <data name="Sys_Module_Enable" xml:space='preserve'> 
+ <value>是否启用</value> 
+ </data>
+  <data name="Sys_Module_Sort" xml:space='preserve'> 
+ <value>排序</value> 
+ </data>
+  <data name="Sys_Module_IsShow" xml:space='preserve'> 
+ <value>显示</value> 
+ </data>
+  <data name="Sys_Module_AdminId" xml:space='preserve'> 
+ <value>管理员ID</value> 
+ </data>
+  <data name="Sys_Module_PubDate" xml:space='preserve'> 
+ <value>操作时间</value> 
+ </data>
+  <data name="Sys_Module_Memo" xml:space='preserve'> 
+ <value>说明</value> 
+ </data>
+  <data name="Sys_Module" xml:space='preserve'> 
+ <value>系统模块</value> 
+ </data>
+  <data name="Sys_Module_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="Sys_Module_Name" xml:space='preserve'> 
+ <value>模块名称</value> 
+ </data>
+  <data name="Sys_Module_EnName" xml:space='preserve'> 
+ <value>英文名称</value> 
+ </data>
+  <data name="Sys_Module_ParentId" xml:space='preserve'> 
+ <value>父级菜单ID</value> 
+ </data>
+  <data name="Sys_Module_Url" xml:space='preserve'> 
+ <value>链接</value> 
+ </data>
+  <data name="Sys_Module_Icon" xml:space='preserve'> 
+ <value>图标样式</value> 
+ </data>
+  <data name="Sys_Module_IsLast" xml:space='preserve'> 
+ <value>是否为最后</value> 
+ </data>
+  <data name="Sys_Module_Enable" xml:space='preserve'> 
+ <value>是否启用</value> 
+ </data>
+  <data name="Sys_Module_Sort" xml:space='preserve'> 
+ <value>排序</value> 
+ </data>
+  <data name="Sys_Module_IsShow" xml:space='preserve'> 
+ <value>显示</value> 
+ </data>
+  <data name="Sys_Module_AdminId" xml:space='preserve'> 
+ <value>管理员ID</value> 
+ </data>
+  <data name="Sys_Module_PubDate" xml:space='preserve'> 
+ <value>操作时间</value> 
+ </data>
+  <data name="Sys_Module_Memo" xml:space='preserve'> 
+ <value>说明</value> 
+ </data>
+  <data name="Sys_ModuleOperate" xml:space='preserve'> 
+ <value>Sys_ModuleOperate</value> 
+ </data>
+  <data name="Sys_ModuleOperate_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="Sys_ModuleOperate_Name" xml:space='preserve'> 
+ <value>Name</value> 
+ </data>
+  <data name="Sys_ModuleOperate_KeyCode" xml:space='preserve'> 
+ <value>KeyCode</value> 
+ </data>
+  <data name="Sys_ModuleOperate_ModuleId" xml:space='preserve'> 
+ <value>ModuleId</value> 
+ </data>
+  <data name="Sys_ModuleOperate_Sort" xml:space='preserve'> 
+ <value>排序</value> 
+ </data>
+  <data name="Sys_ModuleOperate_Icon" xml:space='preserve'> 
+ <value>Icon</value> 
+ </data>
+  <data name="Sys_ModuleOperate_IsBtn" xml:space='preserve'> 
+ <value>是否生成按钮</value> 
+ </data>
+  <data name="Sys_Dictionaries" xml:space='preserve'> 
+ <value>Sys_Dictionaries</value> 
+ </data>
+  <data name="Sys_Dictionaries_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="Sys_Dictionaries_LimitLoginCount" xml:space='preserve'> 
+ <value>限制登录次数</value> 
+ </data>
+  <data name="Sys_Dictionaries_LimitLoginTime" xml:space='preserve'> 
+ <value>限制登录时长</value> 
+ </data>
+  <data name="Sys_Dictionaries_Ident" xml:space='preserve'> 
+ <value>判断是否限制IP登录标识(0、同Ip限制、错误次数)</value> 
+ </data>
+  <data name="Sys_Log" xml:space='preserve'> 
+ <value>操作日志</value> 
+ </data>
+  <data name="Sys_Log_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="Sys_Log_ModuleName" xml:space='preserve'> 
+ <value>模块名称</value> 
+ </data>
+  <data name="Sys_Log_OperateName" xml:space='preserve'> 
+ <value>操作名称</value> 
+ </data>
+  <data name="Sys_Log_OperateMemo" xml:space='preserve'> 
+ <value>操作说明</value> 
+ </data>
+  <data name="Sys_Log_PubDate" xml:space='preserve'> 
+ <value>操作时间</value> 
+ </data>
+  <data name="Sys_Log_AdminId" xml:space='preserve'> 
+ <value>操作人</value> 
+ </data>
+  <data name="Sys_Log_IP" xml:space='preserve'> 
+ <value>IP</value> 
+ </data>
+
+  <data name="App_Version" xml:space='preserve'> 
+ <value>APP版本中心</value> 
+ </data>
+  <data name="App_Version_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="App_Version_Code" xml:space='preserve'> 
+ <value>版本号</value> 
+ </data>
+  <data name="App_Version_Url" xml:space='preserve'> 
+ <value>Url</value> 
+ </data>
+  <data name="App_Version_Memo" xml:space='preserve'> 
+ <value>介绍</value> 
+ </data>
+  <data name="App_Version_PubDate" xml:space='preserve'> 
+ <value>发布时间</value> 
+ </data>
+  <data name="App_Version_AdminId" xml:space='preserve'> 
+ <value>发布人</value> 
+ </data>
+  <data name="Sys_Custody" xml:space='preserve'> 
+ <value>客户单位</value> 
+ </data>
+  <data name="Sys_Custody_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="Sys_Custody_Name" xml:space='preserve'> 
+ <value>单位名称</value> 
+ </data>
+  <data name="Sys_Custody_Grade" xml:space='preserve'> 
+ <value>等级</value> 
+ </data>
+  <data name="Sys_Custody_InfoId" xml:space='preserve'> 
+ <value>负责人姓名</value> 
+ </data>
+  <data name="Sys_Custody_Phone" xml:space='preserve'> 
+ <value>联系电话</value> 
+ </data>
+  <data name="Sys_Custody_FaxPhone" xml:space='preserve'> 
+ <value>传真电话</value> 
+ </data>
+  <data name="Sys_Custody_Email" xml:space='preserve'> 
+ <value>Email</value> 
+ </data>
+  <data name="Sys_Custody_Address" xml:space='preserve'> 
+ <value>单位地址</value> 
+ </data>
+  <data name="Sys_Custody_Discount" xml:space='preserve'> 
+ <value>折扣</value> 
+ </data>
+  <data name="Sys_Custody_Afforested" xml:space='preserve'> 
+ <value>绿化面积(㎡)</value> 
+ </data>
+  <data name="Sys_Custody_House" xml:space='preserve'> 
+ <value>房屋(㎡/栋)</value> 
+ </data>
+  <data name="Sys_Custody_Maintenance" xml:space='preserve'> 
+ <value>养护机械(台)</value> 
+ </data>
+  <data name="Sys_Custody_Fishpond" xml:space='preserve'> 
+ <value>鱼塘(㎡)</value> 
+ </data>
+  <data name="Sys_Custody_Vegetable" xml:space='preserve'> 
+ <value>菜园(㎡)</value> 
+ </data>
+  <data name="Sys_Custody_Garden" xml:space='preserve'> 
+ <value>花园(㎡)</value> 
+ </data>
+  <data name="Sys_Custody_Orchard" xml:space='preserve'> 
+ <value>果园(㎡)</value> 
+ </data>
+  <data name="Sys_Custody_Beast" xml:space='preserve'> 
+ <value>禽兽栏(㎡)</value> 
+ </data>
+  <data name="Sys_Custody_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="Sys_Custody_AdminId" xml:space='preserve'> 
+ <value>AdminId</value> 
+ </data>
+  <data name="Sys_Custody_PubDate" xml:space='preserve'> 
+ <value>PubDate</value> 
+ </data>
+  <data name="Sys_Custody_EditAdminId" xml:space='preserve'> 
+ <value>最后修改人</value> 
+ </data>
+  <data name="Sys_Custody_EditPubDate" xml:space='preserve'> 
+ <value>最后修改时间</value> 
+ </data>
+  <data name="Sys_Rating" xml:space='preserve'> 
+ <value>等级说明</value> 
+ </data>
+  <data name="Sys_Rating_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="Sys_Rating_Type" xml:space='preserve'> 
+ <value>类别</value> 
+ </data>
+  <data name="Sys_Rating_Name" xml:space='preserve'> 
+ <value>名称</value> 
+ </data>
+  <data name="Sys_Rating_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="Sys_Rating_AdminId" xml:space='preserve'> 
+ <value>AdminId</value> 
+ </data>
+  <data name="Sys_Rating_PubDate" xml:space='preserve'> 
+ <value>PubDate</value> 
+ </data>
+  <data name="Sys_Rating_EditAdminId" xml:space='preserve'> 
+ <value>EditAdminId</value> 
+ </data>
+  <data name="Sys_Rating_EditPubDate" xml:space='preserve'> 
+ <value>EditPubDate</value> 
+ </data>
+  <data name="Sys_Traffic" xml:space='preserve'> 
+ <value>交通观测站</value> 
+ </data>
+  <data name="Sys_Traffic_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="Sys_Traffic_Num" xml:space='preserve'> 
+ <value>编号</value> 
+ </data>
+  <data name="Sys_Traffic_Name" xml:space='preserve'> 
+ <value>名称</value> 
+ </data>
+  <data name="Sys_Traffic_CustodyId" xml:space='preserve'> 
+ <value>管养单位</value> 
+ </data>
+  <data name="Sys_Traffic_RouteId" xml:space='preserve'> 
+ <value>路线</value> 
+ </data>
+  <data name="Sys_Traffic_PileNo" xml:space='preserve'> 
+ <value>桩号</value> 
+ </data>
+  <data name="Sys_Traffic_Mileage" xml:space='preserve'> 
+ <value>观测里程</value> 
+ </data>
+  <data name="Sys_Traffic_Lane" xml:space='preserve'> 
+ <value>车道数</value> 
+ </data>
+  <data name="Sys_Traffic_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="Sys_Traffic_AdminId" xml:space='preserve'> 
+ <value>AdminId</value> 
+ </data>
+  <data name="Sys_Traffic_PubDate" xml:space='preserve'> 
+ <value>PubDate</value> 
+ </data>
+  <data name="Sys_Traffic_EditAdminId" xml:space='preserve'> 
+ <value>EditAdminId</value> 
+ </data>
+  <data name="Sys_Traffic_EditPubDate" xml:space='preserve'> 
+ <value>EditPubDate</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo" xml:space='preserve'> 
+ <value>两学一做</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo_Title" xml:space='preserve'> 
+ <value>标题</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo_Conetent" xml:space='preserve'> 
+ <value>内容</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo_PubDate" xml:space='preserve'> 
+ <value>录入时间</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo_EditAdminId" xml:space='preserve'> 
+ <value>修改人</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo_EditPubDate" xml:space='preserve'> 
+ <value>修改时间</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>
+  <data name="WeChat_TwoLearnTodo_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+<data name="WeChat_ZhengCeFagui" xml:space='preserve'> 
+ <value>政策法规</value> 
+ </data>  
+<data name="WeChat_ZhengCeFagui_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>  
+<data name="WeChat_ZhengCeFagui_Title" xml:space='preserve'> 
+ <value>标题</value> 
+ </data>  
+<data name="WeChat_ZhengCeFagui_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>  
+<data name="WeChat_ZhengCeFagui_Conetent" xml:space='preserve'> 
+ <value>内容</value> 
+ </data>  
+<data name="WeChat_ZhengCeFagui_PubDate" xml:space='preserve'> 
+ <value>录入时间</value> 
+ </data>  
+<data name="WeChat_ZhengCeFagui_EditAdminId" xml:space='preserve'> 
+ <value>修改人</value> 
+ </data>  
+<data name="WeChat_ZhengCeFagui_EditPubDate" xml:space='preserve'> 
+ <value>修改时间</value> 
+ </data>  
+<data name="WeChat_ZhengCeFagui_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>  
+<data name="WeChat_ZhengCeFagui_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>  
+<data name="WeChat_ZhengCeFagui_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>  
+<data name="WeChat_ZhengCeFagui_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+<data name="WeChat_HighwayNous" xml:space='preserve'> 
+ <value>公路常识</value> 
+ </data>  
+<data name="WeChat_HighwayNous_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>  
+<data name="WeChat_HighwayNous_Title" xml:space='preserve'> 
+ <value>标题</value> 
+ </data>  
+<data name="WeChat_HighwayNous_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>  
+<data name="WeChat_HighwayNous_Conetent" xml:space='preserve'> 
+ <value>内容</value> 
+ </data>  
+<data name="WeChat_HighwayNous_PubDate" xml:space='preserve'> 
+ <value>录入时间</value> 
+ </data>  
+<data name="WeChat_HighwayNous_EditAdminId" xml:space='preserve'> 
+ <value>修改人</value> 
+ </data>  
+<data name="WeChat_HighwayNous_EditPubDate" xml:space='preserve'> 
+ <value>修改时间</value> 
+ </data>  
+<data name="WeChat_HighwayNous_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>  
+<data name="WeChat_HighwayNous_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>  
+<data name="WeChat_HighwayNous_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>  
+<data name="WeChat_HighwayNous_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+<data name="WeChat_HighwayDynamic" xml:space='preserve'> 
+ <value>公路动态</value> 
+ </data>  
+<data name="WeChat_HighwayDynamic_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>  
+<data name="WeChat_HighwayDynamic_Title" xml:space='preserve'> 
+ <value>标题</value> 
+ </data>  
+<data name="WeChat_HighwayDynamic_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>  
+<data name="WeChat_HighwayDynamic_Conetent" xml:space='preserve'> 
+ <value>内容</value> 
+ </data>  
+<data name="WeChat_HighwayDynamic_PubDate" xml:space='preserve'> 
+ <value>录入时间</value> 
+ </data>  
+<data name="WeChat_HighwayDynamic_EditAdminId" xml:space='preserve'> 
+ <value>修改人</value> 
+ </data>  
+<data name="WeChat_HighwayDynamic_EditPubDate" xml:space='preserve'> 
+ <value>修改时间</value> 
+ </data>  
+<data name="WeChat_HighwayDynamic_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>  
+<data name="WeChat_HighwayDynamic_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>  
+<data name="WeChat_HighwayDynamic_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>  
+<data name="WeChat_HighwayDynamic_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+  <data name="WeChat_PublicReport" xml:space='preserve'> 
+ <value>公众上报</value> 
+ </data>
+  <data name="WeChat_PublicReport_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="WeChat_PublicReport_Location" xml:space='preserve'> 
+ <value>位置</value> 
+ </data>
+  <data name="WeChat_PublicReport_LngLat" xml:space='preserve'> 
+ <value>经纬度</value> 
+ </data>
+  <data name="WeChat_PublicReport_Memo" xml:space='preserve'> 
+ <value>情况描述</value> 
+ </data>
+  <data name="WeChat_PublicReport_ReportPerson" xml:space='preserve'> 
+ <value>上报人</value> 
+ </data>
+  <data name="WeChat_PublicReport_Telephone" xml:space='preserve'> 
+ <value>联系方式</value> 
+ </data>
+  <data name="WeChat_PublicReport_Pubdate" xml:space='preserve'> 
+ <value>上传时间</value> 
+ </data>
+  <data name="WeChat_PublicReport_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="WeChat_PublicReport_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>
+  <data name="WeChat_PublicReport_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad" xml:space='preserve'> 
+ <value>醉美公路</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_RoadName" xml:space='preserve'> 
+ <value>公路名称</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_RoadNum" xml:space='preserve'> 
+ <value>公路编号</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_RoadVotes" xml:space='preserve'> 
+ <value>公路得票数</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_RoadMemo" xml:space='preserve'> 
+ <value>公路简介</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_RoadState" xml:space='preserve'> 
+ <value>状态</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_Pubdate" xml:space='preserve'> 
+ <value>创建时间</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_EditAdminId" xml:space='preserve'> 
+ <value>修改人</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_EditPubDate" xml:space='preserve'> 
+ <value>修改时间</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>
+  <data name="WeChat_DrunkenRoad_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+  <data name="WeChat_RoadInformation" xml:space='preserve'> 
+ <value>路况信息</value> 
+ </data>
+  <data name="WeChat_RoadInformation_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="WeChat_RoadInformation_Title" xml:space='preserve'> 
+ <value>标题</value> 
+ </data>
+  <data name="WeChat_RoadInformation_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>
+  <data name="WeChat_RoadInformation_Conetent" xml:space='preserve'> 
+ <value>内容</value> 
+ </data>
+  <data name="WeChat_RoadInformation_PubDate" xml:space='preserve'> 
+ <value>录入时间</value> 
+ </data>
+  <data name="WeChat_RoadInformation_EditAdminId" xml:space='preserve'> 
+ <value>修改人</value> 
+ </data>
+  <data name="WeChat_RoadInformation_EditPubDate" xml:space='preserve'> 
+ <value>修改时间</value> 
+ </data>
+  <data name="WeChat_RoadInformation_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="WeChat_RoadInformation_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="WeChat_RoadInformation_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>
+  <data name="WeChat_RoadInformation_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+  <data name="WeChat_ActivityInfo" xml:space='preserve'> 
+ <value>活动明细</value> 
+ </data>
+  <data name="WeChat_ActivityInfo_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="WeChat_ActivityInfo_ActivityTitle" xml:space='preserve'> 
+ <value>活动标题</value> 
+ </data>
+  <data name="WeChat_ActivityInfo_ActivityMemo" xml:space='preserve'> 
+ <value>活动备注</value> 
+ </data>
+  <data name="WeChat_ActivityInfo_ActivityContent" xml:space='preserve'> 
+ <value>活动内容</value> 
+ </data>
+  <data name="WeChat_ActivityInfo_StarTime" xml:space='preserve'> 
+ <value>开始时间</value> 
+ </data>
+  <data name="WeChat_ActivityInfo_EndTime" xml:space='preserve'> 
+ <value>结束时间</value> 
+ </data>
+  <data name="WeChat_ActivityInfo_AdminId" xml:space='preserve'> 
+ <value>添加人</value> 
+ </data>
+  <data name="WeChat_ActivityInfo_PubDate" xml:space='preserve'> 
+ <value>添加时间</value> 
+ </data>
+  <data name="WeChat_ActivityInfo_EditAdminId" xml:space='preserve'> 
+ <value>修改人</value> 
+ </data>
+  <data name="WeChat_ActivityInfo_EditPubDate" xml:space='preserve'> 
+ <value>修改时间</value> 
+ </data>
+  <data name="WeChat_HighwayRoad" xml:space='preserve'> 
+ <value>公路查询</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_Title" xml:space='preserve'> 
+ <value>标题</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_Address" xml:space='preserve'> 
+ <value>地址</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_Conetent" xml:space='preserve'> 
+ <value>内容</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_Type" xml:space='preserve'> 
+ <value>路线类型</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_PubDate" xml:space='preserve'> 
+ <value>录入时间</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_EditAdminId" xml:space='preserve'> 
+ <value>修改人</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_EditPubDate" xml:space='preserve'> 
+ <value>修改时间</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>
+  <data name="WeChat_HighwayRoad_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+  <data name="WeChat_HighWayRoadType" xml:space='preserve'> 
+ <value>类型</value> 
+ </data>
+  <data name="WeChat_HighWayRoadType_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="WeChat_HighWayRoadType_Name" xml:space='preserve'> 
+ <value>类型名称</value> 
+ </data>
+  <data name="WeChat_HighWayRoadType_Type" xml:space='preserve'> 
+ <value>类型</value> 
+ </data>
+  <data name="WeChat_HighWayRoadType_AdminId" xml:space='preserve'> 
+ <value>操作人</value> 
+ </data>
+  <data name="WeChat_HighWayRoadType_PubDate" xml:space='preserve'> 
+ <value>操作时间</value> 
+ </data>
+  <data name="WeChat_HighWayRoadType_EditAdminId" xml:space='preserve'> 
+ <value>最后修改人</value> 
+ </data>
+  <data name="WeChat_HighWayRoadType_EditPubDate" xml:space='preserve'> 
+ <value>最后修改时间</value> 
+ </data>
+  <data name="WeChat_HighWayRoadType_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="SP_ShangPin" xml:space='preserve'> 
+ <value>商品</value> 
+ </data>
+  <data name="SP_ShangPin_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="SP_ShangPin_WareName" xml:space='preserve'> 
+ <value>商品名称</value> 
+ </data>
+  <data name="SP_ShangPin_WareType" xml:space='preserve'> 
+ <value>商品类型</value> 
+ </data>
+  <data name="SP_ShangPin_WarePrice" xml:space='preserve'> 
+ <value>进货价</value> 
+ </data>
+  <data name="SP_ShangPin_Specifications" xml:space='preserve'> 
+ <value>规格型号</value> 
+ </data>
+  <data name="SP_ShangPin_SellingPrice" xml:space='preserve'> 
+ <value>销售价</value> 
+ </data>
+  <data name="SP_ShangPin_Warehouse" xml:space='preserve'> 
+ <value>所属仓库</value> 
+ </data>
+  <data name="SP_ShangPin_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="SP_ShangPin_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>
+  <data name="SP_ShangPin_Pubdate" xml:space='preserve'> 
+ <value>录入时间</value> 
+ </data>
+  <data name="SP_ShangPin_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="SP_ShangPin_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>
+  <data name="SP_ShangPin_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+  <data name="SP_sptype" xml:space='preserve'> 
+ <value>商品类型</value> 
+ </data>
+  <data name="SP_sptype_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="SP_sptype_Name" xml:space='preserve'> 
+ <value>名称</value> 
+ </data>
+  <data name="SP_sptype_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="SP_sptype_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="SP_ShangPinInfo" xml:space='preserve'> 
+ <value>商品明细</value> 
+ </data>
+  <data name="SP_ShangPinInfo_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="SP_ShangPinInfo_FormId" xml:space='preserve'> 
+ <value>商品名称</value> 
+ </data>
+  <data name="SP_ShangPinInfo_Iswarehouse" xml:space='preserve'> 
+ <value>是否进出库</value> 
+ </data>
+  <data name="SP_ShangPinInfo_Num" xml:space='preserve'> 
+ <value>数量</value> 
+ </data>
+  <data name="SP_ShangPinInfo_Price" xml:space='preserve'> 
+ <value>价格</value> 
+ </data>
+  <data name="SP_ShangPinInfo_SumPrice" xml:space='preserve'> 
+ <value>总价</value> 
+ </data>
+  <data name="SP_ShangPinInfo_Warehouse" xml:space='preserve'> 
+ <value>所属仓库</value> 
+ </data>
+  <data name="SP_ShangPinInfo_Customer" xml:space='preserve'> 
+ <value>客户</value> 
+ </data>
+  <data name="SP_ShangPinInfo_CustomerId" xml:space='preserve'> 
+ <value>客户ID</value> 
+ </data>
+  <data name="SP_ShangPinInfo_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>
+  <data name="SP_ShangPinInfo_PubDate" xml:space='preserve'> 
+ <value>录入时间</value> 
+ </data>
+  <data name="SP_ShangPinInfo_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="SP_ShangPinInfo_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>
+  <data name="SP_ShangPinInfo_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+  <data name="SP_SaleMain" xml:space='preserve'> 
+ <value>销售</value> 
+ </data>
+  <data name="SP_SaleMain_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="SP_SaleMain_Customer" xml:space='preserve'> 
+ <value>客户</value> 
+ </data>
+  <data name="SP_SaleMain_CustomerId" xml:space='preserve'> 
+ <value>客户ID</value> 
+ </data>
+  <data name="SP_SaleMain_TotalPrice" xml:space='preserve'> 
+ <value>总价合计</value> 
+ </data>
+  <data name="SP_SaleMain_OpeningTime" xml:space='preserve'> 
+ <value>开单时间</value> 
+ </data>
+  <data name="SP_SaleMain_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>
+  <data name="SP_SaleMain_PubDate" xml:space='preserve'> 
+ <value>录入时间</value> 
+ </data>
+  <data name="SP_SaleMain_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="SP_SaleMain_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>
+  <data name="SP_SaleMain_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+  <data name="SP_Customer" xml:space='preserve'> 
+ <value>客户表</value> 
+ </data>
+  <data name="SP_Customer_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="SP_Customer_CustomerName" xml:space='preserve'> 
+ <value>客户名称</value> 
+ </data>
+  <data name="SP_Customer_Phone" xml:space='preserve'> 
+ <value>联系电话</value> 
+ </data>
+  <data name="SP_Customer_Address" xml:space='preserve'> 
+ <value>地址</value> 
+ </data>
+  <data name="SP_Customer_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="SP_Customer_BankAccount" xml:space='preserve'> 
+ <value>银行账户</value> 
+ </data>
+  <data name="SP_Customer_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>
+  <data name="SP_Customer_Pubdate" xml:space='preserve'> 
+ <value>录入时间</value> 
+ </data>
+  <data name="SP_Customer_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="SP_Customer_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>
+  <data name="CK_Warehouse" xml:space='preserve'> 
+ <value>仓库</value> 
+ </data>
+  <data name="CK_Warehouse_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="CK_Warehouse_Name" xml:space='preserve'> 
+ <value>仓库名称</value> 
+ </data>
+  <data name="CK_Warehouse_Area" xml:space='preserve'> 
+ <value>面积</value> 
+ </data>
+  <data name="CK_Warehouse_Ardess" xml:space='preserve'> 
+ <value>地址</value> 
+ </data>
+  <data name="CK_Warehouse_Stock" xml:space='preserve'> 
+ <value>库存</value> 
+ </data>
+  <data name="CK_Warehouse_Memo" xml:space='preserve'> 
+ <value>备注</value> 
+ </data>
+  <data name="CK_Warehouse_AdminId" xml:space='preserve'> 
+ <value>录入人</value> 
+ </data>
+  <data name="CK_Warehouse_Pubdate" xml:space='preserve'> 
+ <value>录入时间</value> 
+ </data>
+  <data name="CK_Warehouse_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="CK_Warehouse_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>
+  <data name="CK_Warehouse_Ext3" xml:space='preserve'> 
+ <value>Ext3</value> 
+ </data>
+  <data name="SP_BankAccount" xml:space='preserve'> 
+ <value>银行账户</value> 
+ </data>
+  <data name="SP_BankAccount_Id" xml:space='preserve'> 
+ <value>Id</value> 
+ </data>
+  <data name="SP_BankAccount_CardNum" xml:space='preserve'> 
+ <value>卡号</value> 
+ </data>
+  <data name="SP_BankAccount_BankName" xml:space='preserve'> 
+ <value>银行名称</value> 
+ </data>
+  <data name="SP_BankAccount_Balance" xml:space='preserve'> 
+ <value>余额</value> 
+ </data>
+  <data name="SP_BankAccount_UserId" xml:space='preserve'> 
+ <value>所属人</value> 
+ </data>
+  <data name="SP_BankAccount_AdminId" xml:space='preserve'> 
+ <value>AdminId</value> 
+ </data>
+  <data name="SP_BankAccount_PubDate" xml:space='preserve'> 
+ <value>PubDate</value> 
+ </data>
+  <data name="SP_BankAccount_Ext1" xml:space='preserve'> 
+ <value>Ext1</value> 
+ </data>
+  <data name="SP_BankAccount_Ext2" xml:space='preserve'> 
+ <value>Ext2</value> 
+ </data>
+</root>

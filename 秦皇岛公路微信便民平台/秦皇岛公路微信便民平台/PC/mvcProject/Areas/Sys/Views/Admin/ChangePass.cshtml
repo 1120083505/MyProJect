@@ -1,0 +1,91 @@
+﻿@model  ZrSoft.Sys_Admin
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+<style>
+    #picAll img {
+        width: 16px;
+        height: 16px;
+        margin: 5px;
+        display: block;
+        float: left;
+        cursor: pointer;
+        border: 1px solid #FFF;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $("#btnSave").click(function () {
+            if ($("form").form("validate")) {
+                if ($("#Newpass").val() == $("#pass").val()) {
+                    $.ajax({
+                        url: "@Url.Action("changepass")",
+                        type: "Post",
+                        data: $("form").serialize(),
+                        dataType: "json",
+                        success: function (data) {
+                            data = eval("(" + data + ")");
+                            //data = data.d;
+                            if (data.Status == 1) {
+                                window.parent.frameReturnByMes(data.Memo);
+                                window.parent.frameReturnByClose();
+
+                            }
+                            else {
+                                window.parent.frameReturnByMes(data.Memo);
+                            }
+                        }
+                    });
+                }
+                else {
+                    window.parent.frameReturnByMes("两次密码输入不一致！");
+                }
+            }
+            return false;
+        });
+        $("#btnReturn").click(function () {
+            window.parent.frameReturnByClose();
+        });
+    });
+
+</script>
+<div class="mvctool bg">
+    <a href="#" class="easyui-linkbutton" id="btnSave" data-options="iconCls:'icon-disk',plain:true">保存</a>
+    <a href="#" class="easyui-linkbutton" id="btnReturn" data-options="iconCls:'icon-undo',plain:true">返回</a>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Id)
+    <table class="fromEditTable">
+        <tbody>
+            <tr>
+                <td style="width: 100px; text-align: right;">原密码：
+                </td>
+                <td style="width: 180px">
+                    <input type="password" id="OldPass" name="OldPass" class="easyui-textbox" required="true" />
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="width: 100px; text-align: right;">新密码：
+                </td>
+                <td style="width: 180px">
+                    <input type="password" id="Newpass" name="Newpass" class="easyui-textbox" required="true" />
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="width: 100px; text-align: right;">确认密码：
+                </td>
+                <td style="width: 180px">
+                    <input type="password" id="pass" name="pass" class="easyui-textbox" required="true" />
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+

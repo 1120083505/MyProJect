@@ -1,0 +1,200 @@
+﻿@{
+    ViewBag.Title = "导入";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml"; 
+}
+@using Core
+
+<div class="mvctool bg">
+    @*<a href="#" id="btnSelect">上传并预览</a>
+    <a href="#" id="btnBack">返回</a>
+    <a href="javascript:void(0)" id="btnImport" style="display: none">导入</a>*@
+    <button id="btnSelect" class="layui-btn layui-btn-primary layui-btn-small">上传并预览</button>
+    <button id="btnBack" class="layui-btn layui-btn-primary layui-btn-small">返回</button>
+    <button id="btnImport" class="layui-btn layui-btn-primary layui-btn-small">导入</button>
+</div>
+<table class="fromEditTable">
+    <tbody>
+        <tr style="height: 65px">
+            <td style="width: 100px; text-align: right;">
+                <label style="color: black">总条数:</label>
+            </td>
+            <td>
+                <label id="lbTotal">0</label>
+            </td>
+            <td style="text-align: left;"></td>
+        </tr>
+        <tr style="height: 65px">
+            <td style="width: 100px; text-align: right;">
+                <label style="color: black">导入进度:</label>
+            </td>
+            <td>
+                <div id="jqmeter-container"></div>
+            </td>
+            <td style="text-align: left;"></td>
+        </tr>
+        <tr style="height: 65px">
+            <td style="width: 100px; text-align: right;">
+                <label style="color: black">导入结果:</label>
+            </td>
+            <td>
+                <label id="lbEnd">未导入</label>
+            </td>
+            <td style="text-align: left;"></td>
+        </tr>
+    </tbody>
+</table>
+<script src="~/Scripts/jqmeter.min.js"></script>
+<script type="text/javascript">
+    var ifrSrc = "@MvcHtmlString.Create(printControl.ifrSrc())";
+    var filesrc = "";
+    var t;
+    var num = 1;
+    var v = "正在导入,请稍后";
+    var myApp = angular.module("list", []);
+    var layer, lIndex = [];
+    layui.use(['form', 'layedit', 'laydate', 'element', 'laypage'], function () {
+        layer = layui.layer;
+    });
+        $(document).ready(function () {
+            $("#btnImport").hide();
+            $('#btnSelect').click(function () {
+                var data = "fileExt=*.xls;"
+                + "&multi=false";
+                + "&fileDesc=" + escape("仅支持.xls后缀的Excel");
+                //$("#modalwindow").html($.format(ifrSrc, "/upload/Index?" + data))
+                //  .window({ title: $(this).text(), width: 400, height: 250, iconCls: 'icon-folder_magnify' }).window('open');
+                lIndex = layer.open({
+                    type: 2,
+                    title: '@Resource.lang.import',
+                shadeClose: true,
+                shade: 0.3,
+                maxmin: true, //开启最大化最小化按钮 
+                area: ['400', '250'],
+                content: "/upload/Index?" + data
+            });
+        });
+        $("#btnBack").click(function () {
+            //window.parent.frameReturnByClose();
+            window.parent.callBack();
+        });
+        $("#btnImport").click(function () {
+            $("#btnImport").hide();
+            $("#btnBack").hide();
+            $("#btnSelect").hide();
+            $("#import").show();
+            window.parent.ImportData(filesrc);
+            xJqMeter();
+            ChangeText();
+        });
+        //进度条
+        $('#jqmeter-container').jQMeter({
+            goal: '$10000',
+            raised: '$0',
+            width: '300px',
+            height: '20px',
+            barColor: '#bfd255',
+            bgColor: '#444'
+        });
+    });
+    function cs(x) {
+        //alert(1);
+        $("#lbtip").text(x);
+    }
+    function frameReturnByClose() {
+        //$('#modalwindow').window('close');
+        //window.parent.callBack(data);
+        layer.close(lIndex);
+    }
+    function uploadResponse(data) {
+        var data = eval(data);
+        var url = data[0].src;
+        filesrc = url;
+        //这里改成进度条,不显示数据是什么了
+        $.ajax({
+            url: '@Url.Action("Read")',
+            data: { url: url, cols: '' },
+            type: "post",
+            dataType: 'json',
+            success: function (data) {
+                $("#lbTotal").text(data.num);
+                if (data.num > 1000) {
+                    layer.confirm('导入数据1000条最佳，您导入的数据大于最佳导入数据，可能导入时间较长请等待。', { title: '提示' }, function (r) {
+                        if (r) {
+                            if (data.Status == 1) {
+                                $("#btnImport").show();
+                            } else {
+                                $("#btnImport").hide();
+                            }
+                        }
+                    });
+                }
+                else {
+                    //if(data.num)
+                    if (data.Status == 1) {
+                        $("#btnImport").show();
+                    } else {
+                        $("#btnImport").hide();
+                    }
+                }
+            }, error: function (data) {                
+                layer.msg("操作失败,请检查Excel的完成性以及是否根据标准Excel模板!列名不能重复!");
+            }
+        });
+    }
+    //修改进度条的设置
+    function xJqMeter() {
+        $('#jqmeter-container').jQMeter({
+            goal: "$1",
+            raised: "$1",
+            width: '300px',
+            height: '20px',
+            displayTotal: false,
+            animationSpeed: 1000 * 20,
+            counterSpeed: 1000 * 20
+        });
+    }
+    //修改进度条的设置
+    function xJqMeterMax() {
+        $('#jqmeter-container').jQMeter({
+            goal: "$1",
+            raised: "$1",
+            width: '300px',
+            height: '20px',
+            displayTotal: true,
+            animationSpeed: 2000,
+            counterSpeed: 2000
+        });
+    }
+    //更改信息1
+    function ChangeText() {
+        $("#lbEnd").text(v + point(num));
+        if (num == 3) {
+            num = 1;
+        }
+        else {
+            num++;
+        }
+        t = setTimeout("ChangeText()", 1000);
+    }
+    //更改信息2
+    function ChangeTextEnd(x) {
+        $("#lbEnd").html(x);
+    }
+    //拼接点
+    function point(k) {
+        var r = ""
+        for (var j = 0; j < k; j++) {
+            r += "..";
+        }
+        return r;
+    }
+    //停止计时器
+    function StopTimer() {
+        clearTimeout(t);
+    }
+    //启用返回按钮
+    function EnBack() {
+        //$("#btnBack").linkbutton("enable");
+        $("#btnBack").show();
+    }
+</script>

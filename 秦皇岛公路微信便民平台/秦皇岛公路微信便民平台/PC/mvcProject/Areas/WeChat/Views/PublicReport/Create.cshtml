@@ -1,0 +1,313 @@
+﻿@{
+    ViewBag.Title = "公众上报";
+    Layout = null;
+}
+@model  Senparc.Weixin.MP.Helpers.JsSdkUiPackage
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link href="~/lib/layui/css/layui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/lib/angular.js"></script>
+<script src="~/lib/layui/layui.js"></script>
+<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=a9d5362d3faf8d5f942792acc562d367&plugin=AMap.Geocoder"></script>
+<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+
+<style>
+    .layui-form-item {
+        margin-left: -15px;
+        margin-right: 10px;
+    }
+
+    .topDiv {
+        margin-top: 10px;
+    }
+
+    .btn {
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+        margin-top: 67%;
+        width: 100%;
+    }
+
+        .btn button {
+            width: 46%;
+        }
+
+    .wz_ly {
+        height: 100%;
+        width: 94%;
+        text-align: center;
+        /*margin-left:1%;*/
+        margin: 0 auto;
+        margin-top: 30px;
+        font-size: 0.92rem;
+        font-family: "微软雅黑";
+    }
+</style>
+
+<script type="text/javascript">
+    var myApp = angular.module('Create', []);
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+
+
+        //监听提交
+        form.on('submit(Accept)', function show_confirm(data) {
+           var result = confirm('是否提交！');
+                if (result) {
+                    var json = data.field;
+                    
+                    json["Image"] = $("#ImgUrl").val();
+                    $.ajax({
+                        url: "@Url.Action("Create")",
+                        type: "Post",
+                        data: json,
+                        dataType: "json",
+                        success: function (data) {
+                            alert('提交成功！');
+                            window.location.href = 'http://bianmin.zrsoft.cn/WeChat/PublicReport/list';
+
+                            //window.parent.callBack(data);
+                        }
+                    });
+
+                } else {
+                    alert('不提交！');
+                }
+
+
+
+                return false;
+    });
+    });
+
+
+    window.onresize = function () {
+        var max = $(window).height() / 3;
+        var top = $("#footer").offset().top;
+        var user_message_box = $('#footer');
+        top > max ? user_message_box.hide() : user_message_box.show();
+    };
+    //人的经纬度
+    var PLng, PLat;
+    //提交按钮
+    $(function () {
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@Model.AppId', // 必填，公众号的唯一标识
+            timestamp: '@Model.Timestamp', // 必填，生成签名的时间戳
+            nonceStr: '@Model.NonceStr', // 必填，生成签名的随机串
+            signature: '@Model.Signature',// 必填，签名
+            jsApiList: [
+                   'chooseImage',
+                   'previewImage',
+                   'uploadImage',
+                   'downloadImage',
+                    'getLocation'
+            ]
+        });
+        wx.ready(function () {
+            wx.getLocation({
+                type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                    var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                    var speed = res.speed; // 速度，以米/每秒计
+                    var accuracy = res.accuracy; // 位置精度
+                    PLat = latitude;
+                    PLng = longitude;
+                }
+            });
+            setInterval(function () {  //使用  setTimeout（）方法设定定时2000毫秒
+                wx.getLocation({
+                    type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                    success: function (res) {
+                        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                        var speed = res.speed; // 速度，以米/每秒计
+                        var accuracy = res.accuracy; // 位置精度
+                        PLat = latitude;
+                        PLng = longitude;
+                    }
+                });
+            }, 5000);
+        });
+        //情况描述里限制输入字数,并提示剩余字数
+        //function words_deal_Info() {
+        //    var curLength = $("#TextArea_Info").val().length;
+        //    if (curLength > 200) {
+        //        var num = $("#TextArea_Info").val().substr(0, 200);
+        //        $("#TextArea_Info").val(num);
+        //        alert("超过字数限制，多出的字将被截断！");
+        //    } else {
+        //        $("#textCount_Info").text(200 - $("#TextArea_Info").val().length);
+        //    }
+        //}
+
+    });
+    //点击图片上传
+    var images = {
+        localId: [],//手机保存位置编号
+        serverId: [] //我们的服务器保存位置编号
+    };
+    var arr = [];
+    function dianji() {
+        wx.chooseImage({
+            //最大上传
+            count: 1,
+            //压缩图或者原图，这里只传压缩图
+            sizeType: ['', 'compressed'],
+            success: function (res) {
+                //res就是返回值
+                images.localId = res.localIds;
+
+                var i = 0, length = images.localId.length;
+                images.serverId = [];
+
+                function upload() {
+                    //图片上传
+                    wx.uploadImage({
+                        localId: images.localId[i],
+                        success: function (resv) {
+                            i++;
+                            images.serverId.push(resv.serverId);
+                            arr.push(resv.serverId);
+                            if (i < length) {
+
+                                upload();
+                            }
+                            else {
+                                $("#ImgUrl").val(arr.join(","));
+                                var str = "";
+                                var picdiv = $("#UpPic");
+
+                                for (var j = 0; j < res.localIds.length; j++) {
+                                    var imga = $("<img>");
+                                    imga.css("width", "65px");
+                                    imga.css("height", "65px");
+                                    imga.attr("src", res.localIds[j]);
+                                    imga.css("margin-bottom", "5px");
+                                    imga.css("margin-right", "5px");
+                                    picdiv.append(imga);
+                                }
+                            }
+                        },
+                        fail: function (resv) {
+
+                        }
+                    });
+                }
+                upload();
+            }
+        });
+    }
+    function regeocoder() {  //逆地理编码
+        var geocoder = new AMap.Geocoder({
+            radius: 1000,
+            extensions: "all"
+        });
+        geocoder.getAddress(lnglatXY, function (status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                geocoder_CallBack(result);
+            }
+        });
+    }
+    function geocoder_CallBack(data) {
+        var address = data.regeocode.formattedAddress; //返回地址描述
+        //document.getElementById("result").innerHTML = address;
+        $("#Location").val(address);
+    }
+    //点击定位
+    function test() {
+        lnglatXY = [PLng, PLat];  //已知点坐标
+        regeocoder();
+    }
+</script>
+
+<body onload="regeocoder()">
+    <form class="layui-form" action="">
+
+        <div class="layui-form-item layui-form-text topDiv">
+            <label class="layui-form-label">位　　置：</label>
+            <div class="layui-input-block">
+                <input type="text" id="Location" name="Location" onclick="test()" required placeholder="点击定位" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">情况描述：</label>
+            <div class="layui-input-block">
+                <textarea name="Memo" id="Memo" placeholder="情况描述" required class="layui-textarea"></textarea>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item layui-form-text">
+           
+            <input type="hidden" name="ImgUrl" id="ImgUrl" value="" />
+            <label class="layui-form-label">相关图片：</label>
+            @*<p><img src="~/Content/WeChat/img/sjsb.png" width="60rem" style="padding-top:0.2rem;"></p>*@
+            <div class="weui-uploader">
+                <div class="weui-uploader__bd">
+                    <div class="" id="UpPic" style="display:inline;">
+                    </div>
+                    <div onclick="dianji()" id="picup" name="picup" style="width: 65px; height: 65px; text-align:center; display:inline-block;">
+                        <i class="layui-icon" style="font-size: 50px; color: #808080;">&#xe608;</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*        <div class="layui-form-item layui-form-text">
+                <input type="hidden" name="ImgUrl" id="musicUrl" value="" />
+                <input type="hidden" name="WXOpenid" id="WXOpenid2" value="" />
+                <label class="layui-form-label">现场音频：</label>
+                <div class="layui-input-block" onclick="">
+                    <div class="" id="UpPic2" style="display:inline;">
+                    </div>
+                    <div id="picup2" name="picup2" style="width: 65px; height: 65px; text-align:center; display:inline-block;">
+                        <i class="layui-icon" style="font-size: 50px; color: #808080;">&#xe623;</i>
+                    </div>
+                </div>
+            </div>*@
+
+        <div class="layui-form-item layui-form-text topDiv">
+            <label class="layui-form-label">上报姓名：</label>
+            <div class="layui-input-block">
+                <input type="text" id="ReportPerson" name="ReportPerson" onclick="test()" required placeholder="请填写您的名字" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text topDiv">
+            <label class="layui-form-label">联系方式：</label>
+            <div class="layui-input-block">
+                <input type="text" id="Telephone" name="Telephone" onclick="test()" required placeholder="请填写您的手机号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        @*      <div class="layui-form-item layui-form-text">
+                <input type="hidden" name="ImgUrl" id="ViedoUrl" value="" />
+                <input type="hidden" name="WXOpenid" id="WXOpenid3" value="" />
+                <label class="layui-form-label">现场视频：</label>
+                <div class="layui-input-block" onclick="">
+                    <div class="" id="UpPic3" style="display:inline;">
+                    </div>
+                    <div id="picup3" name="picup3" style="width: 65px; height: 65px; text-align:center; display:inline-block;">
+                        <i class="layui-icon" style="font-size: 50px; color: #808080;">&#xe623;</i>
+                    </div>
+                </div>
+            </div>*@
+        <div style="width:100%;">
+            <p class="wz_ly" style="height:auto">为了您的留言得到及时有效处理和回应,可填写您的个人信息.我们将严格保护您的个人隐私. </p>
+        </div>
+
+        <br />
+        <div class="btn" style="position: inherit;bottom: 0;margin-top: 20%;">
+            <button class="layui-btn" lay-submit=""  lay-filter="Accept" id="btn_submit" style="background-color: #ff8822">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary" style="border: 1px solid #ff8822;">重置</button>
+        </div>
+    </form>
+</body>
+
+

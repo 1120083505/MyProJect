@@ -1,0 +1,1153 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Core</name>
+    </assembly>
+    <members>
+        <member name="T:Core.BarCodeHelper">
+            <summary>
+            条形码帮助类
+            </summary>
+        </member>
+        <member name="P:Core.BarCodeHelper.Code128.Height">
+            <summary> 
+            高度 
+            </summary> 
+        </member>
+        <member name="P:Core.BarCodeHelper.Code128.ValueFont">
+            <summary> 
+            是否显示可见号码 如果为NULL不显示号码 
+            </summary> 
+        </member>
+        <member name="P:Core.BarCodeHelper.Code128.Magnify">
+            <summary> 
+            放大倍数 
+            </summary> 
+        </member>
+        <member name="T:Core.BarCodeHelper.Code128.Encode">
+            <summary> 
+            条码类别 
+            </summary> 
+        </member>
+        <member name="M:Core.BarCodeHelper.Code128.GetCodeImage(System.String,Core.BarCodeHelper.Code128.Encode)">
+            <summary> 
+            获取128图形 
+            </summary> 
+            <param name="p_Text">文字</param> 
+            <param name="p_Code">编码</param>       
+            <returns>图形</returns> 
+        </member>
+        <member name="M:Core.BarCodeHelper.Code128.GetValue(Core.BarCodeHelper.Code128.Encode,System.String,System.Int32@)">
+            <summary> 
+            获取目标对应的数据 
+            </summary> 
+            <param name="p_Code">编码</param> 
+            <param name="p_Value">数值 A b 30</param> 
+            <param name="p_SetID">返回编号</param> 
+            <returns>编码</returns> 
+        </member>
+        <member name="M:Core.BarCodeHelper.Code128.GetValue(System.Int32)">
+            <summary> 
+            根据编号获得条纹 
+            </summary> 
+            <param name="p_CodeId"></param> 
+            <returns></returns> 
+        </member>
+        <member name="M:Core.BarCodeHelper.Code128.GetImage(System.String)">
+            <summary> 
+            获得条码图形 
+            </summary> 
+            <param name="p_Text">文字</param> 
+            <returns>图形</returns> 
+        </member>
+        <member name="M:Core.BarCodeHelper.Code128.GetViewText(System.Drawing.Bitmap,System.String)">
+            <summary> 
+            显示可见条码文字 如果小于40 不显示文字 
+            </summary> 
+            <param name="p_Bitmap">图形</param>            
+        </member>
+        <member name="M:Core.BarCodeHelper.code128_SaveImg(System.String,System.String,System.String)">
+            <summary>
+            保存条形码图片
+            </summary>
+            <param name="Num">条形码值</param>
+            <param name="imgSaveUrl">图片路径</param>
+            <param name="imgName">图片名称,不输入默认为条形码值（不带图片后缀）</param>
+        </member>
+        <member name="F:Core.Config.PageSize">
+            <summary>
+            每页显示行数
+            </summary>
+        </member>
+        <member name="T:Core.ControllerHelper">
+            <summary>
+            Controller 查询帮助类
+            </summary>
+        </member>
+        <!-- 对于成员“M:Core.ControllerHelper.getQList(System.String)”忽略有格式错误的 XML 注释 -->
+        <!-- 对于成员“M:Core.ControllerHelper.GetQueryStr(System.Collections.Generic.List{Core.QueryModel},System.String)”忽略有格式错误的 XML 注释 -->
+        <member name="M:Core.ControllerHelper.jsonresult(System.Int32,System.String)">
+            <summary>
+            JSON 返回结果的JSON
+            </summary>
+            <param name="status">返回结果</param>
+            <param name="Memo">返回结果说明</param>
+            <returns>JsonResult</returns>
+        </member>
+        <member name="T:Core.LoginInfo">
+            <summary>
+            获取登录用户的相关信息
+            </summary>
+        </member>
+        <member name="F:Core.LoginInfo.proName">
+            <summary>
+            项目名称
+            </summary>
+        </member>
+        <member name="F:Core.LoginInfo.outDays">
+            <summary>
+            Cookie过期天数 默认为退出浏览器清除cookie
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.Theme">
+            <summary>
+            样式
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.AdminID">
+            <summary>
+            管理员登录ID
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.AdminName">
+            <summary>
+            管理员登录名
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.RealName">
+            <summary>
+            管理员真实姓名
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.AdminType">
+            <summary>
+            管理员类型
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.IsAllowAll">
+            <summary>
+            是否允许查看所有
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.Admin_CheckCode">
+            <summary>
+            管理员登录验证码
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.RoleID">
+            <summary>
+            管理员具有的角色ID
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.CusID">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.discount">
+            <summary>
+            折扣
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.CusLoginName">
+            <summary>
+            用户Username
+            </summary>
+        </member>
+        <member name="P:Core.LoginInfo.ConStr">
+            <summary>
+            查询连接
+            </summary>
+        </member>
+        <member name="F:Core.lang.CurrentLang">
+            <summary>
+            当前语言版本
+            </summary>
+        </member>
+        <member name="T:Core.LoginPower">
+            <summary>
+            登录权限判断
+            </summary>
+        </member>
+        <member name="M:Core.LoginPower.AuthorizeCore(System.Web.HttpContextBase)">
+            <summary>
+            判断权限登陆
+            </summary>
+            <param name="httpContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.LoginPower.HandleUnauthorizedRequest(System.Web.Mvc.AuthorizationContext)">
+            <summary>
+            具体操作
+            </summary>
+            <param name="filterContext"></param>
+        </member>
+        <member name="T:Core.oUtilss">
+            <summary>
+            后台外部Utils的扩展类
+            </summary>
+        </member>
+        <member name="M:Core.oUtilss.oKeyDate(System.String,System.Boolean)">
+            <summary>
+            判断是否为有效日期格式
+            </summary>
+            <param name="sdate">需判断值</param>
+            <param name="b">是否可空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.oUtilss.oKeyStr(System.String,System.Boolean)">
+            <summary>
+            字符串是否可用
+            </summary>
+            <param name="sNull">字符串</param>
+            <param name="b">是否可空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.oUtilss.getDateStr(System.String,System.Boolean)">
+            <summary>
+            数值日期转字符日期
+            </summary>
+            <param name="strValue">数值日期值</param>
+            <param name="b">是否可空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.oUtilss.oKeyDecimal(System.String,System.Boolean)">
+            <summary>
+            浮点数判断
+            </summary>
+            <param name="sdecimal">需判断值</param>
+            <param name="b">是否可空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.oUtilss.ReadExcelByOledb(System.String)">
+            <summary>
+            读取Excel中的数据
+            </summary>
+            <param name="fileNamePath">路径</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.oUtilss.oKeyValueStr(System.Data.DataTable,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            根据表中名称找id 字符
+            </summary>
+            <param name="dt">DataTable表全部值</param>
+            <param name="cname">Key键</param>
+            <param name="cvalue">Value值</param>
+            <param name="rk">所需值键</param>
+            <param name="b">是否可空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.oUtilss.oKeyValueStr(System.Data.DataTable,System.String,System.String,System.Boolean)">
+            <summary>
+            根据关系找键值 字符
+            </summary>
+            <param name="dt">数据源</param>
+            <param name="querystr">关系</param>
+            <param name="rk">所需值键</param>
+            <param name="b">是否可空</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.oUtilss.oKeyValueStr(System.Data.DataTable,System.String,System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            根据表中名称找键值 字符
+            </summary>
+            <param name="dt">DataTable表全部值</param>
+            <param name="cname">Key键</param>
+            <param name="cvalue">Value值</param>
+            <param name="rk">所需值键</param>
+            <param name="o">是否模糊查询</param>
+            <param name="b">是否可空</param>
+            <returns></returns>
+        </member>
+        <member name="T:Core.oUtilss.ImportInfo">
+            <summary>
+            导入数据库所需的类
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.I_ok">
+            <summary>
+            正确行数
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.I_no">
+            <summary>
+            错误行数
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.S_no">
+            <summary>
+            错误行号
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.b">
+            <summary>
+            标记改行是否正确,默认值正确
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.idr">
+            <summary>
+            后：数据表格行变量
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.odr">
+            <summary>
+            前：数据表格行变量
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.I_oi">
+            <summary>
+            导入的表格中共有多少条数据
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.sb">
+            <summary>
+            需要写入数据库的字符串
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.I_ti">
+            <summary>
+            当前已经循环读取到第几条
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.I_wi">
+            <summary>
+            每次写入的条数
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.ds">
+            <summary>
+            导入到的数据库的表的结构
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.I_tc">
+            <summary>
+            导入表格的列数
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.S_pc">
+            <summary>
+            判重所需字段
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.S_NM">
+            <summary>
+            导入的数据库表名
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.I_wc">
+            <summary>
+            共需导入到数据库的次数
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.I_mc">
+            <summary>
+            已经循环到了第几次插入数据库
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.mb">
+            <summary>
+            增加每一条信息是否需要增加其他新的数据
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.HaveCount">
+            <summary>
+            已经有多少行,来计算需不需要插入数据库,当最后一轮的时候,不满也要写入数据库
+            </summary>
+        </member>
+        <member name="P:Core.oUtilss.ImportInfo.IsLock">
+            <summary>
+            控制查询是否加锁,这样可以提速33%,但风险会上升
+            </summary>
+        </member>
+        <member name="F:Core.oUtilss.ImportInfo.IsUsingJudge">
+            <summary>
+            是否启用容错判断
+            </summary>
+        </member>
+        <member name="M:Core.oUtilss.dsGet(System.String)">
+            <summary>
+            获取导入到的数据库的表的结构
+            </summary>
+            <param name="tName">数据库中表名</param>
+            <returns></returns>
+        </member>
+        <member name="T:Core.PowerFilter">
+            <summary>
+            权限过滤器[默认为当前Action,Controller]
+            </summary>
+        </member>
+        <member name="T:Core.QueryHelper">
+            <summary>
+            query查询帮助类
+            </summary>
+        </member>
+        <member name="M:Core.QueryHelper.IsEqualTo(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String)">
+            <summary>
+            SqlQuery 等于（=）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryHelper.IsEqualTo(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String,System.String)">
+            <summary>
+            SqlQuery 等于（=）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryHelper.Like(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String)">
+            <summary>
+            SqlQuery 相似（Like）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryHelper.Like(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String,System.String)">
+            <summary>
+            SqlQuery 相似（Like）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryHelper.IsGreaterThan(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String)">
+            <summary>
+            SqlQuery 大于（＞）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryHelper.IsGreaterThan(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String,System.String)">
+            <summary>
+            SqlQuery 大于（＞）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryHelper.IsGreaterThanOrEqualTo(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String)">
+            <summary>
+            SqlQuery 大于等于（≥）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryHelper.IsGreaterThanOrEqualTo(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String,System.String)">
+            <summary>
+            SqlQuery 大于等于（≥）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryHelper.IsLessThan(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String)">
+            <summary>
+            SqlQuery 小于（＜）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryHelper.IsLessThan(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String,System.String)">
+            <summary>
+            SqlQuery 小于（＜）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryHelper.IsLessThanOrEqualTo(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String)">
+            <summary>
+            SqlQuery 小于等于（≤）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryHelper.IsLessThanOrEqualTo(System.Collections.Generic.List{Core.QueryModel},SubSonic.SqlQuery,System.String,System.String)">
+            <summary>
+            SqlQuery 小于等于（≤）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="sq">查询语句</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryHelper.Order(SubSonic.SqlQuery,System.String,System.String)">
+            <summary>
+            排序方式
+            </summary>
+            <param name="sq">原SqlQuery语句</param>
+            <param name="order">排序方式</param>
+            <param name="sort">排序字段</param>
+        </member>
+        <member name="M:Core.QueryHelper.Page(System.Collections.Generic.List{Core.QueryModel},System.String[],Models.GridPager,System.String)">
+            <summary>
+            分页
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="coulums">查询的值（为空查询全部）</param>
+            <param name="rows">显示数</param>
+            <param name="page">页码</param>
+            <param name="TableName">表名</param>
+            <returns></returns>
+        </member>
+        <member name="T:Core.QueryModel">
+            <summary>
+            查询条件实体QueryStr
+            </summary>
+        </member>
+        <member name="P:Core.QueryModel.filed">
+            <summary>
+            字段名
+            </summary>
+        </member>
+        <member name="P:Core.QueryModel.text">
+            <summary>
+            字段值
+            </summary>
+        </member>
+        <member name="T:Core.QueryPaged">
+            <summary>
+            分页查询
+            </summary>
+        </member>
+        <member name="F:Core.QueryPaged.pager">
+            <summary>
+            分页
+            </summary>
+        </member>
+        <member name="F:Core.QueryPaged.TableName">
+            <summary>
+            表名
+            </summary>
+        </member>
+        <member name="M:Core.QueryPaged.init">
+            <summary>
+            初始化
+            </summary>
+        </member>
+        <member name="M:Core.QueryPaged.IsEqualTo(System.Collections.Generic.List{Core.QueryModel},System.String)">
+            <summary>
+            SqlQuery 等于（=）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryPaged.IsEqualTo(System.Collections.Generic.List{Core.QueryModel},System.String,System.String)">
+            <summary>
+            SqlQuery 等于（=）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryPaged.Like(System.Collections.Generic.List{Core.QueryModel},System.String)">
+            <summary>
+            SqlQuery 相似（Like）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryPaged.Like(System.Collections.Generic.List{Core.QueryModel},System.String,System.String)">
+            <summary>
+            SqlQuery 相似（Like）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryPaged.IsGreaterThan(System.Collections.Generic.List{Core.QueryModel},System.String)">
+            <summary>
+            SqlQuery 大于（＞）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryPaged.IsGreaterThan(System.Collections.Generic.List{Core.QueryModel},System.String,System.String)">
+            <summary>
+            SqlQuery 大于（＞）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryPaged.IsGreaterThanOrEqualTo(System.Collections.Generic.List{Core.QueryModel},System.String)">
+            <summary>
+            SqlQuery 大于等于（≥）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryPaged.IsGreaterThanOrEqualTo(System.Collections.Generic.List{Core.QueryModel},System.String,System.String)">
+            <summary>
+            SqlQuery 大于等于（≥）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryPaged.IsLessThan(System.Collections.Generic.List{Core.QueryModel},System.String)">
+            <summary>
+            SqlQuery 小于（＜）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryPaged.IsLessThan(System.Collections.Generic.List{Core.QueryModel},System.String,System.String)">
+            <summary>
+            SqlQuery 小于（＜）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryPaged.IsLessThanOrEqualTo(System.Collections.Generic.List{Core.QueryModel},System.String)">
+            <summary>
+            SqlQuery 小于等于（≤）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="Columns">列名（列名与查询传值字段相同的情况下）</param>
+        </member>
+        <member name="M:Core.QueryPaged.IsLessThanOrEqualTo(System.Collections.Generic.List{Core.QueryModel},System.String,System.String)">
+            <summary>
+            SqlQuery 小于等于（≤）拼接查询
+            </summary>
+            <param name="qList">QueryModel泛型集合</param>
+            <param name="ColumnsName">列名</param>
+            <param name="QueryFiledName">查询传至字段名称</param>
+        </member>
+        <member name="M:Core.QueryPaged.Paged(System.Int32@)">
+            <summary>
+            分页查询语句结果
+            </summary>
+            <param name="TotalCount">总行数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.QueryPaged.paging">
+            <summary>
+            分页数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Core.QueryPaged.Paged">
+            <summary>
+            分页查询语句结果
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Core.ReportPrint">
+            <summary>
+            通过RDLC向默认打印机输出打印报表
+            </summary>
+        </member>
+        <member name="F:Core.ReportPrint.m_currentPageIndex">
+            <summary>
+            当前打印页号
+            </summary>
+        </member>
+        <member name="F:Core.ReportPrint.m_streams">
+            <summary>
+            RDCL转换stream一页对应一个stream
+            </summary>
+        </member>
+        <member name="M:Core.ReportPrint.Export(Microsoft.Reporting.WebForms.LocalReport)">
+            <summary>
+            把report输出成stream
+            </summary>
+            <param name="report">传入需要Export的report</param>
+        </member>
+        <member name="M:Core.ReportPrint.CreateStream(System.String,System.String,System.Text.Encoding,System.String,System.Boolean)">
+            <summary>
+            创建具有指定的名称和格式的流。
+            </summary>
+        </member>
+        <member name="M:Core.ReportPrint.PrintPage(System.Object,System.Drawing.Printing.PrintPageEventArgs)">
+            <summary>
+            打印输出
+            </summary>
+        </member>
+        <member name="M:Core.ReportPrint.Print">
+            <summary>
+            打印预处理
+            </summary>
+        </member>
+        <member name="M:Core.ReportPrint.Run(Microsoft.Reporting.WebForms.LocalReport)">
+            <summary>
+            对外接口,启动打印
+            </summary>
+            <param name="dtSource">打印报表对应的数据源</param>
+            <param name="sReport">打印报表名称</param>
+        </member>
+        <member name="M:Core.ReportPrint.GetPrinterStatus2(System.String,System.UInt32@)">
+            <summary>
+            获取打印机状态
+            </summary>
+            <param name="printerName">打印机名称</param>
+            <param name="status">输出打印机状态</param>
+        </member>
+        <member name="M:Core.ReportPrint.GetPrinterStatus(System.String)">
+            <summary>
+            对外接口,调去打印机信息
+            </summary>
+            <param name="printerName">打印机名称</param>
+            <returns>返回打印机当前状态</returns>
+        </member>
+        <member name="T:Core.Tip">
+            <summary>
+            默认提示辅助类
+            </summary>
+        </member>
+        <member name="F:Core.Tip.NoSelect">
+            <summary>
+            未选中任何数据，请选择！
+            </summary>
+        </member>
+        <member name="P:Core.Tip.InsertSucceed">
+            <summary>
+            添加成功!
+            </summary>
+        </member>
+        <member name="P:Core.Tip.InsertFail">
+            <summary>
+            添加失败!
+            </summary>
+        </member>
+        <member name="P:Core.Tip.EditSucceed">
+            <summary>
+            修改成功!
+            </summary>
+        </member>
+        <member name="P:Core.Tip.EditFail">
+            <summary>
+            修改失败!
+            </summary>
+        </member>
+        <member name="P:Core.Tip.DeleteSucceed">
+            <summary>
+            删除成功!
+            </summary>
+        </member>
+        <member name="P:Core.Tip.DeleteFail">
+            <summary>
+            删除失败!
+            </summary>
+        </member>
+        <member name="F:Core.Tip.IsLastNotAllowInsertSon">
+            <summary>
+            最后一项不允许再进行添加子项！
+            </summary>
+        </member>
+        <member name="F:Core.Tip.OnlyLastModuleCan">
+            <summary>
+            只能选择模块的最后一项！
+            </summary>
+        </member>
+        <member name="F:Core.Tip.WantDeleteTheSelectedRecords">
+            <summary>
+            确定删除本条记录?
+            </summary>
+        </member>
+        <member name="F:Core.Tip.PleaseSelectRoleFrist">
+            <summary>
+            第一步，需要您选择一个角色再进行操作！
+            </summary>
+        </member>
+        <member name="F:Core.Tip.NoChange">
+            <summary>
+            未做任何更改！
+            </summary>
+        </member>
+        <member name="F:Core.Tip.SaveSucceed">
+            <summary>
+            保存成功!
+            </summary>
+        </member>
+        <member name="F:Core.Tip.SaveFail">
+            <summary>
+            保存失败!
+            </summary>
+        </member>
+        <member name="F:Core.Tip.GetParmError">
+            <summary>
+            获取参数失败!
+            </summary>
+        </member>
+        <member name="F:Core.Tip.FileIsExist">
+            <summary>
+            文件已经存在,请更换!
+            </summary>
+        </member>
+        <member name="P:Core.Tip.OperateSucceed">
+            <summary>
+            操作成功！
+            </summary>
+        </member>
+        <member name="P:Core.Tip.OperateFail">
+            <summary>
+            操作失败！
+            </summary>
+        </member>
+        <member name="F:Core.Tip.WantReturnDateBase">
+            <summary>
+            确定还原次数据库?还原之后数据将全部被更换！
+            </summary>
+        </member>
+        <member name="F:Core.Tip.LoginError">
+            <summary>
+            登录失败！
+            </summary>
+        </member>
+        <member name="T:Core.Utils">
+            <summary>
+            常用方法类
+            </summary>
+        </member>
+        <member name="M:Core.Utils.IsPositiveNumber(System.Object)">
+            <summary>
+            判断是否正数包含正小数
+            </summary>
+            <param name="sNum"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.IsPositiveNumberOrLing(System.Object)">
+            <summary>
+            判断是否正数
+            </summary>
+            <param name="sNum">值</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.IsDateTime(System.Object)">
+            <summary>
+            判断是否为时间格式
+            </summary>
+            <param name="sNum"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.isNumber(System.String)">
+            <summary>
+            判断是否为正整数
+            </summary>
+            <param name="strValue"></param>
+            <returns>是正整数返回true,不是返回false</returns>
+        </member>
+        <member name="M:Core.Utils.NoHTML(System.String)">
+            <summary>
+             去除HTML标记
+            </summary>
+            <param name="Htmlstring">包括HTML标签的源码</param>
+            <returns>已经去除后的文字</returns>
+        </member>
+        <member name="M:Core.Utils.Dirty_Filter(System.String,System.String)">
+            <summary>
+            脏字过滤
+            </summary>
+            <param name="content"></param>
+            <param name="dirty"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.Line_Replace(System.String)">
+            <summary>
+            换行替换
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.Line_UnReplace(System.String)">
+            <summary>
+            换行反替换
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.PostMail(System.String,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            发送邮件
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.MD5(System.String)">
+            <summary>
+            md5加密
+            </summary>
+        </member>
+        <member name="M:Core.Utils.GetDirectoryLength(System.String)">
+            <summary>
+            获取文件夹大小
+            </summary>
+            <param name="dirPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.MakeThumbnail(System.String,System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            生成缩略图
+            </summary>
+            <param name="originalImagePath">源图路径（物理路径）</param>
+            <param name="thumbnailPath">缩略图路径（物理路径）</param>
+            <param name="width">缩略图宽度</param>
+            <param name="height">缩略图高度</param>
+            <param name="mode">生成缩略图的方式 H-指定高，宽按比例 W：指定宽，高按比例，Cut 是裁剪 HW 指定宽高缩放</param>    
+        </member>
+        <member name="M:Core.Utils.GenerateCheckCode(System.Int32)">
+            <summary>
+            生成随机字母字符串(数字字母混和)
+            </summary>
+            <param name="codeCount">待生成的位数</param>
+            <returns>生成的字母字符串</returns>
+        </member>
+        <member name="M:Core.Utils.mikecat_GetNumberRandom">
+            <summary>
+            获得数字形式的随机字符串
+            </summary>
+            <returns>数字形式的随机字符串</returns>
+        </member>
+        <member name="M:Core.Utils.DESEncryptMethod(System.String)">
+            <summary>
+            加密-可逆
+            </summary>
+            <param name="rs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.DESDecryptMethod(System.String)">
+            <summary>
+            解密-可逆
+            </summary>
+            <param name="rs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.GetDateTimeNowStr">
+            <summary>
+            获取当前时间
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.checkIMG(System.String)">
+            <summary>
+            文件名称
+            </summary>
+            <param name="FileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.DataTableToJson(System.Data.DataTable)">
+            <summary>
+            将datatable数据转换成JSON数据
+            </summary>
+            <param name="dt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.String2Json(System.String)">
+            <summary>  
+            过滤特殊字符  
+            </summary>  
+            <param name="s"></param>  
+            <returns></returns>  
+        </member>
+        <member name="M:Core.Utils.StringFormat(System.String,System.Type)">
+            <summary>  
+            格式化字符型、日期型、布尔型  
+            </summary>  
+            <param name="str"></param>  
+            <param name="type"></param>  
+            <returns></returns>  
+        </member>
+        <member name="M:Core.Utils.DataTableToJson(System.Data.DataTable,System.String,System.String,System.String)">
+            <summary>
+            将datatable数据转换成JSON数据，加返回值
+            </summary>
+            <param name="dt">数据源</param>
+            <param name="Status">返回状态</param>
+            <param name="TotalCount">总行数</param>
+            <param name="memo">备注</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.GetNewDateID">
+            <summary>
+            获取时间格式新ID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.AutoCreatDir(System.String)">
+            <summary>
+            自动创建文件夹
+            </summary>
+            <param name="Path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.WriteFile(System.String,System.String,System.String)">
+            <summary>
+            写入文件
+            </summary>
+            <param name="path"></param>
+            <param name="filename"></param>
+            <param name="contents"></param>
+        </member>
+        <member name="M:Core.Utils.WriteFileContinue(System.String,System.String,System.String)">
+            <summary>
+            写入文件,文件存在则继续写入
+            </summary>
+            <param name="path"></param>
+            <param name="filename"></param>
+            <param name="contents"></param>
+        </member>
+        <member name="M:Core.Utils.ExportToExcel(System.Web.UI.Page,System.Data.DataTable,System.String)">
+            <summary>
+            导出excel
+            </summary>
+            <param name="page"></param>
+            <param name="dtSource"></param>
+        </member>
+        <member name="M:Core.Utils.GPS_Distance(System.Double,System.Double,System.Double,System.Double)">
+             <summary>
+            计算两点GPS坐标的距离
+             </summary>
+             <param name="n1">第一点的纬度坐标</param>
+             <param name="e1">第一点的经度坐标</param>
+             <param name="n2">第二点的纬度坐标</param>
+             <param name="e2">第二点的经度坐标</param>
+             <returns></returns>
+        </member>
+        <member name="M:Core.Utils.GetTimeStamp">
+            <summary>  
+            获取时间戳  
+            </summary>  
+            <returns></returns>  
+        </member>
+        <member name="M:Core.Utils.HttpPost(System.String,System.String)">
+            <summary>
+            httpPost提交
+            </summary>
+            <param name="Url">请求地址</param>
+            <param name="postDataStr">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Core.Utils.HttpGet(System.String,System.String)">
+            <summary>
+            HttpGet请求
+            </summary>
+            <param name="Url">请求地址</param>
+            <param name="DataStr">参数</param>
+            <returns></returns>
+        </member>
+        <member name="T:StarTech.NPOI.NPOIHelper">
+            <summary>
+            Excel生成操作类
+            </summary>
+        </member>
+        <member name="F:StarTech.NPOI.NPOIHelper.ListColumnsName">
+            <summary>
+            导出列名
+            </summary>
+        </member>
+        <member name="M:StarTech.NPOI.NPOIHelper.ExportExcel(System.Data.DataTable,System.String)">
+            <summary>
+            导出Excel
+            </summary>
+            <param name="dgv"></param>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:StarTech.NPOI.NPOIHelper.ExportExcel(System.Data.DataTable,System.IO.Stream)">
+            <summary>
+            导出Excel
+            </summary>
+            <param name="dgv"></param>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:StarTech.NPOI.NPOIHelper.SaveExcelFile(NPOI.HSSF.UserModel.HSSFWorkbook,System.String)">
+            <summary>
+            保存Excel文件
+            </summary>
+            <param name="excelWorkBook"></param>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:StarTech.NPOI.NPOIHelper.SaveExcelFile(NPOI.HSSF.UserModel.HSSFWorkbook,System.IO.Stream)">
+            <summary>
+            保存Excel文件
+            </summary>
+            <param name="excelWorkBook"></param>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:StarTech.NPOI.NPOIHelper.CreateExcelFile">
+            <summary>
+            创建Excel文件
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:StarTech.NPOI.NPOIHelper.CreateHeader(NPOI.SS.UserModel.ISheet)">
+            <summary>
+            创建excel表头
+            </summary>
+            <param name="dgv"></param>
+            <param name="excelSheet"></param>
+        </member>
+        <member name="M:StarTech.NPOI.NPOIHelper.InsertRow(System.Data.DataTable,NPOI.HSSF.UserModel.HSSFWorkbook)">
+            <summary>
+            插入数据行
+            </summary>
+        </member>
+        <member name="M:StarTech.NPOI.NPOIHelper.InsertCell(System.Data.DataTable,System.Data.DataRow,NPOI.SS.UserModel.IRow,NPOI.SS.UserModel.ISheet,NPOI.HSSF.UserModel.HSSFWorkbook)">
+            <summary>
+            导出数据行
+            </summary>
+            <param name="dtSource"></param>
+            <param name="drSource"></param>
+            <param name="currentExcelRow"></param>
+            <param name="excelSheet"></param>
+            <param name="excelWorkBook"></param>
+        </member>
+        <!-- 对于成员“M:StarTech.NPOI.NPOIHelper.ImportDataTableFromExcel(System.IO.Stream,System.String,System.Int32)”忽略有格式错误的 XML 注释 -->
+        <member name="M:StarTech.NPOI.NPOIHelper.ImportDataTableFromExcel(System.String,System.String,System.Int32)">
+            <summary>
+            由Excel导入DataTable
+            </summary>
+            <param name="excelFilePath">Excel文件路径，为物理路径。</param>
+            <param name="sheetName">Excel工作表名称</param>
+            <param name="headerRowIndex">Excel表头行索引</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:StarTech.NPOI.NPOIHelper.ImportDataTableFromExcel(System.IO.Stream,System.Int32,System.Int32)">
+            <summary>
+            由Excel导入DataTable
+            </summary>
+            <param name="excelFileStream">Excel文件流</param>
+            <param name="sheetName">Excel工作表索引</param>
+            <param name="headerRowIndex">Excel表头行索引</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:StarTech.NPOI.NPOIHelper.ImportDataTableFromExcel(System.String,System.Int32,System.Int32)">
+            <summary>
+            由Excel导入DataTable
+            </summary>
+            <param name="excelFilePath">Excel文件路径，为物理路径。</param>
+            <param name="sheetName">Excel工作表索引</param>
+            <param name="headerRowIndex">Excel表头行索引</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:StarTech.NPOI.NPOIHelper.ExportToExcelByDataSet(System.Data.DataSet)">
+            <summary>
+            导出多个sheet
+            </summary>
+            <param name="ds"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

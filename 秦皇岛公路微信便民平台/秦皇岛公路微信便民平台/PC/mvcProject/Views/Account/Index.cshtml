@@ -1,0 +1,77 @@
+﻿@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link href="~/css/account.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="w">@Resource.lang.Login</h1>
+
+            <form class="form">
+                <input type="text" name="name" autocomplete="off" placeholder="@Resource.lang.UserName">
+                <input type="password" name="pwd" placeholder="@Resource.lang.Password">
+                <button type="submit" id="login-button">@Resource.lang.Login</button>
+            </form>
+            <div id="tip"></div>
+        </div>
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+
+    <script>
+        $('#login-button').click(function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: "@Url.Action("Login")",
+                type: "Post",
+                data: $("form").serialize(),
+                dataType: "json",
+                success: function (data) {
+                    data = eval("(" + data + ")");
+                    if (data.Status == 1) {
+                        $(".w").text("@Resource.lang.Welcome");
+                        $('.wrapper').addClass('form-success');
+                        $("#tip").text("");
+                        $('form').fadeOut(500);
+                        setInterval(function () {
+                            $(".w").text($(".w").text() + ".");
+
+                        }, 600);
+                        setTimeout(function () {
+                            window.location.href = '/';
+
+                        }, 3000);
+
+                    }
+                    else {
+                        $("#tip").text(data.Memo);
+                    }
+                }
+            });
+
+            return false;
+        });
+    </script>
+</body>
+</html>
+

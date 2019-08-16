@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "DTInfo";
+    Layout = null;
+}
+@using Core
+@model  ZrSoft.WeChat_HighwayDynamic
+<meta name="viewport" content="width=device-width,height=device-height, user-scalable=no,initial-scale=1, minimum-scale=1, maximum-scale=1,target-densitydpi=device-dpi ">
+<link href="~/Content/themes/bootstrap/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<script src="~/Content/themes/bootstrap/js/jquery.js"></script>
+<link href="~/Content/themes/bootstrap/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Content/themes/bootstrap/js/bootstrap.min.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body, html {
+        height: 100%;
+        width: 100%;
+        padding: 5px;
+    }
+</style>
+<div style="width:100%;height:auto">
+    <div class="page-header">
+        <h1>@Model.Title @*<small>Subtext for header</small>*@</h1>
+    </div>
+    <i>@Model.PubDate</i>
+    <div class="panel panel-default" style="border-left: 0;border-right: 0;">
+        <div class="panel-body" style="padding-left:0;padding-right:0">
+            @Utils.NoHTML(Model.Conetent)
+        </div>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Model.Ext1))
+    {
+        <img src="@Model.Ext1" style="width:100%;height:auto" />
+    }
+    else
+    {
+        <img src="/Content/images/1.jpg" style="width:100%;height:auto" />
+    }
+</div>
+

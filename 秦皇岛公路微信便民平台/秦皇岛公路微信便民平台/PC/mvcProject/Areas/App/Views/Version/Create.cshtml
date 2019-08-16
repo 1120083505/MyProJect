@@ -1,0 +1,131 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+} 
+@model  ZrSoft.App_Version 
+<link href="~/lib/layui/font/iconfont.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.uploadify-v2.1.4/jquery.uploadify.v2.1.4.min.js"></script>
+<script src="~/Scripts/jquery.uploadify-v2.1.4/swfobject.js"></script>
+<link href="~/Scripts/jquery.uploadify-v2.1.4/uploadify.css" rel="stylesheet" />
+<script>
+    $(function () {
+        var strDir = "/content/upload"; //文件保存路径  
+        var maxFileSize = 1024 * 1024 * 30; //文件最大限制1G
+        var b = 0;
+        $("#Moneypic").uploadify({
+            'uploader': '/Scripts/jquery.uploadify-v2.1.4/uploadify.swf',
+            'script': '/Scripts/jquery.uploadify-v2.1.4/UploadHandler.ashx', //引用Handler
+            'buttonImg': '/Content/images/chooseimg.png', //选择文件按钮
+            'cancelImg': '/Scripts/jquery.uploadify-v2.1.4/cancel.gif', //取消上传按钮
+            'width': 100, //按钮宽度
+            'height': 100, //按钮高度
+            'wmode': 'transparent', //使浏览按钮的flash背景文件透明
+            'folder': strDir, //上传路径
+            'auto': true, //是否自动上传
+            'multi': true, //是否多文件上传
+            'fileExt': '*.apk',
+            'fileDesc': '请选择文件',
+            'sizeLimit': maxFileSize,
+            'simUploadLimit': 1, //同时上传文件数
+            'async': false,
+            'onSelect': function (e, queueId, fileObj) {
+                if (fileObj.size > maxFileSize) {
+                    alert("你所选择的文件大小超过限制！");
+                }
+                $("#uplod").html("文件名：" + fileObj.name);
+                //if (pnam == "") {
+                //    $("#uplod").html("文件名：" + fileObj.name);
+                //}
+            }, onAllComplete: function () {
+                var ss = document.getElementById("Moneypicture").value;
+                if (!ss) {
+                    var str = path1.replace($("#Moneypicture").val(), '').split(';');
+                    $("#Moneypicture").val(path1);
+                } else {
+                    layer.msg('最多上传一份文件', {
+                        time: 1000,
+                    });
+
+                }
+            },
+            onComplete: function (event, queueID, fileObj, response) {
+                var returnjson = "[";
+                returnjson += response.substr(0, response.length - 1);
+                returnjson += "]";
+                var js = $.parseJSON(returnjson);
+                path1 += js[0].src;
+
+            }, onSelectOnce: function () {
+                if (b == 0) {
+                    var list = $("#uploadifyQueue").html();
+                    $("div").detach("#uploadifyQueue");
+                    $("#list").html("<div id=\"uploadifyQueue\" class=\"uploadifyQueue\">" + list + "</div>");
+                }
+                b++;
+                path1 = "";
+            }
+        });
+
+
+
+    });
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+        //监听提交 
+        form.on('submit(Accept)', function (data) {
+            data.field.Code = data.field.Code_1 + '.' + data.field.Code_2 + '.' + data.field.Code_3;
+            var json = data.field;
+            //alert(JSON.stringify(json));
+            $.ajax({
+                url: "@Url.Action("Create")",
+                type: "Post",
+                data: json,
+                dataType: "json",
+                success: function (data) {
+                    window.parent.callBack(data);
+                }
+            });
+            return false;
+        });
+    });
+</script> 
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;"> 
+    <legend> 
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a>@Resource.lang.App_Version   
+    </legend> 
+</fieldset> 
+<form class="layui-form" action=""> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.App_Version_Code</label> 
+        <div class="layui-input-block"> 
+            <input type="hidden" id="Code" name="Code" />
+            <input id='Code_1' name='Code_1' type="number" lay-verify="required" style="width:10%;float:left;" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.App_Version_Code" class="layui-input" >
+            <span style="float:left;line-height:38px;text-align:center;">-</span>
+            <input id='Code_2' name='Code_2' type="number" lay-verify="required" style="width:10%;float:left;" maxlength ="1" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.App_Version_Code" class="layui-input" > 
+            <span style="float:left;line-height:38px;text-align:center;">-</span>
+            <input id='Code_3'  name='Code_3' type="number" lay-verify="required" style="width:10%;float:left;" maxlength ="1" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.App_Version_Code" class="layui-input" > 
+        </div> 
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.App_Version_Url</label> 
+        <div class="layui-input-block"> 
+                    @*<input id='Url' name='Url' type="text" lay-verify="required" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.App_Version_Url" class="layui-input" >*@
+            @*<a href="jacascript:;"><span class="layui-icon" style="font-size:30px;margin-left:10px;">&#xe7a1;</span> </a>*@
+                    <input type="file" name="Moneypic" id="Moneypic" style="margin-top: 5px;" />
+                    <input type="hidden" id="Moneypicture" name="Url" value="" />
+                    <lable id="uplod"></lable>
+        </div> 
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.App_Version_Memo</label> 
+        <div class="layui-input-block"> 
+                    <input  id='Memo' name='Memo' type="text" lay-verify="required" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.App_Version_Memo" class="layui-input" data-options="multiline:true" style="height:80px;"  >
+        </div> 
+    </div>
+    <div class="layui-form-item"> 
+        <div class="layui-input-block"> 
+            <button class="layui-btn" lay-submit="" lay-filter="Accept">@Resource.lang.Accept</button> 
+            <button type="reset" class="layui-btn layui-btn-primary">@Resource.lang.Reset</button> 
+        </div> 
+    </div> 
+</form> 

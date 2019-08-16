@@ -1,0 +1,112 @@
+﻿body {
+    font-size: 12px;
+    font-family: "宋体";
+    color: #232323;
+    background-color: #fff;
+}
+
+html, body {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    padding: 2px 4px;
+}
+
+header, footer, nav, section {
+    display: block;
+}
+
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+fieldset {
+    border: 1px solid #ddd;
+    padding: 0 1.4em 1.4em 1.4em;
+    margin: 0 0 1.5em 0;
+}
+
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+textarea {
+    min-height: 75px;
+}
+
+.editor-label {
+    margin: 1em 0 0 0;
+}
+
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+/*index*/
+.mvctool {
+    height: 30px;
+    margin-bottom: 2px;
+}
+/*all--control
+input[type="text"], input[type="password"], .text-box, .easyui-numberbox, .easyui-validatebox, textarea,.combo,.searchbox {
+    border: 1px solid #bdd3f7;
+    height: 20px;
+    border-radius: 5px;
+}*/
+
+/*table*/
+.fromEditTable {
+    width: 100%;
+    margin-top: 10px;
+}
+
+    .fromEditTable label {
+        color: #55575b;
+    }
+
+    .fromEditTable td {
+        padding: 2px;
+        border-bottom: 1px dashed #CCC;
+    }
+/*create*/
+.bg {
+    background-color: #81B5D7;
+    padding: 2px 5px;
+    border-bottom: 1px solid #7693a7;
+}
+/*针对谷歌浏览器设置的排序样式*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .datagrid-sort-desc .datagrid-sort-icon {
+        padding: 0px;
+    }
+
+    .datagrid-sort-asc .datagrid-sort-icon {
+        padding: 0px;
+    }
+}

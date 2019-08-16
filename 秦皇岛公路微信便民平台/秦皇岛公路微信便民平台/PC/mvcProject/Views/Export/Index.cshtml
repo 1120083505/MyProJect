@@ -1,0 +1,56 @@
+﻿@{ 
+    ViewBag.Title = "ExportReport";
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+}
+<style>
+    .fromEditTable img {
+        padding: 0px 5px;
+    }
+
+    .fromEditTable td {
+        vertical-align: middle;
+        padding: 2px;
+    }
+</style>
+<div style="border-bottom: 2px solid #539abe; padding: 5px; font-weight: bold; background-color: #a1d7f2; font-size: 14px; display: none">
+    导出方式
+</div>
+<table class="fromEditTable">
+    <tbody>
+        <tr>
+            <td>
+                <label>
+                    <input name="type" value="PDF" checked="checked" type="radio"><img src="~/Content/icons/icon/page_white_acrobat.png" />PDF/在线打印</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    <input name="type" value="Image" type="radio"><img src="~/Content/icons/icon/page_white_paint.png" />PNG图片</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    <input name="type" value="Excel" type="radio"><img src="~/Content/icons/icon/page_white_excel.png" />Excel表格</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    <input name="type" value="Word" type="radio"><img src="~/Content/icons/icon/page_white_word.png" />Word文档</label>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div style="text-align: right; padding: 5px; padding-right: 20px;">
+    <a href="#" class="easyui-linkbutton" id="btnOk" data-options="iconCls:'icon-ok',plain:false">确定</a>
+</div>
+<script type="text/javascript">
+    $("#btnOk").click(function () {
+        var type = $("input:radio[name='type']:checked").val()
+        var queryStr = escape("@MvcHtmlString.Create(ViewBag.queryStr)");
+        var url = '@MvcHtmlString.Create(ViewBag.url)?queryStr=' + queryStr + '&type=' + type;
+        window.open(url, '_blank');
+    });
+</script>

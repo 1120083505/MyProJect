@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+@model  ZrSoft.VWeChat_HighwayDynamic
+
+@*<script src="~/lib/angular.js"></script>*@
+<script src="~/Scripts/InfoPicture.js"></script>
+<script src="~/Scripts/jquery.uploadify-v2.1.4/jquery.uploadify.v2.1.4.min.js"></script>
+<script src="~/Scripts/jquery.uploadify-v2.1.4/swfobject.js"></script>
+<link href="~/Scripts/jquery.uploadify-v2.1.4/uploadify.css" rel="stylesheet" />
+<script src="~/Scripts/ueditor1_4_3-utf8-net/ueditor.config.js"></script>
+<script src="~/Scripts/ueditor1_4_3-utf8-net/ueditor.all.min.js"></script>
+<script>
+    $(function () {
+        monpic();
+    })
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+        var theEditor = "";
+        theEdiotr = UE.getEditor('Conetent',
+        {
+            initialFrameWidth: 'auto',
+            initialFrameHeight: 300
+        });
+    });
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back">&#xe6ff;</a>  @Resource.lang.WeChat_HighwayDynamic
+    </legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.WeChat_HighwayDynamic_Title
+        </label>
+        <div class="layui-input-block">
+            <input id='Title' name='Title' type="text" lay-verify="" autocomplete="off" placeholder="@Model.Title" class="layui-input" value='@Model.Title'>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.WeChat_HighwayDynamic_Conetent
+        </label>
+        <div class="layui-input-block">
+            <textarea id='Conetent' name='Conetent' readonly="readonly" style="width:95%;height:170px;" placeholder="@Resource.lang.WeChat_HighwayDynamic_Conetent">@Html.Raw(Model.Conetent)</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片</label>
+        <div class="layui-input-block">
+            <input id="Moneypic" name="Moneypic" style="margin-top: 5px;" type="hidden" />
+            <div id="img">
+            </div>
+            <input id="FileName" name="FileName" type="hidden" value="@ViewBag.FileName" />
+            <input id="FileUrl" name="FileUrl" type="hidden" value="@ViewBag.FileUrl" />
+        </div>
+    </div>
+    @*<div class="layui-form-item">
+            <label class="layui-form-label">@Resource.lang.WeChat_HighwayDynamic_Memo</label><div class="layui-input-block">
+                <label name="@Model.Memo" class="layui-input">@Model.Memo</label>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">@Resource.lang.WeChat_HighwayDynamic_Ext1</label><div class="layui-input-block">
+                <label name="@Model.Ext1" class="layui-input">@Model.Ext1</label>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">@Resource.lang.WeChat_HighwayDynamic_Ext2</label><div class="layui-input-block">
+                <label name="@Model.Ext2" class="layui-input">@Model.Ext2</label>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">@Resource.lang.WeChat_HighwayDynamic_Ext3</label><div class="layui-input-block">
+                <label name="@Model.Ext3" class="layui-input">@Model.Ext3</label>
+            </div>
+        </div>*@
+</form>

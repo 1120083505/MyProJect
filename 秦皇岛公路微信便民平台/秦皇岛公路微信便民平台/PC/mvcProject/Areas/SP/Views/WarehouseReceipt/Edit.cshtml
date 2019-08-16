@@ -1,0 +1,280 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+@model ZrSoft.SP_SaleMain
+<script src="~/Scripts/vue.js"></script>
+<script src="~/Scripts/layui2.0/layui.js"></script>
+<link href="~/Scripts/layui2.0/css/layui.css" rel="stylesheet" />
+<style>
+    .layui-form-item {
+        width: 30%
+    }
+
+    .Select {
+        display: block;
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 30px;
+        cursor: pointer;
+        height: 38px;
+        line-height: 1.3;
+        line-height: 38px\9;
+        border-width: 1px;
+        border-style: solid;
+        background-color: #fff;
+        border-radius: 2px;
+    }
+
+    .Selecttwo {
+        display: block;
+        width: 72%;
+        padding-left: 10px;
+        padding-right: 30px;
+        cursor: pointer;
+        height: 38px;
+        line-height: 1.3;
+        line-height: 38px\9;
+        border-width: 1px;
+        border-style: solid;
+        background-color: #fff;
+        border-radius: 2px;
+    }
+</style>
+<script>
+
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back">&#xe6ff;</a>@Resource.lang.SP_ShangPinInfo
+    </legend>
+</fieldset>
+<div id="app">
+    <div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">@Resource.lang.SP_SaleMain_Customer</label>
+            <div class="layui-input-block">
+                <select v-model="Sales.Customer" clearable filterable lay-verify="required" class="Select">
+                    <Option v-for="item in CustomerList" :value="item.Id" :key="item.Id">{{item.CustomerName}}</Option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="position: absolute;left: 30%;top: 10%;">
+            <label class="layui-form-label">@Resource.lang.SP_SaleMain_OpeningTime</label>
+            <div class="layui-input-block">
+                <input id='OpeningTime' name='OpeningTime' v-model="Sales.OpeningTime" type="text" lay-verify="date|required" placeholder="@Resource.lang.SP_SaleMain_OpeningTime" autocomplete="off" @@click="laydateon(Sales)" class="layui-input" missingmessage="日期不能为空" editable="false">
+            </div>
+        </div>
+        <div class="layui-form-item" style="position: absolute;left: 60%;top: 10%;">
+            <label class="layui-form-label">@Resource.lang.SP_SaleMain_TotalPrice</label>
+            <div class="layui-input-block">
+                <input id='TotalPrice' name='TotalPrice' v-model="Sales.TotalPrice" type="number" lay-verify="number|required" placeholder="@Resource.lang.SP_SaleMain_TotalPrice" autocomplete="off" class="layui-input" precision="2">
+            </div>
+        </div>
+    </div>
+    <div v-for="(info, index) in myInfo" style="position:relative">
+        <div class="layui-form-item">
+            <label class="layui-form-label">@Resource.lang.SP_ShangPinInfo_FormId</label>
+            <div class="layui-input-block">
+                <select v-model="info.FormId" lay-verify="required" class="Select" @@change='getCouponSelected(index)'>
+                    <Option v-for="item in CityList" :value="item.Id" :key="item.Id">{{item.WareName}}</Option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="position: absolute;left: 30%;top: 0%;">
+            <label class="layui-form-label">@Resource.lang.SP_ShangPinInfo_Num</label>
+            <div class="layui-input-block">
+                <input id='Num' name='Num' type="number" v-model="info.Num" @@keyup='SumHeji(index)' lay-verify="number" placeholder="@Resource.lang.SP_ShangPinInfo_Num" autocomplete="off" class="layui-input" precision="2">
+            </div>
+        </div>
+        <div class="layui-form-item" style="position: absolute;left: 60%;top: 0%;">
+            <label class="layui-form-label">@Resource.lang.SP_ShangPinInfo_Price</label>
+            <div class="layui-input-block">
+                <input id='Price' name='Price' v-model="info.Price" type="number" @@keyup='SumHeji(index)' lay-verify="number" placeholder="@Resource.lang.SP_ShangPinInfo_Price" autocomplete="off" class="layui-input" precision="2">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">@Resource.lang.SP_ShangPinInfo_SumPrice</label>
+            <div class="layui-input-block">
+                <input id='SumPrice' name='SumPrice' v-model="info.SumPrice" type="number" lay-verify="number" placeholder="@Resource.lang.SP_ShangPinInfo_SumPrice" @@keyup='ZSumHeji()' autocomplete="off" class="layui-input" precision="2">
+            </div>
+        </div>
+        <div class="layui-form-item" style="position: absolute;left: 30%;top: 60%;">
+            <label class="layui-form-label">@Resource.lang.SP_ShangPinInfo_Warehouse</label>
+            <select v-model="info.Warehouse" lay-verify="required" class="Selecttwo">
+                <Option v-for="item in CKList" :value="item.Id" :key="item.Id">{{item.Name}}</Option>
+            </select>
+        </div>
+        <div class="layui-form-item" style="position: absolute;left: 60%;top: 60%;">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <input id='Memo' name='Memo' v-model="info.Memo" placeholder="备注" class="layui-input">
+            </div>
+        </div>
+        <button @@click='handleClick' v-if="index==0" class="layui-btn" style="position: absolute;left: 92%;top: 0%">添加</button>
+        <button v-on:click='Delete(index)' v-if="index!=0" class="layui-btn" style="position: absolute;left: 92%;top: 0%">删除</button>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" @@click='SubTj' lay-filter="Accept">@Resource.lang.Accept</button>
+        </div>
+    </div>
+</div>
+<script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                myInfo: [{
+                    Id:'',
+                    FormId: '',
+                    Num: '',
+                    Price: '',
+                    SumPrice: '',
+                    Warehouse: '',
+                    Customer: '',
+                    Memo: ''
+                }],
+                CityList:[{}],
+                CustomerList:[{}],
+                CKList: [{}],
+                Sales: {
+                    id:'',
+                    Customer: '',
+                    OpeningTime: '',
+                    TotalPrice: '',
+
+                }
+            },
+            mounted: function () {
+                this.CompanyView();
+                this.CKView();
+                this.CustomerView();
+                this.GetJsonArr();
+            },
+            methods: {
+                handleClick() {
+                    var str = {
+                        Id: '',
+                        FormId: '',
+                        Num: '',
+                        Price: '',
+                        SumPrice: '',
+                        Warehouse: '',
+                        Customer: '',
+                        Memo: ''
+                    };
+                    this.myInfo.push(str);
+                },
+                laydateon: function (Sales) {
+                    layui.use('laydate', function () {
+                        var laydate = layui.laydate;
+                        laydate.render({
+                            elem: '#OpeningTime',
+                            done: function (value) {
+                                Sales.OpeningTime = value;
+                            }
+                        })
+                    });
+                },
+                Delete: function (index) {
+                    if(this.myInfo.length > 1){
+                        this.myInfo.splice(index, 1);
+                    }
+                    else {
+                        console.log("别删了 还剩一个了");
+                    }
+                },
+                SumHeji(index) {
+                    //Math.floor
+                    this.myInfo[index].SumPrice = (this.myInfo[index].Num * this.myInfo[index].Price).toFixed(2);
+                    var Sum = 0;
+                    for (var i = 0; i < this.myInfo.length; i++) {
+                        Sum += this.myInfo[i].SumPrice * 1;
+                    }
+                    //alert(Sum);
+                    this.Sales.TotalPrice = Sum.toFixed(2);
+                },
+                getCouponSelected(index) {
+                    var Price;
+                    for (var i = 0; i < this.CityList.length; i++) {
+                        if (this.CityList[i].Id == this.myInfo[index].FormId) {
+                            Price = this.CityList[i].WarePrice;
+                        }
+                    }
+                    this.myInfo[index].Price = Price;
+                },
+                SubTj() {
+                    this.Sales.Info = this.myInfo;
+                    var List = this.Sales;
+                    $.ajax({
+                        url: "@Url.Action("CreateList")",
+                        type: "Post",
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(List),
+                        dataType: "json",
+                        success: function (data) {
+                            window.parent.callBack(data);
+                            //console.log(JSON.stringify(List))
+                        }
+                    });
+
+                },
+                CompanyView: function () {
+                    var Arr;
+                    $.ajax({
+                        url: '/SP/ShangPin/GetAllList',
+                        type: 'Post',
+                        dataType: 'json',
+                        async: false,
+                        success: function (d) {
+                            Arr = d.rows;
+                        }
+                    });
+                    this.CityList = Arr;
+                    //console.log(JSON.stringify(this.CityList));
+                },
+                CKView: function () {
+                    var Arr;
+                    $.ajax({
+                        url: '/CK/Warehouse/GetAllList',
+                        type: 'Post',
+                        dataType: 'json',
+                        async: false,
+                        success: function (d) {
+                            Arr = d.rows;
+                        }
+                    });
+                    this.CKList = Arr;
+                    //console.log(JSON.stringify(this.CityList));
+                },
+                CustomerView: function () {
+                    var Arr;
+                    $.ajax({
+                        url: '/SP/Customer/GetAllList',
+                        type: 'Post',
+                        dataType: 'json',
+                        async: false,
+                        success: function (d) {
+                            Arr = d.rows;
+                        }
+                    });
+                    this.CustomerList = Arr;
+                },
+                GetJsonArr: function () {
+                    var Arr;
+                    $.ajax({
+                        url: '/SP/SalesOutlet/GetListJson',
+                        type: 'Post',
+                        data: {'id':'@Model.Id'},
+                        dataType: 'json',
+                        async: false,
+                        success: function (d) {
+                            Arr = d;
+                        }
+                    });
+                    this.Sales = Arr;
+                    this.myInfo = Arr.rows;
+                }
+            }
+        })
+</script>

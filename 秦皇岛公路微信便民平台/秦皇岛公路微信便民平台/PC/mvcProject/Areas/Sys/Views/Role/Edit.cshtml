@@ -1,0 +1,158 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+} 
+@model  ZrSoft.Sys_Role 
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+        //监听提交 
+        form.on('submit(Accept)', function (data) {
+            var json = data.field;
+            json["Id"] = "@Model.Id";
+            $.ajax({
+                url: "@Url.Action("Edit")",
+                type: "Post",
+                data: json,
+                dataType: "json",
+                success: function (data) {
+                    window.parent.callBack(data);
+                }
+            });
+            return false;
+        });
+    });
+</script> 
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;"> 
+    <legend> 
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a> @Resource.lang.Sys_Role </legend>
+</fieldset> 
+<form class="layui-form" action=""> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Html.LabelFor(model => model.Name) 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input id='Name' name='Name'  type="text" lay-verify="required" autocomplete="off" placeholder="@Model.Name" class="layui-input"  value='@Model.Name'> 
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label"> 
+                    @Html.LabelFor(model => model.Memo) 
+                </label> 
+        <div class="layui-input-block"> 
+                    <input  id='Memo' name='Memo' type="text" lay-verify="required" autocomplete="off" placeholder="@Model.Memo" class="layui-input" data-options="multiline:true" style="height:80px;" value="@Model.Memo" >
+        </div> 
+    </div> 
+    <div class="layui-form-item"> 
+        <div class="layui-input-block"> 
+            <button class="layui-btn" lay-submit="" lay-filter="Accept">@Resource.lang.Accept</button> 
+            <button type="reset" class="layui-btn layui-btn-primary">@Resource.lang.Reset</button> 
+        </div> 
+    </div> 
+</form> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@model  ZrSoft.Sys_Role
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+<style>
+    #picAll img {
+        width: 16px;
+        height: 16px;
+        margin: 5px;
+        display: block;
+        float: left;
+        cursor: pointer;
+        border: 1px solid #FFF;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $("#btnSave").click(function () {
+            if ($("form").form("validate")) {
+                $.ajax({
+                    url: "@Url.Action("Edit")",
+                    type: "Post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data.Status == 1) {
+                            window.parent.frameReturnByMes(data.Memo);
+                            window.parent.frameReturnByReload(true);
+                            window.parent.frameReturnByClose()
+                        }
+                        else {
+                            window.parent.frameReturnByMes(data.Memo);
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+        $("#btnReturn").click(function () {
+            window.parent.frameReturnByClose();
+        });
+    });
+
+</script>
+<div class="mvctool bg">
+    <a href="#" class="easyui-linkbutton" id="btnSave" data-options="iconCls:'icon-disk',plain:true">保存</a>
+    <a href="#" class="easyui-linkbutton" id="btnReturn" data-options="iconCls:'icon-undo',plain:true">返回</a>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.PubDate)
+    <table class="fromEditTable">
+        <tbody>
+            <tr>
+                <td style="width: 100px; text-align: right;">
+                    @Html.LabelFor(model => model.Name)：
+                </td>
+                <td style="width: 180px">
+                    @Html.EditorFor(model => model.Name)
+                </td>
+                <td style="text-align: left;">@Html.ValidationMessageFor(model => model.Name)</td>
+            </tr>
+
+            <tr>
+                <td style="width: 100px; text-align: right;">
+                    @Html.LabelFor(model => model.Memo)：
+                </td>
+                <td style="width: 180px">
+                    <textarea name="Memo" cols="30" rows="2">@Model.Memo</textarea>
+                </td>
+                <td style="text-align: left;">@Html.ValidationMessageFor(model => model.Memo)</td>
+            </tr>
+
+        </tbody>
+    </table>
+}
+
+*@

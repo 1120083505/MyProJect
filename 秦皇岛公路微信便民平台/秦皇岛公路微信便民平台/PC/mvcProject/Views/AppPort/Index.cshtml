@@ -1,0 +1,112 @@
+﻿@using Core
+@{ 
+    ViewBag.Title = "APP提示页面";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml"; 
+}
+<style>
+    .easyui-textbox {
+        width: 50%;
+    }
+</style>
+<script type="text/javascript">
+
+    $(function () {
+        $("#btnAccept").click(function () {
+            //alert("/appPort/" + $("#ActionName").textbox("getValue") + "?" + $("#p").textbox("getValue"));
+            if ($("form").form("validate")) {
+                try {
+                    $.ajax({
+                        url: "/appPort/" + $("#ActionName").textbox("getValue") + "?" + $("#p").textbox("getValue"),
+                        type: "POST",
+                        success: function (data) {
+                            $("#Memo").textbox("setValue", JSON.stringify(data));
+                        },
+                        async: false,
+                        error: function (dd) {
+                            $.messager.alert('出错了', '请检查内容是否填写完整、准确！!', 'error');
+                            $("#Memo").textbox("setValue", JSON.stringify(dd));
+                        }
+                    });
+                }
+                catch (e) {
+                    $("#Memo").textbox("setValue", JSON.stringify(e));
+                }
+            }
+            return false;
+        });
+    });
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+        //监听提交 
+        form.on('submit(Accept)', function (data) {
+            var json = data.field;
+            try {
+                $.ajax({
+                    url: "/appPort/" + json.ActionName + "?" + json.p,
+                    type: "POST",
+                    success: function (data) {
+                        $("#Memo").val( JSON.stringify(data));
+                    },
+                    async: false,
+                    error: function (dd) {
+                        $.messager.alert('出错了', '请检查内容是否填写完整、准确！!', 'error');
+                        $("#Memo").val(JSON.stringify(dd));
+                    }
+                });
+            }
+            catch (e) {
+                $("#Memo").textbox("setValue", JSON.stringify(e));
+            }
+            return false;
+        });
+    });
+</script>
+<form style="" class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">请求方法：</label>
+        <div class="layui-input-block">
+            <input id='ActionName' name='ActionName' type="text" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数：</label>
+        <div class="layui-input-block">
+            <input id='p' name='p' type="text" lay-verify="" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+        </div>
+    </div>
+    <button class="layui-btn" lay-submit="" lay-filter="Accept" style="margin-left:40%;">@Resource.lang.Accept</button>
+    <div class="layui-form-item">
+        <label class="layui-form-label">返回结果：</label>
+        <div class="layui-input-block">
+            <textarea id='Memo' name='Memo' placeholder="" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    @*<form>
+    <table class="fromEditTable">
+        <tbody>
+            <tr>
+                <td style="width: 100px; text-align: right;">请求方法：</td>
+                <td>
+                    <input id='ActionName' name='ActionName' class="easyui-textbox" data-options="prompt:'ActionName',required:true">
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100px; text-align: right;">参数：</td>
+                <td>
+                    <input id='p' name='p' class="easyui-textbox" data-options="prompt:'“?”之后的参数例如：**=*&**=**',required:false"></td>
+            </tr>
+            <tr>
+                <td style="width: 100px; text-align: right;"></td>
+                <td><a href="#" class="easyui-linkbutton" id="btnAccept" data-options="iconCls:'icon-ok',plain:false">提交至服务器</a></td>
+            </tr>
+            <tr>
+                <td style="width: 100px; text-align: right;">返回结果：</td>
+                <td>
+                    <input id="Memo" class="easyui-textbox" data-options="multiline:true" style="height: 150px">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>*@
+</form>

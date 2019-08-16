@@ -1,0 +1,161 @@
+﻿@using Core 
+@{ 
+    ViewBag.Title = " _Index"; 
+    Layout = "~/Views/Shared/_Index_Layout.cshtml"; 
+} 
+<div style="padding-top: 10px;"> 
+    @MvcHtmlString.Create(printControl.PowerLinkBtn(@Url.Action("")))
+</div> 
+<hr /> 
+<form style="" class="layui-form"> 
+    <div class="layui-input-inline"> 
+                    <input id='Name' name='Name' type="text" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.Sys_Role_Name" class="layui-input" > 
+    </div> 
+    <button class="layui-btn layui-btn-primary SearchBtn" id="btnSearch"><i class="layui-icon">&#xe651;</i>@Resource.lang.Search</button> 
+    <button class="layui-btn layui-btn-primary SearchBtn" type="reset" id="btnClear"><i class="layui-icon">&#xe641;</i>@Resource.lang.Reset</button> 
+</form> 
+<table class="layui-table"> 
+    <colgroup> 
+        <col width="20"> 
+        <col width="150"> 
+        <col width="150"> 
+    </colgroup> 
+    <thead> 
+        <tr class=""> 
+            <th> 
+                <input id="checkOrNoAll" type="checkbox"> 
+            </th> 
+            <th>@Resource.lang.Sys_Role_Name</th> 
+            <th>@Resource.lang.Sys_Role_Memo</th> 
+        </tr> 
+    </thead> 
+    <tbody ng-controller="listController"> 
+        <tr ng-repeat="x in data" id="{{x.Id}}"> 
+            <td> 
+                <input id="check{{ x.RowNumber }}" value="{{x.Id}}" class="checkList" type="checkbox" name="checkList"> 
+            </td> 
+            <td>{{x.Name}}</td> 
+            <td>{{x.Memo}}</td> 
+        </tr> 
+    </tbody> 
+</table> 
+<div id="paged" style="margin: 0px; padding: 0px; text-align: center"></div>  
+<script type="text/javascript">
+    function callBack(data) {
+        Alert(data);
+        if (data.Status == 1) {
+            layer.close(lIndex);
+            searchcount = 0;
+            paged(1);
+        }
+    }
+    function Alert(data) {
+        layer.msg(data.Memo, { icon: data.Status == 0 ? 2 : 1, time: 3 * 1000 });
+    }
+    function closeLayer() {
+        layer.close(lIndex);
+    }
+    var layer, lIndex, ids = [];
+    var paged, searchcount = 0, totalPages = 0;
+    layui.use(['form', 'layedit', 'laydate', 'element', 'laypage'], function () {
+        layer = layui.layer;
+    });
+    function CeatePage(pages, curr) {
+        layui.use(['laypage'], function () {
+            layer = layui.layer;
+            layui.laypage({
+                cont: 'paged'
+              , pages: pages //总页数 
+                , curr: curr
+                , groups: 5 //连续显示分页数 
+                  , skip: true
+                  , jump: function (obj, first) {
+                      var curr = obj.curr;
+                      paged(curr);
+                  }
+            , prev: '<em><</em>'
+            , next: '<em>></em>'
+            , first: '<em>@Resource.lang.FristPage</em>'
+            , last: '<em>@Resource.lang.LastPage</em>'
+            });
+        });
+    }
+    $(document).ready(function () {
+        paged(1);
+        $("#btnSearch").click(function () {
+            searchcount = 0;
+            paged(1);
+            return false;
+        });
+        $('#btnCreate').click(function () {
+            lIndex = layer.open({
+                type: 2,
+                title: '@Resource.lang.Create',
+                shadeClose: true,
+                shade: 0.3,
+                maxmin: true, //开启最大化最小化按钮 
+                area: ['893px', '600px'],
+                content: '@Url.Action("Create")'
+            });
+        });
+        $('#btnEdit').click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                lIndex = layer.open({
+                    type: 2,
+                    title: '@Resource.lang.Edit',
+                    shadeClose: true,
+                    shade: 0.3,
+                    maxmin: true, //开启最大化最小化按钮 
+                    area: ['893px', '600px'],
+                    content: '@Url.Action("Edit/")' + ids[0]
+                });
+            }
+        });
+        $("#btnDelete").click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                layer.confirm('@Resource.lang.tip_Do_Dell', {
+                    btn: ['@Resource.lang.OK', '@Resource.lang.Cancel'] //按钮 
+                }, function () {
+                    $.post('@Url.Action("Delete")', { id: ids.join(',') }, function (data) {
+                        callBack(data);
+                    }, 'json');
+                }, function () {
+                });
+            }
+        });
+    });
+    var myApp = angular.module("list", []);
+    myApp.controller('listController', function ($scope, $http) {
+        paged = $scope.GetData = function (page) {
+            var queryStr = $('form').serialize();
+            //alert(queryStr);  
+            if (searchcount == 1) {
+                searchcount++;
+            }
+            else {
+                $http.post('@Url.Action("GetList")', { page: page, queryStr: queryStr })
+                    .success(function (d) {
+                        $scope.data = d.rows;
+                        searchcount++;
+                        if (searchcount == 1) {
+                            CeatePage(d.pager.totalPages, 1);
+                        }
+                    });
+            }
+        };
+    });
+    myApp.controller('RoleController', function ($scope, $http) {
+        $http.post('/Sys/Role/GetListAll')
+           .success(function (d) {
+               $scope.data = d.rows;
+           });
+    });
+</script> 

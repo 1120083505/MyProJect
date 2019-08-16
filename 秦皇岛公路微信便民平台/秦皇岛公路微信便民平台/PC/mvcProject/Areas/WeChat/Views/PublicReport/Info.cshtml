@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+@model  ZrSoft.WeChat_PublicReport
+<script src="~/lib/angular.js"></script>
+<script>
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+    });
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back">&#xe6ff;</a>  @Resource.lang.WeChat_PublicReport
+    </legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.WeChat_PublicReport_Location</label><div class="layui-input-block">
+            <label name="@Model.Location" class="layui-input">@Model.Location</label>
+        </div>
+    </div>
+    @*<div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.WeChat_PublicReport_LngLat</label><div class="layui-input-block">
+            <label name="@Model.LngLat" class="layui-input">@Model.LngLat</label>
+        </div>
+    </div>*@
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.WeChat_PublicReport_Memo</label><div class="layui-input-block">
+            <label name="@Model.Memo" class="layui-input">@Model.Memo</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.WeChat_PublicReport_ReportPerson</label><div class="layui-input-block">
+            <label name="@Model.ReportPerson" class="layui-input">@Model.ReportPerson</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.WeChat_PublicReport_Telephone</label><div class="layui-input-block">
+            <label name="@Model.Telephone" class="layui-input">@Model.Telephone</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.WeChat_PublicReport_Pubdate</label><div class="layui-input-block">
+            <label name="@Model.Pubdate" class="layui-input">@Model.Pubdate</label>
+        </div>
+    </div>
+    @*<div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.WeChat_PublicReport_Ext1</label><div class="layui-input-block">
+            <label name="@Model.Ext1" class="layui-input">@Model.Ext1</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.WeChat_PublicReport_Ext2</label><div class="layui-input-block">
+            <label name="@Model.Ext2" class="layui-input">@Model.Ext2</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.WeChat_PublicReport_Ext3</label><div class="layui-input-block">
+            <label name="@Model.Ext3" class="layui-input">@Model.Ext3</label>
+        </div>
+    </div>*@
+</form>

@@ -1,0 +1,153 @@
+﻿@using Core
+@{ 
+    ViewBag.Title = "测试_Index";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml"; 
+}
+<style>
+    .datagrid-header-row {
+        height: 50px;
+    }
+</style>
+<div class="mvctool">
+    @MvcHtmlString.Create(printControl.PowerLinkBtn(@Url.Action("")))
+</div>
+<div id="sp">
+    <div id="SearchPanel" style="padding: 2px; overflow: hidden;">
+        <form>
+            @MvcHtmlString.Create(printControl.SerachType())
+            <span>
+                <label for="Name">测试名称：</label><input id="Name" name="Name" type="text" /></span>
+            <span>
+                <label for="Title">标题：</label><input id="Title" name="Title" type="text" /></span>
+            <span>
+                <label for="price">价格：</label><input id="price" name="price" type="text" /></span>
+            <span>
+                <label for="count">计数：</label><input id='count' name='count' class="easyui-numberbox"></span>
+            <span>
+                <label for="PubDate">操作时间：</label><input id='PubDate' name='PubDate' class="easyui-datebox" editable="false"></span>
+            <span>
+                <label for="AdminId">操作员：</label><input id="AdminId" name="AdminId" type="text" /></span>
+            <span>
+                <label for="OtherMemo">备注：</label><input id="OtherMemo" name="OtherMemo" type="text" /></span>
+        </form>
+    </div>
+</div>
+<table id="List"></table>
+<script type="text/javascript">
+    $.ajax({
+        url: '@Url.Action("gettest")',
+        type: "POST",
+        async: false,
+        success: function (data) {
+            // alert(JSON.stringify(data));
+        }
+    });
+    function frameReturnByClose() {
+        $('#modalwindow').window('close');
+    }
+    function frameReturnByReload(flag) {
+        if (flag) {
+            $('#List').datagrid('load');
+        }
+        else {
+            $('#List').datagrid('reload');
+        }
+    }
+    function frameReturnByMes(mes) {
+        $.messageBox5s('提示', mes);
+    }
+    var ifrSrc = "@MvcHtmlString.Create(printControl.ifrSrc())";
+    $(function () {
+        var ColumnsJson;
+        $.ajax({
+            url: '@Url.Action("GetColumnsJson")',
+            type: "POST",
+            async: false,
+            success: function (data) {
+                ColumnsJson = data;
+            }
+        });
+        //【JSON删除】从位置7开始，删除1个元素
+        ColumnsJson.splice(7, 1);
+
+        $('#List').datagrid({
+            url: '@Url.Action("GetList")',
+            queryParams: { queryStr: $("#sp form").serialize() },
+            sortName: 'Id',
+            sortOrder: 'Asc',
+            idField: 'Id',
+            width: SetGridWidthSub(12),
+            methord: 'post',
+            height: SetGridHeightSub(),
+            fitColumns: false,
+            pageSize: 15,
+            pageList: [15, 20, 30, 40, 50],
+            pagination: true,
+            striped: true, //奇偶行是否区分 
+            rownumbers: true,//行号 
+            singleSelect: true,//单选模式 
+            showFooter: true,
+            columns: [ColumnsJson],
+            onLoadSuccess: function (data) {
+                $(this).datagrid("autoMergeCells", ["Title", "Name"]);
+            }
+        });
+        //【重新定义列的属性】
+        var obj = $('#List').datagrid('options').columns[0];
+        //alert("wwww"+JSON.stringify(obj));
+        obj[1].formatter = function (value, datarow) {
+            return "<span onclick='javascript:alert(\"" + datarow.count + "\")' style='color:Blue'>" + value + "</span>";
+        };
+        $('#btnCreate').click(function () {
+            $('#modalwindow').html($.format(ifrSrc, '@Url.Action("Create")'))
+                .window({ title: $(this).text(), width: 600, height: 350, iconCls: 'icon-add' }).window('open');
+        });
+        $('#btnEdit').click(function () {
+            var row = $('#List').datagrid('getSelected');
+            if (row != null) {
+                $('#modalwindow').html($.format(ifrSrc, '@Url.Action("Edit/")' + row.Id))
+                .window({ title: $(this).text(), width: 600, height: 350, iconCls: 'icon-edit' }).window('open');
+
+            }
+            else {
+                $.messageBox5s('提示', '@Tip.NoSelect');
+            }
+        });
+        $('#btnDelete').click(function () {
+            var row = $('#List').datagrid('getSelected');
+            if (row != null) {
+                $.messager.confirm('提示', '@Tip.WantDeleteTheSelectedRecords', function (r) {
+                    if (r) {
+                        $.post('@Url.Action("Delete/")' + row.Id, function (data) {
+                            if (data.Status == 1)
+                                $('#List').datagrid('load');
+                            $.messageBox5s('提示', data.Memo);
+                        }, 'json');
+                        $('#List').datagrid('clearSelections');
+
+                    }
+                });
+            }
+            else {
+                $.messageBox5s('提示', '@Tip.NoSelect');
+            }
+        });
+        $('#BtnQuery').click(function () {
+            var queryStr = $('#sp form').serialize();
+            //queryStr = decodeURIComponent(queryStr, true);
+            if (queryStr == null) {
+                queryStr = '%';
+            }
+            $('#List').datagrid('load', { queryStr: queryStr, dataType: 'json' });
+
+        });
+        $('#btnExport').click(function () {
+            var queryStr = $('#sp form').serialize();
+            //queryStr = decodeURIComponent(queryStr, true);
+            queryStr = escape(queryStr);
+            var url = '@Url.Action("Export")';
+            $('#modalwindow').html($.format(ifrSrc, '/export?url=' + url + '&queryStr=' + queryStr))
+              .window({ title: " ", width: 300, height: 200, minimizable: false, collapsible: false, maximizable: false, iconCls: 'icon-printer' }).window('open');
+        });
+    });
+</script>

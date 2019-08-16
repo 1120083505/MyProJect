@@ -1,0 +1,222 @@
+﻿@{
+    ViewBag.Title = "便民服务";
+    Layout = null;
+}
+<meta name="viewport" content="width=device-width,height=device-height, user-scalable=no,initial-scale=1, minimum-scale=1, maximum-scale=1,target-densitydpi=device-dpi ">
+ <title>@ViewBag.Title</title>
+<link href="~/Content/zmgl/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/zmgl/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" />
+<script src="~/Content/zmgl/js/jquery.js"></script>
+<script src="~/Content/zmgl/js/bootstrap.js"></script>
+<link href="~/Content/zmgl/css/cxfw.css" rel="stylesheet" />
+@*<div class="biaoti">
+        出行服务
+    </div>*@
+<div id="myCarousel" class="carousel slide">
+    <!-- 轮播（Carousel）指标 -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    </ol>
+    <!-- 轮播（Carousel）项目 -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <img src="~/Content/zmgl/image/图层 20.png" alt="First slide" />
+        </div>
+    </div>
+    <!-- 轮播（Carousel）导航 -->
+    <a class="carousel-control left" href="#myCarousel" data-slide="prev"></a>
+    <a class="carousel-control right" href="#myCarousel" data-slide="next"></a>
+</div>
+<div class="zong">
+    <div class="row">
+        <a href="https://bianmin.zrsoft.cn/WeChat/WXHighwayMap/RoadCondition">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan1" style="padding-top:13px">
+                        <img src="~/Content/zmgl/image/01实时路况.png" />
+                    </div>
+                </div>
+                实时路况
+            </div>
+        </a>
+        @*<a href="http://tools.qingdaonews.com/wap/weizhang/">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan2">
+                        <img src="~/Content/zmgl/image/02违章查询.png" />
+                    </div>
+                </div>
+                违章查询
+            </div>
+        </a>*@
+        <a href="http://bus.qingdaonews.com/m/?source=wx&cityid=370200">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan3">
+                        <img src="~/Content/zmgl/image/03公交查询.png" />
+                    </div>
+                </div>
+                公交查询
+            </div>
+        </a>
+        <a href="http://ditu.amap.com">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan4">
+                        <img src="~/Content/zmgl/image/04附近检索.png" />
+                    </div>
+                </div>
+                附近检索
+            </div>
+        </a>
+        <a href="http://sms.czfw.cn/TPDYH/WZZ/bmfw.aspx">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan15" style="padding-top:13px">
+                        <img src="~/Content/zmgl/image/15便民服务.png" />
+                    </div>
+                </div>
+                便民服务
+            </div>
+        </a>
+    </div>
+    <div class="row">
+        <a href="https://bianmin.zrsoft.cn/WeChat/WXDrunkenRoad/Index">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan5">
+                        <img src="~/Content/zmgl/image/05最美公路.png" />
+                    </div>
+                </div>
+                最美公路
+            </div>
+        </a>
+        <a href="https://bianmin.zrsoft.cn/WXHome/index3">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan6">
+                        <img src="~/Content/zmgl/image/06公路动态.png" />
+                    </div>
+                </div>
+                公路动态
+            </div>
+        </a>
+        <a href="https://bianmin.zrsoft.cn/WXHome/GCMap">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan7">
+                        <img src="~/Content/zmgl/image/07公厕地图.png" />
+                    </div>
+                </div>
+                公测地图
+            </div>
+        </a>
+        <a href="http://m.tianqi.com">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan8">
+                        <img src="~/Content/zmgl/image/08天气查询.png" />
+                    </div>
+                </div>
+                实时天气
+            </div>
+        </a>
+    </div>
+    <div class="row">
+        <a href="http://gonglu.zrsoft.cn/WeChat/Login">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan9">
+                        <img src="~/Content/zmgl/image/09专家诊治.png" />
+                    </div>
+                </div>
+                专家诊治
+            </div>
+        </a>
+        <a href="http://m.kuaidi100.com">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan10">
+                        <img src="~/Content/zmgl/image/10快递查询 .png" />
+                    </div>
+                </div>
+                快递查询
+            </div>
+        </a>
+        <a href="https://bianmin.zrsoft.cn/WXHome/Index">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan11">
+                        <img src="~/Content/zmgl/image/11两学一做.png" />
+                    </div>
+                </div>
+                两学一做
+            </div>
+        </a>
+        <a href="https://bianmin.zrsoft.cn/WXHome/index2">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan12">
+                        <img src="~/Content/zmgl/image/12政策法规.png" />
+                    </div>
+                </div>
+                政策法规
+            </div>
+        </a>
+    </div>
+    <div class="row">
+        <a href="https://bianmin.zrsoft.cn/WXHome/HighWayRoadCountry2">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan13">
+                        <img src="~/Content/zmgl/image/13高速公路.png" />
+                    </div>
+                </div>
+                高速公路
+            </div>
+        </a>
+        <a href="https://bianmin.zrsoft.cn/WXHome/HighWayRoadCountry">
+                <div class="col-xs-3 col-md-4">
+                    <div class="zuiwai">
+                        <div class="nyclass neiyuan13">
+                            <img src="~/Content/zmgl/image/14省道查询.png" />
+                        </div>
+                    </div>
+                    省道公路
+                </div>
+            </a>
+        <a href="http://m.qd.bendibao.com/weixin/qd/">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan14">
+                        <img src="~/Content/zmgl/image/16旅游攻略.png" />
+                    </div>
+                </div>
+                旅游攻略
+            </div>
+        </a>
+        <a href="https://bianmin.zrsoft.cn/WXHome/HighWayRoadCountry4">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan13">
+                        <img src="~/Content/zmgl/image/18服务区.png" />
+                    </div>
+                </div>
+                服务区
+            </div>
+        </a>
+    </div>
+    <div class="row">
+        <a href="https://bianmin.zrsoft.cn/WXHome/HighWayRoadCountry3">
+            <div class="col-xs-3 col-md-4">
+                <div class="zuiwai">
+                    <div class="nyclass neiyuan13">
+                        <img src="~/Content/zmgl/image/17收费站.png" />
+                    </div>
+                </div>
+                收费站
+            </div>
+        </a>
+        
+    </div>
+</div>

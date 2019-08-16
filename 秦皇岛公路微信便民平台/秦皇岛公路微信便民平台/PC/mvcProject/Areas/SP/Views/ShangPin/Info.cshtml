@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+@model  ZrSoft.SP_ShangPin
+<script src="~/lib/angular.js"></script>
+<script>
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+    });
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back">&#xe6ff;</a>  @Resource.lang.SP_ShangPin
+    </legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_WareName</label><div class="layui-input-block">
+            <label name="@Model.WareName" class="layui-input">@Model.WareName</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_WareType</label><div class="layui-input-block">
+            <label name="@Model.WareType" class="layui-input">@Model.WareType</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_WarePrice</label><div class="layui-input-block">
+            <label name="@Model.WarePrice" class="layui-input">@Model.WarePrice</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_Specifications</label><div class="layui-input-block">
+            <label name="@Model.Specifications" class="layui-input">@Model.Specifications</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_SellingPrice</label><div class="layui-input-block">
+            <label name="@Model.SellingPrice" class="layui-input">@Model.SellingPrice</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_Warehouse</label><div class="layui-input-block">
+            <label name="@Model.Warehouse" class="layui-input">@Model.Warehouse</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_Memo</label><div class="layui-input-block">
+            <label name="@Model.Memo" class="layui-input">@Model.Memo</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_AdminId</label><div class="layui-input-block">
+            <label name="@Model.AdminId" class="layui-input">@Model.AdminId</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_Pubdate</label><div class="layui-input-block">
+            <label name="@Model.Pubdate" class="layui-input">@Model.Pubdate</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_Ext1</label><div class="layui-input-block">
+            <label name="@Model.Ext1" class="layui-input">@Model.Ext1</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_Ext2</label><div class="layui-input-block">
+            <label name="@Model.Ext2" class="layui-input">@Model.Ext2</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_ShangPin_Ext3</label><div class="layui-input-block">
+            <label name="@Model.Ext3" class="layui-input">@Model.Ext3</label>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,301 @@
+﻿ .biaoti {
+        width: 100%;
+        height: 45px;
+        font-size: 22px;
+        line-height: 45px;
+        background: #FE8920;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .zuiwai img {
+        width: 30px;
+    }
+
+    .row {
+        text-align: center;
+        line-height: 40px;
+    }
+    .zong {
+        padding:15px
+    }
+    .myul {
+        position: fixed;
+        bottom: 0;
+        width:100%
+    }
+    .myul li {
+        width:50%
+    }
+    .myul li a {
+        text-align:center;
+        background-color:#fff;
+    }
+    .nav-tabs > li > a {
+     margin-right: 0px; 
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+}
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #FE8920;
+    cursor: default;
+    background-color: #fff;
+    border:0;
+    border-top: 2px solid #FE8920;
+    border-bottom-color: transparent;
+}
+    a {
+    color: #555;
+    text-decoration: none;
+}
+    .zuiwai {
+        width: 60px;
+    height: 60px;
+    background: #E2E3E0;
+    border-radius: 40px;
+    padding-top: 5px;
+    }
+    .neiyuan1 {
+        width: 50px;
+    height: 50px;
+    background: #329DFD;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan1:active {
+        width: 50px;
+    height: 50px;
+    background: #329DFD;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+    .neiyuan2 {
+        width: 50px;
+    height: 50px;
+    background: #FC6C6B;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan2:active {
+        width: 50px;
+    height: 50px;
+    background: #FC6C6B;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+    .neiyuan3 {
+        width: 50px;
+    height: 50px;
+    background: #FB8D42;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan3:active {
+        width: 50px;
+    height: 50px;
+    background: #FB8D42;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+    .neiyuan4 {
+        width: 50px;
+    height: 50px;
+    background: #F59701;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan4:active {
+        width: 50px;
+    height: 50px;
+    background: #F59701;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+     .neiyuan5 {
+        width: 50px;
+    height: 50px;
+    background: #1DCCAB;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan5:active {
+        width: 50px;
+    height: 50px;
+    background: #1DCCAB;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+      .neiyuan6 {
+        width: 50px;
+    height: 50px;
+    background: #68B507;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan6:active {
+        width: 50px;
+    height: 50px;
+    background: #68B507;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+     .neiyuan7 {
+        width: 50px;
+    height: 50px;
+    background: #0076A8;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan7:active {
+        width: 50px;
+    height: 50px;
+    background: #0076A8;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+     .neiyuan8 {
+        width: 50px;
+    height: 50px;
+    background: #392FF0;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan8:active {
+        width: 50px;
+    height: 50px;
+    background: #392FF0;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+    .neiyuan9 {
+        width: 50px;
+    height: 50px;
+    background: #FE3C83;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan9:active {
+        width: 50px;
+    height: 50px;
+    background: #FE3C83;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+    .neiyuan10 {
+        width: 50px;
+    height: 50px;
+    background: #3BDCF8;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan10:active {
+        width: 50px;
+    height: 50px;
+    background: #3BDCF8;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+     .neiyuan11 {
+        width: 50px;
+    height: 50px;
+    background: #149C2E;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan11:active {
+        width: 50px;
+    height: 50px;
+    background: #149C2E;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+     .neiyuan12 {
+        width: 50px;
+    height: 50px;
+    background: #FE6A22;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan12:active {
+        width: 50px;
+    height: 50px;
+    background: #FE6A22;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+      .neiyuan13 {
+        width: 50px;
+    height: 50px;
+    background: #F83BA1;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan13:active {
+        width: 50px;
+    height: 50px;
+    background: #F83BA1;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+      .neiyuan14 {
+        width: 50px;
+    height: 50px;
+    background: #6B731E;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan14:active {
+        width: 50px;
+    height: 50px;
+    background: #6B731E;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+    .neiyuan15 {
+        width: 50px;
+    height: 50px;
+    background: #91A60D;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow: 2px -2px 11px 0px;
+    }
+    .neiyuan15:active {
+        width: 50px;
+    height: 50px;
+    background: #91A60D;
+    border-radius: 35px;
+    margin-left: 5px;
+    box-shadow:inset 2px -2px 11px 0px;
+    }
+    .nyclass {
+        padding-top:10px!important
+    }

@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+@model  ZrSoft.SP_Customer
+<script src="~/lib/angular.js"></script>
+<script>
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+    });
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back">&#xe6ff;</a>  @Resource.lang.SP_Customer
+    </legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_Customer_CustomerName</label><div class="layui-input-block">
+            <label name="@Model.CustomerName" class="layui-input">@Model.CustomerName</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_Customer_Phone</label><div class="layui-input-block">
+            <label name="@Model.Phone" class="layui-input">@Model.Phone</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_Customer_Address</label><div class="layui-input-block">
+            <label name="@Model.Address" class="layui-input">@Model.Address</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_Customer_Memo</label><div class="layui-input-block">
+            <label name="@Model.Memo" class="layui-input">@Model.Memo</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_Customer_BankAccount</label><div class="layui-input-block">
+            <label name="@Model.BankAccount" class="layui-input">@Model.BankAccount</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_Customer_AdminId</label><div class="layui-input-block">
+            <label name="@Model.AdminId" class="layui-input">@Model.AdminId</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_Customer_Pubdate</label><div class="layui-input-block">
+            <label name="@Model.Pubdate" class="layui-input">@Model.Pubdate</label>
+        </div>
+    </div>
+   
+</form>

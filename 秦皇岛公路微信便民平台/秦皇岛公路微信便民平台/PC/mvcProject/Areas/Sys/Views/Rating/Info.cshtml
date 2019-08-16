@@ -1,0 +1,52 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+} 
+@model  ZrSoft.Sys_Rating 
+<script src="~/lib/angular.js"></script> 
+<script> 
+    layui.use(['form', 'layedit', 'laydate'], function () { 
+        var form = layui.form() 
+        , layer = layui.layer; 
+    }); 
+</script> 
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;"> 
+    <legend> 
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a>  @Resource.lang.Sys_Rating</legend> 
+</fieldset> 
+<form class="layui-form layui-form-pane" action=""> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Rating_Type</label><div class="layui-input-block"> 
+                    <input name='Type' type="number" value="@Model.Type" lay-verify="number" placeholder="@Resource.lang.Input @Resource.lang.Sys_Rating_Type" autocomplete="off" class="layui-input"> 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Rating_Name</label><div class="layui-input-block"> 
+                    <input name='Name' type="text" value="@Model.Name" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.Sys_Rating_Name" class="layui-input" > 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Rating_Memo</label><div class="layui-input-block"> 
+                    <input name='Memo' type="text" value="@Model.Memo" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.Sys_Rating_Memo" class="layui-input" > 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Rating_AdminId</label><div class="layui-input-block"> 
+                    <input name='AdminId' type="text" value="@Model.AdminId" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.Sys_Rating_AdminId" class="layui-input" > 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Rating_PubDate</label><div class="layui-input-block"> 
+                    <input name='PubDate' type="text" value="@Model.PubDate" lay-verify="date" placeholder="@Resource.lang.Input  @Resource.lang.Sys_Rating_PubDate" autocomplete="off" onclick="layui.laydate({elem: this})" class="layui-input"> 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Rating_EditAdminId</label><div class="layui-input-block"> 
+                    <input name='EditAdminId' type="text" value="@Model.EditAdminId" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.Sys_Rating_EditAdminId" class="layui-input" > 
+        </div>
+    </div> 
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Rating_EditPubDate</label><div class="layui-input-block"> 
+                    <input name='EditPubDate' type="text" value="@Model.EditPubDate" lay-verify="date" placeholder="@Resource.lang.Input  @Resource.lang.Sys_Rating_EditPubDate" autocomplete="off" onclick="layui.laydate({elem: this})" class="layui-input"> 
+        </div>
+    </div> 
+</form> 

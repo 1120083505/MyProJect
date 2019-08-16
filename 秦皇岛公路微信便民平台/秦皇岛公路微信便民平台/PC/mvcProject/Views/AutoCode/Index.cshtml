@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<script type="text/javascript">
+    var requestCount = 0;
+    $(document).ready(function () {
+        $('#mainTab').tabs({ tabPosition: "left" });
+        $('#btnload').click(function () {
+           // $("#loading").slideDown();
+            if ($("#sqllink").val() != "") {
+                $.ajax({
+                    url: '@Url.Action("sqlcon")',
+                    data: { linkstr: $("#sqllink").val() },
+                    type: "POST",
+                    datatype: "text",
+                    success: function (data) {
+                        //if (data == "" || data == null) {
+                        //    $.messager.alert('Warning', '请求失败！！请检查连接字符串!');
+                        //    return false;
+                        //}
+                        //所有数据库表
+                        $('#tt').tree({
+                            lines: true,
+                            animate: true,
+                            onClick: function (node) {
+                                requestCount = 0;
+                                $("#loading").show();
+                                var tablename = node.id;
+                                if (tablename.indexOf("V") != 0) {
+                                    AutoCode(tablename, "DAL");
+                                    AutoCode(tablename, "Controller");
+                                    AutoCode(tablename, "IndexCode");
+                                    AutoCode(tablename, "Create");
+                                    AutoCode(tablename, "Edit");
+                                    AutoCode(tablename, "Report");
+                                    $('#mainTab').tabs('enableTab', 'Controller');
+                                    $('#mainTab').tabs('enableTab', 'Index');
+                                    $('#mainTab').tabs('enableTab', 'Create');
+                                    $('#mainTab').tabs('enableTab', 'Edit');
+                                    $('#mainTab').tabs('enableTab', 'Report');
+
+                                }
+                                else {
+                                    $('#mainTab').tabs('select', "DAL");
+                                    $("textarea").text("");
+                                    AutoCode(tablename, "Report");
+                                    $('#mainTab').tabs('disableTab', 'Controller');
+                                    $('#mainTab').tabs('disableTab', 'Index');
+                                    $('#mainTab').tabs('disableTab', 'Create');
+                                    $('#mainTab').tabs('disableTab', 'Edit');
+                                    //$('#mainTab').tabs('disableTab', 'Report');
+                                    AutoCode(tablename, "DAL_View");
+                                }
+                            },
+                            method: "POST",
+                            url: '@Url.Action("GetTables")'
+                        });
+                    },
+                    error: function () {
+                        $.messager.alert('Warning', '请求失败！！请检查连接字符串');
+                    }
+                });
+
+            } else {
+                $.messager.alert('Warning', '填写数据库连接！！！');
+            }
+        });
+    });
+    function AutoCode(tablename, actionname) {
+        //DAL
+        $.ajax({
+            url: '/autocode/' + actionname,
+            data: { tablename: tablename },
+            type: "POST",
+            datatype: "text",
+            success: function (data) {
+                if (actionname == "DAL_View") {
+                    actionname = "DAL";
+                }
+                $("#" + actionname + " textarea").text(data);
+                requestCount++;
+                if (requestCount > 1) {
+                    $("#loading").hide();
+                }
+            },
+            error: function () {
+                $("#" + actionname + " textarea").html('请求失败...');
+            }
+        });
+    }
+</script>
+<style>
+    #loading {
+        padding: 2px;
+        width: 300px;
+        border: 1px solid #dbd9d9;
+        position: absolute;
+        top: 150px;
+        left: 200px;
+        z-index: 999;
+        text-align: center;
+        display: none;
+        background-color:#f1f5f5;
+    }
+
+        #loading table {
+            padding: 5px;
+            width: 300px;
+            height: 100px;
+            border: 1px solid #dbd9d9;
+            background-color:#FFF;
+        }
+</style>
+
+<body class="easyui-layout">
+    <div data-options="region:'north'" style="padding: 5px;">
+        <label for="sqllink">数据库连接:</label><input type="text" name="sqllink" id="sqllink" value="@Core.LoginInfo.ConStr" style="width: 60%;" /><a href="#" id="btnload" class="easyui-linkbutton" iconcls="icon-search">载入</a>
+    </div>
+    <div data-options="region:'west',split:true,title:'数据表'" style="width: 180px; padding: 10px 5px; overflow-y: auto;">
+
+        <ul id="tt" class="easyui-tree" data-options="animate:true,dnd:true">
+        </ul>
+
+    </div>
+    <div data-options="region:'center',border:false">
+        <div id="loading">
+            <table>
+                <tr>
+                    <td>
+                        <img src="~/Content/images/loading.gif" /></td>
+                    <td class="text">正在请求中....</td>
+                </tr>
+            </table>
+        </div>
+        <div id="mainTab" class="easyui-tabs" fit="true">
+            <div title="DAL" id="DAL" data-options="iconCls:'icon-table'" style="overflow: auto;">
+                <textarea style="height: 98%; width: 99%;"> </textarea>
+            </div>
+            <div title="Controller" id="Controller" data-options="iconCls:'icon-monitor'" style="overflow: auto;">
+                <textarea style="height: 98%; width: 99%;"> </textarea>
+            </div>
+            <div title="Index" id="IndexCode" data-options="iconCls:'icon-house'" style="overflow: auto;">
+                <textarea style="height: 98%; width: 99%;"> </textarea>
+            </div>
+            <div title="Create" id="Create" data-options="iconCls:'icon-add'" style="overflow: auto;">
+                <textarea style="height: 98%; width: 99%;"> </textarea>
+            </div>
+            <div title="Edit" id="Edit" data-options="iconCls:'icon-edit'" style="overflow: auto;">
+                <textarea style="height: 98%; width: 99%;"> </textarea>
+            </div>
+            <div title="Report" id="Report" data-options="iconCls:'icon-printer'" style="overflow: auto;">
+                <textarea style="height: 98%; width: 99%;"> </textarea>
+            </div>
+        </div>
+    </div>
+</body>

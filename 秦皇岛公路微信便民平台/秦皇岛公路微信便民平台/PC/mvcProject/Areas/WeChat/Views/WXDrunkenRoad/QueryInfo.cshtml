@@ -1,0 +1,425 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, width=device-width">
+    <meta name="screen-orientation" content="portrait">
+    <title>醉美公路评选</title>
+    <link href="~/Content/zmgl/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/zmgl/css/dropload.css" rel="stylesheet" />
+    <link href="~/Content/zmgl/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/Content/zmgl/js/jquery.js"></script>
+    <script src="~/Content/zmgl/js/bootstrap.js"></script>
+
+    <link href="~/Content/zmgl/css/zmgl.css" rel="stylesheet" />
+    <style>
+        .biao {
+            line-height: 90px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .th1 {
+            width: 20%;
+            height: 100%;
+            float: left;
+            text-align: center;
+            background: #F7F7F7;
+        }
+
+            .th1 img {
+                width: 70px;
+                min-height: 70px;
+            }
+
+        .tabletou {
+            height: 45px;
+            line-height: 45px;
+        }
+
+        .disp {
+            display: none;
+        }
+        .content .item {
+        height: 161px;
+        }
+    </style>
+</head>
+<body onload="countTime()">
+    <div id="myCarousel" class="carousel slide">
+
+        <!-- 轮播（Carousel）项目 -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="~/Content/zmgl/image/1.jpg" alt="First slide" />
+            </div>
+            <div class="item">
+                <img src="~/Content/zmgl/image/1.jpg" alt="Second slide" />
+            </div>
+            <div class="item">
+                <img src="~/Content/zmgl/image/1.jpg" alt="Third slide" />
+            </div>
+            <div class="item">
+                <img src="~/Content/zmgl/image/1.jpg" alt="Fourth slide" />
+            </div>
+        </div>
+        <!-- 轮播（Carousel）导航 -->
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev"></a>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next"></a>
+        <div class="tongji">
+            <div class="one tongji_bm">
+                <p>报名公路</p>
+                <p>@ViewBag.NUM</p>
+            </div>
+            <div class="three tongji_bm">
+                <p>报名公路</p>
+                <p>@ViewBag.NUM</p>
+            </div>
+            <div class="two tongji_bm">
+                <p>报名公路</p>
+                <p>@ViewBag.NUM</p>
+            </div>
+        </div>
+    </div>
+    <div class="daojishi" id="daojishi">
+        @*据活动结束还有 15 天 24 小时 24 分钟 24 秒*@
+    </div>
+    <div class="tongzhi">
+        <div class="sanhang">
+            <span class="fa fa-weixin" style="color: #55C700;"></span>
+            <span style="margin-left: 10px">@ViewBag.Title</span>
+        </div>
+        <div class="sanhang">
+            <span class="fa fa-clock-o" style="color: #FF4F35;"></span>
+            <span style="margin-left: 10px">@string.Format("{0:yyyy年MM月dd日}", ViewBag.StarTime)~@string.Format("{0:yyyy年MM月dd日}", ViewBag.EndTime)</span>
+        </div>
+        <div class="sanhang">
+            <span class="fa fa-file-text" style="color: #FE8900;"></span>
+            <span style="margin-left: 10px">@ViewBag.ActivityMemo</span>
+        </div>
+    </div>
+    <div id="daohang">
+        <div class="tab">
+            <a onclick="cx1()" href="javascript:;" class="item cur">公路投票</a>
+            <a onclick="cx2()" href="javascript:;" class="item">人气公路</a>
+        </div>
+        <div class="input-group" id="CX">
+            <input type="text" class="form-control input-lg" id="CXContent" value="@ViewBag.ID"><a class="fa fa-search input-group-addon btn btn-primary" id="Spcx" style="display: table-cell;" onclick="CXPM()" href="javascript:;"></a>
+        </div>
+    </div>
+    <div id="toutaoxinxi">
+
+    </div>
+    <div id="xs" class="content">
+        <div class="lists"></div>
+        <div class="lists"></div>
+    </div>
+    <script src="~/Content/zmgl/js/dropload.min.js"></script>
+    <script>    
+        function CXPM() {
+            var Content = $("#CXContent").val();
+            if (Content == '') {
+                window.location.href = '@Url.Action("Index/")';
+            }
+            else {
+                window.location.href = '@Url.Action("QueryInfo/")' + Content;
+            }
+        }
+    </script>
+    <script>
+        function countTime() {
+            //获取当前时间
+            var date = new Date();
+            var now = date.getTime();
+            //设置截止时间
+            var str = '@string.Format("{0:yyyy-MM-dd}",ViewBag.EndTime)';
+            var endDate = new Date(str);
+            var end = endDate.getTime();
+
+            //时间差
+            var leftTime = end-now;
+            //定义变量 d,h,m,s保存倒计时的时间
+            var d,h,m,s;
+            if (leftTime>=0) {
+                    d = Math.floor(leftTime/1000/60/60/24);
+                    h = Math.floor(leftTime/1000/60/60%24);
+                    m = Math.floor(leftTime/1000/60%60);
+                    s = Math.floor(leftTime / 1000 % 60);
+                    document.getElementById("daojishi").innerHTML = "据活动结束还有 " + d + "天" + h + "时" + m + "分" + s + "秒";
+            }
+            else {
+                document.getElementById("daojishi").innerHTML = "活动已结束! " ;
+            }
+            //将倒计时赋值到div中
+            //alert(d + "天" + h + "时" + m + "分" + s + "秒");
+            
+        //递归每秒调用countTime方法，显示动态时间效果
+            setTimeout(countTime,1000);
+        }
+        function cx2() {
+            $("#CX").addClass("disp");
+        }
+        function cx1() {
+            $("#CX").removeClass("disp");
+        }
+        $(function () {
+
+        var itemIndex = 0;
+        var tab1LoadEnd = false;
+        var tab2LoadEnd = false;
+
+
+        // tab
+        $('.tab .item').on('click', function() {
+            var $this = $(this);
+            itemIndex = $this.index();
+            $this.addClass('cur').siblings('.item').removeClass('cur');
+            $('.lists').eq(itemIndex).show().siblings('.lists').hide();
+
+            // 如果选中菜单一
+            if(itemIndex == '0') {
+                // 如果数据没有加载完
+                if(!tab1LoadEnd) {
+                    // 解锁
+                    dropload.unlock();
+                    dropload.noData(false);
+                } else {
+                    // 锁定
+                    dropload.lock('down');
+                    dropload.noData();
+                }
+                // 如果选中菜单二
+            } else if(itemIndex == '1') {
+                if(!tab2LoadEnd) {
+                    // 解锁
+                    dropload.unlock();
+                    dropload.noData(false);
+                } else {
+                    // 锁定
+                    dropload.lock('down');
+                    dropload.noData();
+                }
+            }
+            // 重置
+            dropload.resetload();
+        });
+
+        var counter = 0;
+        // 每页展示4个
+        var num = 4;
+        var pageStart = 0,
+            pageEnd = 0;
+
+        var counter2 = 0;
+        // 每页展示4个
+        var num2 = 4;
+        var pageStart2 = 0,
+            pageEnd2 = 0;
+        // dropload
+        var dropload = $('.content').dropload({
+            scrollArea: window,
+            loadDownFn: function(me) {
+                // 加载菜单一的数据
+                if (itemIndex == '0') {
+                    $.ajax({
+                        url: '@Url.Action("CXPMList")',
+                        type: 'post',
+                        data: { Id: '@ViewBag.ID' },
+                        success: function(data) {
+                            var result = '';
+                            var img = '';
+                            counter++;
+                            pageEnd = num * counter;
+                            pageStart = pageEnd - num;
+                            if (pageStart <= data.rows.length) {
+                                for (var i = pageStart; i < pageEnd; i++) {
+                                    img = data.rows[i].Ext1;
+                                    if (img == '' | img==null) {
+                                        img = "~/Content/images/1.jpg";
+                                    }
+                                    result += '<a class="item opacity" href="#1">' +
+                                       '<div class="item2" data-toggle="modal" data-target="#myModal' + i + '">' +
+                                       '<img src="' + img + '" alt="">' +
+                                       '<div class="zhedang">&nbsp;&nbsp;' + data.rows[i].RoadNum + '&nbsp;号&nbsp;&nbsp;&nbsp;' + data.rows[i].RoadName + '<span class="fa fa-search-plus" style="color: #fff;float: right;line-height: 25px; margin-right: 5px;"></span>' +
+
+                                       '</div>' +
+                                       '</div>' +
+                                       '<div class="caozuo">' +
+                                       '<div class="piaoshu">' + data.rows[i].RoadVotes + '票</div>' +
+                                       '<button class="toupiao" id="' + data.rows[i].Id + '" onclick="Vote(this.id)"><span class="fa fa-heart" style="margin-right: 5px"></span>投票</button>' +
+                                       '</div>' +
+                                       '</a>' +
+                                       '<div class="modal fade" id="myModal'+i+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">' +
+                                       '<div class="modal-dialog" role="document">' +
+                                       '<div class="modal-content">' +
+                                       '<div class="modal-header">' +
+                                       '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+                                       '<span aria-hidden="true">×</span>  ' +
+                                   '</button>  ' +
+                                   '</div>  ' +
+                                   '<div class="modal-body">' +
+                                           '<div style="position: relative;">' +
+                                       '<img src="' + img + '" style="width: 100%;" alt="">' +
+                                           '<div style="position: absolute;width: 100%;height: 40px;bottom: 0;background: rgba(0, 0, 0, 0.5);">' +
+                                           '<div style="height: 100%;float: left;line-height: 40px;color: #fff;margin-left: 11px;">&nbsp;' + data.rows[i].RoadNum + '&nbsp;号&nbsp;&nbsp;&nbsp;' + data.rows[i].RoadName + '' +
+                                       '</div>' +
+                                       '<div style="line-height: 40px;color: #fff;height: 100%;float: right;margin-right: 11px">' + data.rows[i].RoadVotes + '票' +
+                                       '</div>' +
+                                       '</div>' +
+                                       '</div>' +
+
+                                   '</div>  ' +
+                                   '<div class="modal-footer" style="text-align:left">' +
+                                           '<div>' +
+                                           '<p><span class="fa fa-quote-left" style="color: #969696;"></span>' + data.rows[i].RoadMemo + '<span class="fa fa-quote-right" style="color: #969696;"></span>' +
+                                       '</p>' +
+                                       '</div>' +
+                                       '<button type="button" class="btn btn-default fa fa-heart" id="' + data.rows[i].Id + '" onclick="Vote(this.id)" style="display: table-cell;background: #FE5037;color: #fff;">&nbsp;&nbsp;给它投票</button>  ' +
+                                       '<div style="width: auto;float: right;color: #FE5037;">' +
+                                           '<span class="fa fa-share-alt" style="margin-right: 10px">' +
+                                       '</span>为它拉票' +
+                                       '</div>' +
+                                       '</div>  ' +
+                                       '</div>  ' +
+                                       '</div>  ' +
+                                       '</div> ';
+                                    if ((i + 1) >= data.rows.length) {
+                                        // 数据加载完
+                                        tab1LoadEnd = true;
+                                        // 锁定
+                                        me.lock();
+                                        // 无数据
+                                        me.noData();
+                                        break;
+                                    }
+                                }
+                                // 为了测试，延迟1秒加载
+                                setTimeout(function() {
+                                    $('.lists').eq(0).append(result);
+                                    // 每次数据加载完，必须重置
+                                    me.resetload();
+                                }, 1000);
+                            }
+                        },
+                        error: function(xhr, type) {
+                            //alert('Ajax error!');
+                            // 即使加载出错，也得重置
+                            me.resetload();
+                        }
+                    });
+                    // 加载菜单二的数据
+                } else if (itemIndex == '1') {
+                    $("#CX").addClass("disp");
+                    $.ajax({
+                        type: 'post',
+                        url: '@Url.Action("GetPMList")',
+                        dataType: 'json',
+                        success: function (data) {
+                            var img = '';
+                            var result = '';
+                            counter2++;
+                            pageEnd2 = num2 * counter2;
+                            pageStart2 = pageEnd2 - num2;
+                            if (pageStart2 <= data.rows.length) {
+                                for (var i = pageStart2; i < pageEnd2; i++) {
+                                    img = data.rows[i].Ext1;
+                                    if (img == '' | img == null) {
+                                        img = "~/Content/images/1.jpg";
+                                    }
+                                    var mingci = i + 1;
+                                    result += '<div class="biao" style="width: 100%;height: 90px;" data-toggle="modal" data-target="#my2Modal' + i + '">' +
+                                 '<div class="th1">' + mingci + '</div>' +
+                                 '<div class="th1"><img src="' + img + '"/>' +
+
+                                 '</div>' +
+                                 '<div class="th1">' + data.rows[i].RoadNum + '</div>' +
+                                 '<div class="th1">' + data.rows[i].RoadName + '</div>' +
+                                 '<div class="th1">' + data.rows[i].RoadVotes + '</div>' +
+                                 '</div>' +
+                                 '<div class="modal fade" id="my2Modal' + i + '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">' +
+                                 '<div class="modal-dialog" role="document">' +
+                                 '<div class="modal-content">' +
+                                 '<div class="modal-header">' +
+                                 '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+                                 '<span aria-hidden="true">×</span>  ' +
+                                 '</button>  ' +
+                                 '</div>  ' +
+                                 '<div class="modal-body">' +
+                                 '<div style="position: relative;">' +
+                                 '<img src="' + img + '" style="width: 100%;" alt="">' +
+                                 '<div style="position: absolute;width: 100%;height: 40px;bottom: 0;background: rgba(0, 0, 0, 0.5);">' +
+                                 '<div style="height: 100%;float: left;line-height: 40px;color: #fff;margin-left: 11px;">&nbsp;' + data.rows[i].RoadNum + '&nbsp;号&nbsp;&nbsp;&nbsp;' + data.rows[i].RoadName + '' +
+                                 '</div>' +
+                                 '<div style="line-height: 40px;color: #fff;height: 100%;float: right;margin-right: 11px">' + data.rows[i].RoadVotes + '票' +
+                                 '</div>' +
+                                 '</div>' +
+                                 '</div>' +
+
+                                 '</div>  ' +
+                                 '<div class="modal-footer" style="text-align:left">' +
+                                 '<div>' +
+                                 '<p><span class="fa fa-quote-left" style="color: #969696;"></span>' + data.rows[i].RoadMemo + '<span class="fa fa-quote-right" style="color: #969696;"></span>' +
+                                 '</p>' +
+                                 '</div>' +
+                                 '<button type="button" class="btn btn-default fa fa-heart" id="' + data.rows[i].Id + '" onclick="Vote(this.id)" style="display: table-cell;background: #FE5037;color: #fff;">&nbsp;&nbsp;给它投票</button>  ' +
+                                 '<div style="width: auto;float: right;color: #FE5037;">' +
+                                 '<span class="fa fa-share-alt" style="margin-right: 10px">' +
+                                 '</span>为它拉票' +
+                                 '</div>' +
+                                 '</div>  ' +
+                                 '</div>  ' +
+                                 '</div>  ' +
+                                 '</div> ';
+                                    if ((i + 1) >= data.rows.length) {
+                                        // 数据加载完
+                                        tab2LoadEnd = true;
+                                        // 锁定
+                                        me.lock();
+                                        // 无数据
+                                        me.noData();
+                                        break;
+                                    }
+                                }
+                                // 为了测试，延迟1秒加载
+                                setTimeout(function() {
+                                    $('.lists').eq(1).append(result);
+                                    // 每次数据加载完，必须重置
+                                    me.resetload();
+                                }, 1000);
+                            }
+                        },
+                        error: function(xhr, type) {
+                            //alert('Ajax error!');
+                            // 即使加载出错，也得重置
+                            me.resetload();
+                        }
+                    });
+                }
+            }
+        });
+        });
+        function Vote(Id) {
+            //alert(Id);
+            $.ajax({
+                url: '@Url.Action("Vote")',
+                data: { Id: Id },
+                type: 'Post',
+                //dataType: 'json',
+                async: false,
+                success: function (dataResult) {
+                    if (dataResult == "OK") {
+                        alert("投票成功");
+                        //刷新页面
+                        //window.location.href("");
+                        window.location.href = '/WeChat/WXDrunkenRoad/Ranking';
+                    }
+                    if (dataResult == "Repeat") {
+                        alert("您今天已经投过票了！");
+                    }
+
+                }
+            })
+        };
+    </script>
+</body>
+</html>

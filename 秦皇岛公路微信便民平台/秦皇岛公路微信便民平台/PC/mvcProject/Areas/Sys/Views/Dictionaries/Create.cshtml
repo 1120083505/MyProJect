@@ -1,0 +1,70 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+}
+@model  ZrSoft.Sys_Dictionaries
+<script src="~/lib/angular.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        $(function () { })
+        var form = layui.form()
+        , layer = layui.layer;
+        //监听提交 
+        form.on('submit(Accept)', function (data) {
+            checked();
+            var json = data.field;
+            console.log($("#Ident").val());
+            $.ajax({
+                url: "@Url.Action("Create")",
+                type: "Post",
+                data: json,
+                dataType: "json",
+                success: function (data) {
+                    window.parent.callBack(data);
+                }
+            });
+            return false;
+        });
+    });
+    function checked()
+    {
+        if ($("#Idents").checked==true) {
+            $("#Ident").val("0");
+        }
+        else {
+            $("#Ident").val("1");
+        }
+    }
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a>@Resource.lang.Sys_Dictionaries
+    </legend>
+</fieldset>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Dictionaries_LimitLoginCount</label>
+        <div class="layui-input-block">
+            <input id='LimitLoginCount' name='LimitLoginCount' type="number" lay-verify="required" lay-verify="number" placeholder="@Resource.lang.Sys_Dictionaries_LimitLoginCount" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Dictionaries_LimitLoginTime</label>
+        <div class="layui-input-block">
+            <input id='LimitLoginTime' name='LimitLoginTime' type="number" lay-verify="required" lay-verify="number" placeholder="@Resource.lang.Sys_Dictionaries_LimitLoginTime" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Dictionaries_Ident</label>
+        <div class="layui-input-inline">
+            <input type="checkbox" name="Idents" lay-skin="switch" lay-filter="switchTest" title="@Resource.lang.Sys_Dictionaries_Ident">
+        </div>
+        <input type="hidden" Name="Ident" />
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="Accept">@Resource.lang.Accept</button>
+            <button type="reset" class="layui-btn layui-btn-primary">@Resource.lang.Reset</button>
+        </div>
+    </div>
+</form>
+

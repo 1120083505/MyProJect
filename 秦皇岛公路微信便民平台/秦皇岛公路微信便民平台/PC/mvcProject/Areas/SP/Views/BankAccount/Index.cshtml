@@ -1,0 +1,225 @@
+﻿@using Core
+@{
+    ViewBag.Title = "Resource.lang.SP_BankAccount";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+<div style="padding-top: 10px;">
+    @MvcHtmlString.Create(printControl.PowerLinkBtn(@Url.Action("")))
+</div>
+<hr />
+<form style="" class="layui-form">
+    <div class="layui-input-inline">
+        <input id='CardNum' name='CardNum' type="text" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.SP_BankAccount_CardNum" class="layui-input">
+    </div>
+    <div class="layui-input-inline">
+        <input id='BankName' name='BankName' type="text" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Input @Resource.lang.SP_BankAccount_BankName" class="layui-input">
+    </div>
+    <button class="layui-btn layui-btn-primary SearchBtn" id="btnSearch"><i class="layui-icon">&#xe651;</i>@Resource.lang.Search</button>
+    <button class="layui-btn layui-btn-primary SearchBtn" type="reset" id="btnClear"><i class="layui-icon">&#xe641;</i>@Resource.lang.Reset</button>
+</form>
+<table class="layui-table">
+    <colgroup>
+        <col width="20">
+        <col width="50">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+        <col width="150">
+    </colgroup>
+    <thead>
+        <tr class="">
+            <th>
+                <input id="checkOrNoAll" type="checkbox">
+            </th>
+            <th style="text-align: center">@Resource.lang.SortNo</th>
+            <th>@Resource.lang.SP_BankAccount_CardNum</th>
+            <th>@Resource.lang.SP_BankAccount_BankName</th>
+            @*<th>@Resource.lang.SP_BankAccount_Balance</th>*@
+            <th>@Resource.lang.SP_BankAccount_UserId</th>
+            <th>录入人</th>
+            <th>录入时间</th>
+            @*<th>@Resource.lang.SP_BankAccount_Ext1</th>
+        <th>@Resource.lang.SP_BankAccount_Ext2</th>*@
+        </tr>
+    </thead>
+    <tbody ng-controller="listController">
+        <tr ng-repeat="x in data" id="{{x.Id}}" ng-dblclick="RowsDbClick(x.Id)">
+            <td>
+                <input id="check{{ x.RowNumber }}" value="{{x.Id}}" class="checkList" type="checkbox" name="checkList">
+            </td>
+            <td style="text-align: center">{{ x.RowNumber}}</td>
+            <td>{{x.CardNum}}</td>
+            <td>{{x.BankName}}</td>
+            @*<td>{{x.Balance}}</td>*@
+            <td>{{x.UserId}}</td>
+            <td>{{x.AdminId}}</td>
+            <td>{{x.PubDate}}</td>
+            @*<td>{{x.Ext1}}</td>
+            <td>{{x.Ext2}}</td>*@
+        </tr>
+    </tbody>
+</table>
+<div id="paged" style="margin: 0px; padding: 0px; text-align: center"></div>
+<script type="text/javascript">
+
+    function callBack(data) {
+        Alert(data);
+        if (data.Status == 1) {
+            layer.close(lIndex);
+            searchcount = 0;
+            paged(1);
+        }
+    }
+    function Alert(data) {
+        layer.msg(data.Memo, { icon: data.Status == 0 ? 2 : 1, time: 3 * 1000 });
+    }
+    function closeLayer() {
+        layer.close(lIndex);
+    }
+    var layer, lIndex, ids = [];
+    var paged, searchcount = 0, totalPages = 0;
+    layui.use(['form', 'layedit', 'laydate', 'element', 'laypage'], function () {
+        layer = layui.layer;
+    });
+    function CeatePage(pages, curr) {
+        layui.use(['laypage'], function () {
+            layer = layui.layer;
+            layui.laypage({
+                cont: 'paged'
+              , pages: pages //总页数
+                , curr: curr
+                , groups: 5 //连续显示分页数
+                  , skip: true
+                  , jump: function (obj, first) {
+                      var curr = obj.curr;
+                      paged(curr);
+                  }
+            , prev: '<em><</em>'
+            , next: '<em>></em>'
+            , first: '<em>@Resource.lang.FristPage</em>'
+            , last: '<em>@Resource.lang.LastPage</em>'
+            });
+        });
+    }
+    $(document).ready(function () {
+        paged(1);
+        $("#btnSearch").click(function () {
+            searchcount = 0;
+            paged(1);
+            return false;
+        });
+        $('#btnCreate').click(function () {
+            lIndex = layer.open({
+                type: 2,
+                title: '@Resource.lang.Create',
+                shadeClose: true,
+                shade: 0.3,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['70%', '70%'],
+                content: '@Url.Action("Create")'
+            });
+            if ($.UserMobileAgent())
+                layer.full(lIndex);
+        });
+        $('#btnEdit').click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+           else if(ids.length>1)
+           {
+               layer.msg('@Resource.lang.tip_SelectOne');
+           }
+            else {
+                lIndex = layer.open({
+                    type: 2,
+                    title: '@Resource.lang.Edit',
+                    shadeClose: true,
+                    shade: 0.3,
+                    maxmin: true, //开启最大化最小化按钮
+                    area: ['70%', '70%'],
+                    content: '@Url.Action("Edit/")' + ids[0]
+                });
+                if ($.UserMobileAgent())
+                    layer.full(lIndex);
+            }
+        });
+        $("#btnDelete").click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                layer.confirm('@Resource.lang.tip_Do_Dell', {
+                    btn: ['@Resource.lang.OK', '@Resource.lang.Cancel'] //按钮
+                }, function () {
+                    $.post('@Url.Action("Delete")', { id: ids.join(',') }, function (data) {
+                        callBack(data);
+                    }, 'json');
+                }, function () {
+                });
+            }
+        });
+        $('#btnInfo').click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                Detail(ids[0])
+            }
+        });
+    });
+    function Detail(id) {
+        lIndex = layer.open({
+            type: 2,
+            title: '@Resource.lang.Info',
+                shadeClose: true,
+                shade: 0.3,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['70%', '70%'],
+                content: '@Url.Action("Info/")' + id
+          });
+            if ($.UserMobileAgent())
+                layer.full(lIndex);
+    }
+    var myApp = angular.module("list", []);
+    myApp.controller('listController', function ($scope, $http) {
+        $scope.RowsDbClick = function (id) {
+            //显示详情
+            Detail(id);
+        }
+        paged = $scope.GetData = function (page) {
+            var queryStr = $('form').serialize();
+            //alert(queryStr);
+            if (searchcount == 1) {
+                searchcount++;
+            }
+            else {
+                $http.post('@Url.Action("GetList")', { page: page, queryStr: queryStr })
+                    .success(function (d) {
+                        $scope.data = d.rows;
+                        searchcount++;
+                        if (searchcount == 1) {
+                            CeatePage(d.pager.totalPages, 1);
+                        }
+                    });
+            }
+        };
+    });
+    myApp.controller('BankAccountController', function ($scope, $http) {
+           $.ajax({
+                url: '/SP/BankAccount/GetAllList',
+                type: 'Post',
+                dataType: 'json',
+                async:false,
+            success: function (d) {
+                $scope.data = d.rows;
+            }
+        });
+    });
+</script>

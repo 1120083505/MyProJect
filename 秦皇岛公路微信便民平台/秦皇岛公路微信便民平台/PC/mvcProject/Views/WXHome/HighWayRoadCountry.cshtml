@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, width=device-width">
+    <meta name="screen-orientation" content="portrait">
+    <title>公路信息</title>
+    <link href="~/Content/zmgl/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/zmgl/css/dropload.css" rel="stylesheet" />
+    <link href="~/Content/zmgl/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/Content/zmgl/js/jquery.js"></script>
+    <script src="~/Content/zmgl/js/bootstrap.js"></script>
+    <link href="~/Content/themes/bootstrap/js/mui.min.css" rel="stylesheet" />
+    <script src="~/Content/themes/bootstrap/js/mui.min.js"></script>
+
+    <style>
+        .neirong {
+            width: 100%;
+            height: 100px;
+            padding: 5px;
+        }
+
+        .tupian {
+            height: 100%;
+            width: 38%;
+            float: left;
+        }
+
+            .tupian img {
+                width: 100%;
+                height: 100%;
+            }
+
+        .wenzi {
+            width: 62%;
+    float: right;
+    height: 100%;
+    padding-left: 5px;
+    text-align: center;
+    line-height: 90px;
+        }
+
+        .jc {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .bjc {
+            overflow: hidden;
+            font-size: 12px;
+            line-height: 15px;
+            color: #000;
+        }
+
+        .mui-table-view-chevron .mui-table-view-cell {
+            padding-right: 0px;
+        }
+
+        .mui-table-view-cell {
+            padding: 5px;
+        }
+
+        .litile {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 999;
+            width: 70px;
+            height: 70px;
+            font-size: 28px;
+            line-height: 70px;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+        <div class="mui-scroll">
+            <!--数据列表-->
+            <ul class="mui-table-view mui-table-view-chevron"></ul>
+        </div>
+    </div>
+
+    <script>
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+
+					up: {
+						auto:true,
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+
+			mui('body').on('tap', 'a', function () { document.location.href = this.href; });
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					$.ajax({
+					    url: '/WeChat/HighwayRoad/GetAllList1',
+					    type: 'Post',
+					    dataType: 'json',
+					    async: false,
+					    data:{ type:"国道公路"},
+					    success: function (d) {
+					        //alert(JSON.stringify(d));
+					        for (var i = cells.length, len = i + 5; i < len; i++) {
+					            img = d.rows[i].imgurl;
+					            if (img == '' | img == null) {
+					                img = "/Content/images/1.jpg";
+					            }
+					            var li = document.createElement('li');
+					            li.className = 'mui-table-view-cell';
+					            li.innerHTML = '<div class="neirong">' +
+                                                                '<a href="/WXHome/RoadInfo?id=' + d.rows[i].Id + '"><div class="tupian">' +
+                                                                    '<img src="' + img + '" />' +
+                                                                '</div>' +
+                                                                '<div class="wenzi jc">'+d.rows[i].Title +
+                                '</div>' +
+                                '</a>' +
+                           '</div> ';
+					            mui('body').on('tap', 'a', function () { document.location.href = this.href; });
+					            table.appendChild(li);
+					        }
+					    }
+					})
+
+				}, 1500);
+			}
+//			if (mui.os.plus) {
+//				mui.plusReady(function() {
+//					setTimeout(function() {
+//						mui('#pullrefresh').pullRefresh().pullupLoading();
+//					}, 10);
+//
+//				});
+//			} else {
+//				mui.ready(function() {
+//					mui('#pullrefresh').pullRefresh().pullupLoading();
+//				});
+//			}
+    </script>
+</body>
+</html>

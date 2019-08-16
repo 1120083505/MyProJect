@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+@model  ZrSoft.Sys_Admin
+<script src="~/lib/angular.js"></script>
+<script>
+    var myApp = angular.module("Create", []);
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+        //监听提交
+        form.on('submit(Accept)', function (data) {
+            var json = data.field;
+            json["Id"] = "@Model.Id";
+            $.ajax({
+                url: "@Url.Action("Edit")",
+                type: "Post",
+                data: json,
+                dataType: "json",
+                success: function (data) {
+                    window.parent.callBack(data);
+                }
+            });
+            return false;
+        });
+    });
+    var myApp = angular.module("Create", [])
+    CreateSelect("Create", "RoleController", "/sys/role/GetAllList");
+    CreateSelect("Create", "CustodyController", "/sys/Custody/GetAllList");
+    $(document).ready(function () {
+    });
+</script>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a>  @Resource.lang.Sys_Admin</legend>
+</fieldset>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_RealName</label>
+        <div class="layui-input-block">
+            <input type="text" name="RealName" value="@Model.RealName" lay-verify="required" autocomplete="off" placeholder="@Resource.lang.Sys_Admin_RealName" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_LoginName</label>
+        <div class="layui-input-block">
+            <input type="text" name="LoginName" value="@Model.LoginName" lay-verify="required" placeholder="@Resource.lang.Sys_Admin_LoginName" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_Email</label>
+        <div class="layui-input-inline">
+            <input type="text" name="Email" value="@Model.Email" autocomplete="off" placeholder="@Resource.lang.Sys_Admin_Email" class="layui-input">
+        </div>
+    </div>
+    @*<div class="layui-form-item">
+            <label class="layui-form-label">@Resource.lang.Sys_Custody_Name</label>
+            <div class="layui-input-inline">
+                <select name="CustodyId" id="CustodyId" lay-verify="required" ng-controller="CustodyController"  ng-init="selected = '@Model.CustodyId'" ng-model="selected">
+                    <option value="">@Resource.lang.Select@Resource.lang.Sys_Custody</option>
+                    <option ng-repeat="x in data" value="{{ x.Id}}">{{ x.Name}}</option>
+                </select>
+            </div>
+        </div>*@
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_LoginPwd</label>
+        <div class="layui-input-inline">
+            <input type="password" name="LoginPwd" lay-verify="pass" value="@Model.LoginPwd" placeholder="@Resource.lang.Sys_Admin_LoginPwd" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_RoleId</label>
+        <div class="layui-input-inline">
+            <select name="RoleId" id="RoleId" lay-verify="required" ng-controller="RoleController" ng-init="selected = '@Model.RoleId'" ng-model="selected">
+                <option value="">@Resource.lang.Select@Resource.lang.Sys_Role</option>
+                <option ng-repeat="x in data" value="{{ x.Id}}">{{ x.Name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.Sys_Admin_Address
+        </label>
+        <div class="layui-input-block">
+            <input id='Address' name='Address' type="text" lay-verify="" autocomplete="off" placeholder="@Model.Address" class="layui-input" value='@Model.Address'>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.Sys_Admin_Phone
+        </label>
+        <div class="layui-input-block">
+            <input id='Phone' name='Phone' type="text" lay-verify="" autocomplete="off" placeholder="@Model.Phone" class="layui-input" value='@Model.Phone'>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_IsLogin</label>
+        <div class="layui-input-inline">
+            <input type="checkbox" name="IsLogin" ng-checked="@Model.IsLogin" lay-skin="switch" value="1" lay-filter="switchTest" title="@Resource.lang.Sys_Admin_IsLogin">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="Accept">@Resource.lang.Accept</button>
+            <button type="reset" class="layui-btn layui-btn-primary">@Resource.lang.Reset</button>
+        </div>
+    </div>
+</form>

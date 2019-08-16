@@ -1,0 +1,252 @@
+﻿@using Core
+
+@{
+    ViewBag.Title = Resource.lang.Sys_Admin_Email;
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+<link href="~/lib/layui/font/iconfont.css" rel="stylesheet" />
+<link href="/Content/themes/default/easyui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.easyui.js"></script>
+<style>
+    .layui-tab-content {
+        padding: 0px;
+    }
+
+    .layui-table tr {
+        cursor: pointer;
+    }
+
+    .selected {
+        border-radius: 90%;
+        background-color: #e2e2e2;
+    }
+</style>
+<div style="padding-top: 10px;">
+    @MvcHtmlString.Create(printControl.PowerLinkBtn(@Url.Action("")))
+</div>
+<hr />
+
+<fieldset id="step1" class="layui-elem-field layui-field-title" style="width: 500px; float: left">
+    <legend>第1步,请选择角色</legend>
+    <div class="layui-tab layui-tab-brief" lay-filter="Tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this" tv="0" id="role">@Resource.lang.Sys_Role</li>
+            <li tv="1" id="adm1">@Resource.lang.Sys_Admin</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show" id="role1">
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="30">
+                        <col width="130">
+                       @* <col width="340">*@
+                    </colgroup>
+                    <thead>
+                        <tr class="">
+                            <th>@Resource.lang.SortNo</th>
+                            <th>@Resource.lang.Sys_Role_Name</th>
+                            @*<th>@Resource.lang.Sys_Role_Memo</th>*@
+                        </tr>
+                    </thead>
+                    <tbody ng-controller="RoleController">
+                        <tr ng-repeat="x in data" id="{{x.Id}}" ng-click="initTree(x.Id)">
+                            <td style="text-align: center">{{ x.RowNumber}}
+                            </td>
+                            <td>{{x.Name}}</td>
+                           @* <td>{{x.Memo}}</td>*@
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="layui-tab-item" id="adm">
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="30">
+                        <col width="300">
+                        <col width="300">
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr class="">
+                            <th>@Resource.lang.SortNo</th>
+                            <th>@Resource.lang.Sys_Admin_RealName</th>
+                            <th>@Resource.lang.Sys_Admin_RoleId</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-controller="listController">
+                        <tr ng-repeat="x in data" id="{{x.Id}}" ng-click="initTree(x.Id)">
+                            <td style="text-align: center">{{ x.RowNumber}}
+                            </td>
+                            <td>{{ x.RealName}}</td>
+                            <td>{{x.RoleName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="paged" style="margin: 0px; padding: 0px; text-align: center"></div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset id="step2" class="layui-elem-field layui-field-title" style="float: left; margin-left: 5px; width: 500px;">
+    <legend>第2步,请选择或更改权限</legend>
+    <div style="padding: 5px;">
+        <ul id="tt" class="easyui-tree" data-options="animate:true,dnd:true">
+        </ul>
+    </div>
+</fieldset>
+<script type="text/javascript">
+    var powerType = 0, RoleId = "", AdminId = "";
+    function callBack(data) {
+        Alert(data);
+        if (data.Status == 1) {
+            layer.close(lIndex);
+            searchcount = 0;
+            paged(1);
+        }
+    }
+    function Alert(data) {
+        layer.msg(data.Memo, { icon: data.Status == 0 ? 2 : 1, time: 3 * 1000 });
+    }
+    function closeLayer() {
+        layer.close(lIndex);
+    }
+    var layer, lIndex, ids = [];
+    var paged, searchcount = 0, totalPages = 0;
+    layui.use(['form', 'layedit', 'laydate', 'element', 'laypage'], function () {
+        layer = layui.layer;
+    });
+    function CeatePage(pages, curr) {
+        layui.use(['laypage'], function () {
+            layer = layui.layer;
+            layui.laypage({
+                cont: 'paged'
+              , pages: pages //总页数
+                , curr: curr
+                , groups: 5 //连续显示分页数
+                  , skip: true
+                  , jump: function (obj, first) {
+                      var curr = obj.curr;
+                      paged(curr);
+                  }
+            , prev: '<em><</em>'
+            , next: '<em>></em>'
+            , first: '<em>@Resource.lang.FristPage</em>'
+            , last: '<em>@Resource.lang.LastPage</em>'
+            });
+        });
+    }
+    function resize() {
+        var w = $(window).width();
+        // $("#step2").width(w - $("#step1").width() - 10);
+    }
+    var selectedpid = "";
+    $(document).ready(function () {
+        @*if ('@ViewBag.Route'==1) {
+            $("#role").hide();
+            $("#role1").hide();
+            $("#role1").removeClass("layui-show");
+            $("#adm").addClass("layui-show");
+        }*@
+        $("#adm").hide();
+        $("#adm1").hide();
+        paged(1);
+        resize();
+        $(".layui-tab-title li").click(function () {
+            powerType = $(this).attr("tv");
+            RoleId = "";
+            AdminId = "";
+            $.initTree();
+        });
+        $("#btnAccept").click(function () {
+            if (AdminId == "" && RoleId == "") {
+                layer.msg("未做任何操作");
+            }
+            var data = $('#tt').tree('getChecked');
+            var d = [];
+            for (var i = 0; i < data.length; i++) {
+                d.push(data[i].id);
+            }
+            $.ajax({
+                url: "@Url.Action("ChangePower")",
+                type: "Post",
+                data: { powerids: d.join(","), pType: powerType, pid: selectedpid },
+                dataType: "json",
+                success: function (data) {
+                    Alert(data);
+                    @*if (data.Status == 1) {
+                        Alert("@Resource.lang.tip_OperateSucceed"+123);
+                     }
+                     else {
+                         Alert("@Resource.lang.tip_OperateFail");
+                     }*@
+                }
+            });
+            //提交至
+        });
+    });
+    $.extend({
+        initTree: function (id) {
+            $('#tt').tree({
+                lines: false,
+                animate: true,
+                method: "POST",
+                url: '/Module/GetMenuList/' + id,
+                checkbox: true,
+                onlyLeafCheck: false,
+                //getLevel:3
+            });
+            $("td").removeClass("selected");
+            $("#" + id + " td:first").addClass("selected");
+            if (id != undefined) {
+                if (powerType == 0) {
+                    RoleId = id;
+                }
+                else {
+                    AdminId = id;
+                }
+            }
+            selectedpid = id;
+            //console.log(RoleId + "===" + AdminId);
+
+        }
+    });
+    var myApp = angular.module("list", []);
+    myApp.controller('listController', function ($scope, $http) {
+        $scope.initTree = function (id) {
+            $.initTree(id)
+        }
+        paged = $scope.GetData = function (page) {
+            var queryStr = $('form').serialize();
+            //alert(queryStr); 
+            queryStr += "CustodyId="
+            if (searchcount == 1) {
+                searchcount++;
+            }
+            else {
+                $http.post("/sys/admin/GetList", { page: page, queryStr: queryStr })
+                    .success(function (d) {
+                        $scope.data = d.rows;
+                        searchcount++;
+                        if (searchcount == 1) {
+                            CeatePage(d.pager.totalPages, 1);
+                            // layer.msg('共查到' + d.total + "条数据");
+                            //layer.msg(String.format("@Resource.lang.tip_SearchCount", d.total));
+                        }
+                    });
+            }
+        };
+
+    });
+    myApp.controller('RoleController', function ($scope, $http) {
+        $scope.initTree = function (id) {
+            $.initTree(id)
+        }
+        $http.post('/sys/role/GetAllList')
+           .success(function (d) {
+               $scope.data = d.rows;
+           });
+    });
+
+
+
+</script>

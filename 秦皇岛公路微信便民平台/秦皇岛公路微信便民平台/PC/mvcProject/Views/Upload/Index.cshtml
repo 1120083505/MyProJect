@@ -1,0 +1,82 @@
+﻿@model Models.UpLoad
+@{
+    ViewBag.Title = "上传公共页面";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml"; 
+}
+
+<link href="~/Scripts/jquery.uploadify-v2.1.4/uploadify.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.uploadify-v2.1.4/swfobject.js"></script>
+<script src="~/Scripts/jquery.uploadify-v2.1.4/jquery.uploadify.v2.1.4.min.js"></script>
+<script type="text/javascript">
+    var strDir = "/content/upload"; //文件保存路径
+    var maxFileSize = 1024 * 1024 * 1024; //文件最大限制1G
+    var myApp = angular.module("list", []);
+    $(document).ready(function () {
+        var c = 0;
+        var returnjson = "[";
+        $("#uploadify").uploadify({
+            'uploader': '/Scripts/jquery.uploadify-v2.1.4/uploadify.swf',
+            'script': '/Scripts/jquery.uploadify-v2.1.4/UploadHandler.ashx', //引用Handler
+            'buttonImg': '/content/images/select.png', //选择文件按钮
+            'cancelImg': '/Scripts/jquery.uploadify-v2.1.4/cancel.gif', //取消上传按钮
+            'width': 81, //按钮宽度
+            'height': 25, //按钮高度
+            'wmode': 'transparent', //使浏览按钮的flash背景文件透明
+            'folder': strDir, //上传路径
+            'auto': false, //是否自动上传
+            'multi': '@Model.multi.ToString().ToLower()', //是否多文件上传
+            'fileExt': '@Model.fileExt',
+            'fileDesc': '@Model.fileExt',
+            'sizeLimit': maxFileSize,
+            'simUploadLimit': 1, //同时上传文件数
+            'onSelect': function (e, queueId, fileObj) {
+                if (fileObj.size > maxFileSize) {
+                    alert("你所选择的文件大小超过限制！");
+                }
+            }, onAllComplete: function () {
+                returnjson = returnjson.substr(0, returnjson.length - 1);
+                returnjson += "]";
+                window.parent.uploadResponse(returnjson);
+                window.parent.frameReturnByClose();
+            },
+            onComplete: function (event, queueID, fileObj, response) {
+                returnjson += response;
+            }, onSelectOnce: function () {
+                if (c == 0) {
+                    var list = $("#uploadifyQueue").html();
+                    $("div").detach("#uploadifyQueue");
+                    $("#listv").html("<div id=\"uploadifyQueue\" class=\"uploadifyQueue\">" + list + "</div>");
+                }
+                c++;
+            }
+        });
+        $("#btnBack").click(function () {
+            window.parent.frameReturnByClose();
+        });
+    });
+</script>
+<style>
+    object {
+        float: left;
+    }
+
+    #fileQueue {
+        clear: both;
+    }
+
+    body {
+        overflow-y: auto;
+    }
+</style>
+<div class="mvctool bg">
+    <input type="file" name="uploadify" id="uploadify" />
+    <a href="javascript:$('#uploadify').uploadifyUpload();" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">开始上传</a>
+    <a href="javascript:$('#uploadify').uploadifyClearQueue();" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">取消操作</a>
+    <a href="javascript:window.close();" class="easyui-linkbutton" id="btnBack" data-options="iconCls:'icon-undo',plain:'true'">返回</a>
+</div>
+<div id="fileQueue">
+</div>
+<div id="listv"></div>
+<input type="hidden" id="IsUpFile" />
+
+

@@ -1,0 +1,257 @@
+﻿@using Core
+@{
+    ViewBag.Title = "销售单打印";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+@model ZrSoft.VSP_SaleMain
+<link href="~/Content/print/print-preview.css" rel="stylesheet" />
+<link href="~/Content/print/print.css" rel="stylesheet" />
+<script src="~/Content/print/jquery.print-preview.js"></script>
+<script src="~/Content/print/jquery.tools.min.js"></script>
+@*<button type="button" onclick="pagePrint()">打印</button>*@
+<a onclick="pagePrint()" style="float:right;position: relative;font-size: 16px;color: red;" id="b_button">
+    <img src="~/Content/print/images/icon-print.png" alt="" />
+    打印
+</a>
+<div>
+    <!--startprint-->
+    <P style="font-size: 25px;width:100%;text-align:center">销售订单</P>
+    <div>
+        <p style="float:left">客户:@Model.CustomerName</p>
+        <p style="float:left;margin-left:10%">客户电话:@Model.Phone </p>
+        <p style="float:left;margin-left:10%">时间:@string.Format("{0:yyyy-MM-dd}", DateTime.Now.ToShortDateString())</p>
+    </div>
+    <div>
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+                <col width="150">
+            </colgroup>
+            <thead>
+                <tr class="">
+                    <th>@Resource.lang.SP_ShangPinInfo_FormId</th>
+                    <th>@Resource.lang.SP_ShangPinInfo_Num</th>
+                    <th>@Resource.lang.SP_ShangPinInfo_Price</th>
+                    <th>@Resource.lang.SP_ShangPinInfo_SumPrice</th>
+                    <th>@Resource.lang.SP_ShangPinInfo_Warehouse</th>
+                    @*<th>@Resource.lang.SP_ShangPinInfo_Customer</th>*@
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody ng-controller="listController">
+                <tr ng-repeat="x in data" id="{{x.Id}}" ng-dblclick="RowsDbClick(x.Id)">
+                    <td>{{x.FormId}}</td>
+                    <td>{{x.Num}}</td>
+                    <td>{{x.Price}}</td>
+                    <td>{{x.SumPrice}}</td>
+                    <td>{{x.Warehouse}}</td>
+                    @*<td>{{x.Customer}}</td>*@
+                    <td>{{x.Memo}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <p>地址:@ViewBag.Admin.Address</p>
+        <p>联系电话:@ViewBag.Admin.Phone</p>
+        @foreach (var item in ViewBag.List)
+        {
+        <div style="width:400px;float:left;text-align:center">
+            <p style="float:left">@item.BankName 卡号:@item.CardNum</p>
+            <p style="float:left;margin-left:10px">户主:@item.UserName</p>
+        </div>           
+        }
+    </div>
+    <!--endprint-->
+</div>
+<div id="paged" style="margin: 0px; padding: 0px; text-align: center"></div>
+<script type="text/javascript">
+
+    function callBack(data) {
+        Alert(data);
+        if (data.Status == 1) {
+            layer.close(lIndex);
+            searchcount = 0;
+            paged(1);
+        }
+    }
+    function Alert(data) {
+        layer.msg(data.Memo, { icon: data.Status == 0 ? 2 : 1, time: 3 * 1000 });
+    }
+    function closeLayer() {
+        layer.close(lIndex);
+    }
+    var layer, lIndex, ids = [];
+    var paged, searchcount = 0, totalPages = 0;
+    layui.use(['form', 'layedit', 'laydate', 'element', 'laypage'], function () {
+        layer = layui.layer;
+    });
+    function CeatePage(pages, curr) {
+        layui.use(['laypage'], function () {
+            layer = layui.layer;
+            layui.laypage({
+                cont: 'paged'
+              , pages: pages //总页数
+                , curr: curr
+                , groups: 5 //连续显示分页数
+                  , skip: true
+                  , jump: function (obj, first) {
+                      var curr = obj.curr;
+                      paged(curr);
+                  }
+            , prev: '<em><</em>'
+            , next: '<em>></em>'
+            , first: '<em>@Resource.lang.FristPage</em>'
+            , last: '<em>@Resource.lang.LastPage</em>'
+            });
+        });
+    }
+    $(document).ready(function () {
+        paged(1);
+        $("#btnSearch").click(function () {
+            searchcount = 0;
+            paged(1);
+            return false;
+        });
+        $('#btnCreate').click(function () {
+            lIndex = layer.open({
+                type: 2,
+                title: '@Resource.lang.Create',
+                shadeClose: true,
+                shade: 0.3,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['700px', '500px'],
+                content: '@Url.Action("Create")'
+            });
+            if ($.UserMobileAgent())
+                layer.full(lIndex);
+        });
+        $('#btnEdit').click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+           else if(ids.length>1)
+           {
+               layer.msg('@Resource.lang.tip_SelectOne');
+           }
+            else {
+                lIndex = layer.open({
+                    type: 2,
+                    title: '@Resource.lang.Edit',
+                    shadeClose: true,
+                    shade: 0.3,
+                    maxmin: true, //开启最大化最小化按钮
+                    area: ['700px', '500px'],
+                    content: '@Url.Action("Edit/")' + ids[0]
+                });
+                if ($.UserMobileAgent())
+                    layer.full(lIndex);
+            }
+        });
+        $("#btnDelete").click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                layer.confirm('@Resource.lang.tip_Do_Dell', {
+                    btn: ['@Resource.lang.OK', '@Resource.lang.Cancel'] //按钮
+                }, function () {
+                    $.post('@Url.Action("Delete")', { id: ids.join(',') }, function (data) {
+                        callBack(data);
+                    }, 'json');
+                }, function () {
+                });
+            }
+        });
+        $('#btnInfo').click(function () {
+            ids = GetCheckedIds();
+            if (ids.length == 0) {
+                layer.msg('@Resource.lang.tip_NoSelect');
+            }
+            else {
+                Detail(ids[0])
+            }
+        });
+    });
+    function Detail(id) {
+        lIndex = layer.open({
+            type: 2,
+            title: '@Resource.lang.Info',
+                shadeClose: true,
+                shade: 0.3,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['700px', '500px'],
+                content: '@Url.Action("Info/")' + id
+          });
+            if ($.UserMobileAgent())
+                layer.full(lIndex);
+    }
+    var myApp = angular.module("list", []);
+    myApp.controller('listController', function ($scope, $http) {
+        $scope.RowsDbClick = function (id) {
+            //显示详情
+             //Detail(id);
+        }
+        paged = $scope.GetData = function (page) {
+            var queryStr = $('form').serialize();
+            //alert(queryStr);
+            if (searchcount == 1) {
+                searchcount++;
+            }
+            else {
+                $http.post('@Url.Action("GetInfoList")', { id:'@Model.Id' })
+                    .success(function (d) {
+                        $scope.data = d.rows;
+                        searchcount++;
+                        if (searchcount == 1) {
+                            CeatePage(d.pager.totalPages, 1);
+                        }
+                    });
+            }
+        };
+    });
+    myApp.controller('ShangPinInfoController', function ($scope, $http) {
+           $.ajax({
+                url: '/SP/ShangPinInfo/GetAllList',
+                type: 'Post',
+                dataType: 'json',
+                async:false,
+            success: function (d) {
+                $scope.data = d.rows;
+            }
+        });
+    });
+</script>
+<script>
+    function pagePrint() {
+        //打印
+        var bdhtml = window.document.body.innerHTML;//获取当前页的html代码
+        var sprnstr = "<!--startprint-->";//设置打印开始区域
+        var eprnstr = "<!--endprint-->";//设置打印结束区域
+        var strArray = bdhtml.split(sprnstr);
+        var prnhtml = "";
+        if (strArray.length == 3) {
+            prnhtml = strArray[1];
+            prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));//从结束代码向前取html
+        }
+        //var prnhtml = bdhtml.substring(bdhtml.indexOf(sprnstr) + 18);//从开始代码向后取html
+        window.document.body.innerHTML = prnhtml;
+        window.print();
+        window.document.body.innerHTML = bdhtml;
+    }
+</script>

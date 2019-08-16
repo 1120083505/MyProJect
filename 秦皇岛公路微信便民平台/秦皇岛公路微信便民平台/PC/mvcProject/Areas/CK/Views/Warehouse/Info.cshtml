@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+@model  ZrSoft.CK_Warehouse
+<script src="~/lib/angular.js"></script>
+<script>
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+    });
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back">&#xe6ff;</a>  @Resource.lang.CK_Warehouse
+    </legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_Name</label><div class="layui-input-block">
+            <label name="@Model.Name" class="layui-input">@Model.Name</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_Area</label><div class="layui-input-block">
+            <label name="@Model.Area" class="layui-input">@Model.Area</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_Ardess</label><div class="layui-input-block">
+            <label name="@Model.Ardess" class="layui-input">@Model.Ardess</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_Stock</label><div class="layui-input-block">
+            <label name="@Model.Stock" class="layui-input">@Model.Stock</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_Memo</label><div class="layui-input-block">
+            <label name="@Model.Memo" class="layui-input">@Model.Memo</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_AdminId</label><div class="layui-input-block">
+            <label name="@Model.AdminId" class="layui-input">@Model.AdminId</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.CK_Warehouse_Pubdate</label><div class="layui-input-block">
+            <label name="@Model.Pubdate" class="layui-input">@Model.Pubdate</label>
+        </div>
+    </div>
+    
+</form>

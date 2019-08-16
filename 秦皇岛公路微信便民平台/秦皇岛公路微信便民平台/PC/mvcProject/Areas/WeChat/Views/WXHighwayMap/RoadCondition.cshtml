@@ -1,0 +1,102 @@
+﻿@model  Senparc.Weixin.MP.Helpers.JsSdkUiPackage
+<html>
+<head>
+    <title>实时路况</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@Model.AppId', // 必填，公众号的唯一标识
+                timestamp: '@Model.Timestamp', // 必填，生成签名的时间戳
+                nonceStr: '@Model.NonceStr', // 必填，生成签名的随机串
+                signature: '@Model.Signature',// 必填，签名
+                jsApiList: [
+                       'chooseImage',
+                       'previewImage',
+                       'uploadImage',
+                       'downloadImage',
+                        'getLocation'
+                ]
+            });
+            wx.ready(function () {
+                wx.getLocation({
+                    type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                    success: function (res) {
+                        //alert(JSON.stringify(res));
+                        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                        var speed = res.speed; // 速度，以米/每秒计
+                        var accuracy = res.accuracy; // 位置精度
+                        PLat = latitude;
+                        PLng = longitude;
+                        var map = new BMap.Map("mapContainer");
+                        map.centerAndZoom(new BMap.Point(PLng, PLat), 16);
+                        var ctrl = new BMapLib.TrafficControl({
+                            showPanel: false
+                        });
+
+                        map.addControl(new BMap.NavigationControl());
+                        map.enableContinuousZoom(false);
+                        map.enableScrollWheelZoom(false);
+
+
+                        map.addControl(ctrl);
+                        ctrl.setAnchor(BMAP_ANCHOR_BOTTOM_RIGHT);
+                        ctrl.showTraffic();
+                        //按坐标移动
+                        function goPosition(xPos, yPos) {
+                            var mapa = new BMap.Map("mapContainer");
+                            mapa.centerAndZoom(new BMap.Point(xPos, yPos), 16);
+                            var ctrla = new BMapLib.TrafficControl({
+                                showPanel: false
+                            });
+
+                            mapa.addControl(new BMap.NavigationControl());
+                            mapa.enableContinuousZoom(false);
+                            mapa.enableScrollWheelZoom(true);
+
+                            mapa.addControl(ctrla);
+                            ctrla.setAnchor(BMAP_ANCHOR_BOTTOM_RIGHT);
+                            ctrla.showTraffic();
+                        }
+                    }
+                });
+                setInterval(function () {  //使用  setTimeout（）方法设定定时2000毫秒
+                    wx.getLocation({
+                        type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                        success: function (res) {
+                            var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                            var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                            var speed = res.speed; // 速度，以米/每秒计
+                            var accuracy = res.accuracy; // 位置精度
+                            PLat = latitude;
+                            PLng = longitude;
+                            //alert(PLng, PLat);
+                        }
+                    });
+
+                }, 5000);
+            });
+       
+
+    });
+
+    
+    </script>
+    <style type="text/css">
+        #mapContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mapContainer"></div>
+</body>
+</html>

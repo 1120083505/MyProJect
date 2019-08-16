@@ -1,0 +1,84 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        /*修改时间*/
+        $("#btntkSave").click(function () {
+            $.ajax({
+                url: "@Url.Action("updateTk")",
+                type: "Post",
+                data: { tk: $("#tk").val(), pwd: $("#password").val() },
+                dataType: "json",
+                success: function (data) {
+                    alert(data.Memo);
+                }
+            });
+        });
+        /*修改注册码*/
+        $("#btnmkSave").click(function () {
+            $.ajax({
+                url: "@Url.Action("updateMk")",
+                type: "Post",
+                data: { mk: $("#mk").val(), pwd: $("#password").val() },
+                dataType: "json",
+                success: function (data) {
+                    alert(data.Memo);
+                }
+            });
+        });
+    });
+</script> 
+</head>
+<body>
+    <form style="padding: 100px;">
+        <table>
+            <tbody>
+                <tr>
+                    <td style="width: 180px; text-align: right;">截至时间:
+                    </td>
+                    <td>
+                        <input id='tk' name='tk' data-options="required:false,width:155" />
+                        <input type="button" id="btntkSave" value="保存" />
+                    </td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td style="width: 180px; text-align: right;">当前机器硬件的信息:
+                    </td>
+                    <td>
+                        <label id="smk">@Core.errorHelper.getCPUCode_MAC()</label>
+                    </td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td style="width: 180px; text-align: right;">使用机器硬件的信息:
+                    </td>
+                    <td>
+                        <input id='mk' name='mk' class="easyui-textbox" data-options="required:false,width:155" />
+                        <input type="button" id="btnmkSave" value="保存" />
+                    </td>
+                    <td style="text-align: left;"></td>
+                </tr>
+                <tr>
+                    <td style="width: 120px; text-align: right;">密码:
+                    </td>
+                    <td>
+                        <input id='password' name='password' type="password" data-options="required:false,width:155" />
+                        <label style="color: red">如果更新，请输入密码</label>
+                    </td>
+                    <td style="text-align: left;"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>

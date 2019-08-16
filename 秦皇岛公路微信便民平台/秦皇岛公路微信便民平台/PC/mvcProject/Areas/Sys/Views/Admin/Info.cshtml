@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+@model  ZrSoft.Sys_Admin
+<script src="~/lib/angular.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+    });
+    var myApp = angular.module("Create", [])
+    CreateSelect("Create", "RoleController", "/sys/role/GetAllList");
+</script>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a>  @Resource.lang.Sys_Admin</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_RealName</label>
+        <div class="layui-input-block">
+            <input type="text" name="RealName" value="@Model.RealName" lay-verify="required" autocomplete="off" placeholder="@Resource.lang.Sys_Admin_RealName" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_LoginName</label>
+        <div class="layui-input-block">
+            <input type="text" name="LoginName" value="@Model.LoginName" lay-verify="required" disabled placeholder="@Resource.lang.Sys_Admin_LoginName" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    @*<div class="layui-form-item">
+            <label class="layui-form-label">@Resource.lang.Sys_Custody_Name</label><div class="layui-input-block">
+                        <label name="@Model.CustodyId" class="layui-input">@Model.CustodyId</label>
+            </div>
+        </div>*@
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_Email</label>
+        <div class="layui-input-block">
+            <input type="text" name="Email" value="@Model.Email" disabled autocomplete="off" placeholder="@Resource.lang.Sys_Admin_Email" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_LoginPwd</label>
+        <div class="layui-input-block">
+            <input type="password" name="LoginPwd" lay-verify="pass" disabled value="@Model.LoginPwd" placeholder="@Resource.lang.Sys_Admin_LoginPwd" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_Address</label><div class="layui-input-block">
+            <label name="@Model.Address" class="layui-input">@Model.Address</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_Phone</label><div class="layui-input-block">
+            <label name="@Model.Phone" class="layui-input">@Model.Phone</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_RoleId</label>
+        <div class="layui-input-block">
+            <select name="RoleId" id="RoleId" disabled lay-verify="required" ng-controller="RoleController" ng-init="selected = '@Model.RoleId'" ng-model="selected">
+                <option value="">@Resource.lang.Select@Resource.lang.Sys_Role</option>
+                <option ng-repeat="x in data" value="{{ x.Id}}">{{ x.Name}}</option>
+            </select>
+
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Admin_IsLogin</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="IsLogin" disabled ng-checked="@Model.IsLogin" lay-skin="switch" value="1" lay-filter="switchTest" title="@Resource.lang.Sys_Admin_IsLogin">
+        </div>
+    </div>
+</form>

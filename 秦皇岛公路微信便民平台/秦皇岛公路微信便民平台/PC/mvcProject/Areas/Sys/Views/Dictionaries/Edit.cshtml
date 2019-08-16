@@ -1,0 +1,63 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+}
+@model  ZrSoft.Sys_Dictionaries
+<script src="~/lib/angular.js"></script>
+<script> 
+    layui.use(['form', 'layedit', 'laydate'], function () { 
+        var form = layui.form() 
+        , layer = layui.layer; 
+        //监听提交 
+        form.on('submit(Accept)', function (data) { 
+            var json = data.field;
+            json["Id"] = "@Model.Id"; 
+            $.ajax({ 
+                url: "@Url.Action("Edit")", 
+                type: "Post", 
+                data: json, 
+                dataType: "json", 
+                success: function (data) { 
+                    window.parent.callBack(data); 
+                } 
+            }); 
+            return false; 
+        });
+    });
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a> @Resource.lang.Sys_Dictionaries </legend>
+</fieldset>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Html.LabelFor(model => model.LimitLoginCount)
+        </label>
+        <div class="layui-input-block">
+            <input id='LimitLoginCount' name='LimitLoginCount' type="number" class="layui-input" lay-verify="required"  lay-verify="number"  autocomplete="off" placeholder="@Model.LimitLoginCount" value='@Model.LimitLoginCount'>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Html.LabelFor(model => model.LimitLoginTime)
+        </label>
+        <div class="layui-input-block">
+            <input id='LimitLoginTime' name='LimitLoginTime' type="number" class="layui-input" lay-verify="required"  lay-verify="number"  autocomplete="off" placeholder="@Model.LimitLoginTime" value='@Model.LimitLoginTime'>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.Sys_Dictionaries_Ident
+        </label>
+        <div class="layui-input-inline">           
+            <input type="checkbox" name="Ident" ng-checked="@Model.Ident" lay-skin="switch" value="1" lay-filter="switchTest" title="@Resource.lang.Sys_Dictionaries_Ident">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="Accept">@Resource.lang.Accept</button>
+            <button type="reset" class="layui-btn layui-btn-primary">@Resource.lang.Reset</button>
+        </div>
+    </div>
+</form>
+

@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index_Create.cshtml";
+}
+@model  ZrSoft.VSP_BankAccount
+<script src="~/lib/angular.js"></script>
+<script>
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+    });
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back">&#xe6ff;</a>  @Resource.lang.SP_BankAccount
+    </legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_BankAccount_CardNum</label><div class="layui-input-block">
+            <label name="@Model.CardNum" class="layui-input">@Model.CardNum</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_BankAccount_BankName</label><div class="layui-input-block">
+            <label name="@Model.BankName" class="layui-input">@Model.BankName</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_BankAccount_UserId</label><div class="layui-input-block">
+            <label name="@Model.UserId" class="layui-input">@Model.UserName</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_BankAccount_AdminId</label><div class="layui-input-block">
+            <label name="@Model.AdminId" class="layui-input">@Model.RealName</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.SP_BankAccount_PubDate</label><div class="layui-input-block">
+            <label name="@Model.PubDate" class="layui-input">@Model.PubDate</label>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,126 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+}
+@model  ZrSoft.Sys_Module
+<link href="~/lib/layui/font/iconfont.css" rel="stylesheet" />
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+        //监听提交 
+        form.on('submit(Accept)', function (data) {
+            var json = data.field;
+            $.ajax({
+                url: "@Url.Action("Create")",
+                type: "Post",
+                data: json,
+                dataType: "json",
+                success: function (data) {
+                    window.parent.callBack(data);
+                }
+            });
+            return false;
+        });
+    });
+    function PicClick() {
+        layer.open({
+            type: 2,
+            title: '选择图标',
+            shadeClose: false,
+            shade: 0.8,
+            area: ['380px', '50%'],
+            content: '/Icon/Index' //iframe的url
+        });
+    }
+    function CallBackIcon(json) {
+        layer.closeAll('iframe');
+        $("#Icon").val(json.fontclass);
+        $("#ImgSty").html("<span class='tree-icon icon iconfont " + json.fontclass + "' style='text-align:center;float:left;line-height:38px;font-size:30px;margin-right:5px;'></span>");
+    }
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a>@Resource.lang.Sys_Module
+    </legend>
+</fieldset>
+<form class="layui-form" action="">
+    <input name="ParentId" type="hidden" value="@ViewBag.ParentId" />
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级名称</label>
+        <div class="layui-input-block">
+            <label style="line-height: 35px; font-size: 17px;">@ViewBag.ParentName</label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Module_Name</label>
+        <div class="layui-input-block">
+            <input id='Name' name='Name' type="text" lay-verify="required" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Sys_Module_Name" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Module_EnName</label>
+        <div class="layui-input-block">
+            <input id='EnName' name='EnName' type="text" lay-verify="required" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Sys_Module_EnName" class="layui-input" >
+        </div>
+    </div>
+    @*<div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Module_ParentId</label> 
+        <div class="layui-input-block"> 
+                    <input id='ParentId' name='ParentId' type="text" lay-verify="required" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Sys_Module_ParentId" class="layui-input" > 
+        </div> 
+    </div>*@
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Module_Url</label>
+        <div class="layui-input-block">
+            <input id='Url' name='Url' type="text" lay-verify="" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Sys_Module_Url" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Module_Icon</label>
+        <div class="layui-input-block">
+            <div id="ImgSty"></div>
+            <input id='Icon' name='Icon' type="hidden"/>
+            <input type="button" onclick="PicClick()" style="width:20%;" lay-verify="" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Sys_Module_Icon" class="layui-input" value="选择">
+            
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Module_Sort</label>
+        <div class="layui-input-block">
+            <input id='Sort' name='Sort' type="number" lay-verify="required" lay-verify="number" placeholder="@Resource.lang.Sys_Module_Sort" autocomplete="off" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Module_IsLast</label>
+        <div class="layui-input-block">
+            @*<input id='IsLast' name='IsLast' type="number" lay-verify="required" lay-verify="number" placeholder="@Resource.lang.Sys_Module_IsLast" autocomplete="off" class="layui-input" > *@
+            <input type="checkbox" name="IsLast" checked=""  lay-skin="switch" value="1" lay-filter="switchTest" title="@Resource.lang.Sys_Module_IsLast">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Module_IsShow</label>
+        <div class="layui-input-block">
+            @*<input id='IsShow' name='IsShow' type="number" lay-verify="required" lay-verify="number" placeholder="@Resource.lang.Sys_Module_IsShow" autocomplete="off" class="layui-input" >*@
+            <input type="checkbox" name="IsShow" checked=""  lay-skin="switch" value="1" lay-filter="switchTest" title="@Resource.lang.Sys_Module_IsShow">
+        </div>
+    </div>
+    @*<div class="layui-form-item"> 
+        <label class="layui-form-label">@Resource.lang.Sys_Module_Enable</label> 
+        <div class="layui-input-block"> 
+                    <input id='Enable' name='Enable' type="number" lay-verify="required" lay-verify="number" placeholder="@Resource.lang.Sys_Module_Enable" autocomplete="off" class="layui-input" > 
+        <input type="checkbox" name="Enable" checked=""  lay-skin="switch" value="1" lay-filter="switchTest" title="@Resource.lang.Sys_Module_Enable">
+        </div> 
+    </div>*@
+    <div class="layui-form-item">
+        <label class="layui-form-label">@Resource.lang.Sys_Module_Memo</label>
+        <div class="layui-input-block">
+            <input  id='Memo' name='Memo' type="text" lay-verify="" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Sys_Module_Memo" class="layui-input" data-options="multiline:true" style="height:80px;"  >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="Accept">@Resource.lang.Accept</button>
+            <button type="reset" class="layui-btn layui-btn-primary">@Resource.lang.Reset</button>
+        </div>
+    </div>
+</form>

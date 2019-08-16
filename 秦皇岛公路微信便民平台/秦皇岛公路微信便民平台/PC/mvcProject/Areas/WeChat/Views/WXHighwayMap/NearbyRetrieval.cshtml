@@ -1,0 +1,244 @@
+﻿@model  Senparc.Weixin.MP.Helpers.JsSdkUiPackage
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <style type="text/css">
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+            font-size: 14px;
+        }
+
+        #l-map {
+            height: 100%;
+            width: 100%;
+        }
+
+        /*#r-result {
+            width: 100%;
+        }*/
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KSzPC6Oi5unq6I8TatCvWKoW"></script>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <title>附近检索</title>
+</head>
+<body>
+    <div id="oper_table" style="position:absolute;top:0;left:0;z-index:999;width:100%; ">
+        <div id="r-result" style="position:relative">
+            <input type="text" id="suggestId" tabindex="7" size="20" placeholder="请输入检索地点" style="width: 70%;left: 15%; height: 35px;font-size: 18px;margin:10px auto; border: 1px solid #cccccc;line-height: 35px;border-radius: 20px;text-align:center;position:absolute;top:0" onkeyup="mysearch(this)"/>
+            <input type="text" id="suggestId2" tabindex="7" size="20" placeholder="请输入检索地点" style="width: 70%;left: 15%; height: 35px;font-size: 18px;margin:10px auto;border: 1px solid #cccccc;line-height: 35px;border-radius: 20px;text-align:center ;visibility: hidden;position:absolute;top:0" />
+            @*<input type="button" onclick="FujinJS();" style="height: 35px;float: left;border-radius: 20px;padding-left:10px;padding-right:10px" value="查找" />*@
+        </div>
+    </div>
+    <div id="l-map">
+            
+    </div>
+
+    <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    //人的经纬度
+    var PLng, PLat;
+    //提交按钮
+    $(function () {
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@Model.AppId', // 必填，公众号的唯一标识
+            timestamp: '@Model.Timestamp', // 必填，生成签名的时间戳
+            nonceStr: '@Model.NonceStr', // 必填，生成签名的随机串
+            signature: '@Model.Signature',// 必填，签名
+            jsApiList: [
+                   'chooseImage',
+                   'previewImage',
+                   'uploadImage',
+                   'downloadImage',
+                    'getLocation'
+            ]
+        });
+        wx.ready(function () {
+            wx.getLocation({
+                type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    //alert(JSON.stringify(res));
+                    var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                    var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                    var speed = res.speed; // 速度，以米/每秒计
+                    var accuracy = res.accuracy; // 位置精度
+                    PLat = latitude;
+                    PLng = longitude;
+                    FujinJS();
+                }
+            });
+            setInterval(function () {  //使用  setTimeout（）方法设定定时2000毫秒
+                wx.getLocation({
+                    type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                    success: function (res) {
+                        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                        var speed = res.speed; // 速度，以米/每秒计
+                        var accuracy = res.accuracy; // 位置精度
+                        PLat = latitude;
+                        PLng = longitude;
+                        //alert(PLng, PLat);
+                    }
+                });
+
+            }, 5000);
+        });
+       
+    });
+	function G(id) {
+		return document.getElementById(id);
+	}
+	function FujinJS() {
+	    var map = new BMap.Map("l-map");
+	    var Point = new BMap.Point(PLng, PLat);
+	    map.centerAndZoom(Point, 16);
+	    //map.addControl(new BMap.MapTypeControl({
+	    //    mapTypes: [
+	    //        BMAP_NORMAL_MAP,
+	    //        BMAP_HYBRID_MAP
+	    //    ]
+	    //}));
+	    map.enableScrollWheelZoom(true);
+	    //function FujinJS() {
+	    //    var Didian = $("#suggestId").val();
+	    //    	  
+
+	    //    if (Didian=='') {
+	    //        alert("请输入检索点！");
+	    //        return false;
+	    //    }
+	    //    var local = new BMap.LocalSearch(map, { renderOptions: { map: map, autoViewport: false } });
+	    //    local.searchNearby(Didian, Point, 5000);
+	    //    local.setSearchCompleteCallback(function(results){
+	    //        if (local.getStatus() == BMAP_STATUS_SUCCESS) {        
+	    //            for (var i = 0; i < results.getCurrentNumPois() ; i++) {
+	    //                alert(JSON.stringify(results.getPoi(i)));
+	    //                map.clearOverlays();
+	    //                var poi = results.getPoi(i);
+
+	    //            }
+	    //            //str += '</ul>';
+	    //            //$("#result").html(str);
+	    //            //$("#s-city").text(results.province + results.city);
+	    //            //$("#s-point").text(results.getPoi(0).point.lng + "," + results.getPoi(0).point.lat);
+	    //        }
+	    //    });
+
+	    //}
+
+	   
+	    
+	    var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+            {
+                "input": "suggestId2"
+            , "location": map,
+            });
+	    ac.addEventListener("onhighlight", function (e) {  //鼠标放在下拉列表上的事件
+	        var str = "";
+	        var _value = e.fromitem.value;
+	        var value = "";
+	        if (e.fromitem.index > -1) {
+	            value = _value.province + _value.city + _value.district + _value.street + _value.business;
+	        }
+	        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+	        value = L + "";
+	        if (e.toitem.index > -1) {
+	            _value = e.toitem.value;
+	            value = _value.province + _value.city + _value.district + _value.street + _value.business;
+	        }
+	        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+	        G("searchResultPanel").innerHTML = str;
+
+	    });
+
+	    var myValue;
+	    ac.addEventListener("onconfirm", function (e) {    //鼠标点击下拉列表后的事件
+	        var _value = e.item.value;
+	        myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+	        G("searchResultPanel").innerHTML = "onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+	        //alert("2222");
+	        setPlace();
+	    });
+
+	    function setPlace() {
+	        map.clearOverlays();    //清除地图上所有覆盖物
+	        function myFun() {
+	            var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+	            //map.centerAndZoom(pp, 18);
+	            //map.addOverlay(new BMap.Marker(pp));    //添加标注
+	            //alert(JSON.stringify(pp));
+	            var p1 = new BMap.Point(PLng, PLat);
+	            var driving = new BMap.DrivingRoute(map, { renderOptions: { map: map, autoViewport: true } });
+	            driving.search(p1, pp);
+	        }
+	        var local = new BMap.LocalSearch(map, { //智能搜索
+	            onSearchComplete: myFun
+	        });
+	        local.search(myValue);
+	        //alert(myValue);
+	    }
+	}
+	
+	function mysearch(e) {
+	    wx.getLocation({
+	        type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+	        success: function (res) {
+	            //alert(JSON.stringify(res));
+	            var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+	            var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+	            var speed = res.speed; // 速度，以米/每秒计
+	            var accuracy = res.accuracy; // 位置精度
+	            PLat = latitude;
+	            PLng = longitude;
+	            var geoc = new BMap.Geocoder();
+	            var pt = new BMap.Point(PLng, PLat);
+	            geoc.getLocation(pt, function (rs) {
+	                var D = "";
+	                var addComp = rs.addressComponents;
+	                L = addComp;
+	                D = addComp.province + addComp.city + addComp.district + addComp.street;
+	                $("#suggestId2").val(D + $("#suggestId").val())
+	            });
+	        }
+	    });
+	   
+	}
+	//function FujinJS() {
+	//    var Didian = $("#suggestId").val();
+	//
+
+	//    if (Didian=='') {
+	//        alert("请输入检索点！");
+	//        return false;
+	//    }
+	//    var local = new BMap.LocalSearch(map, { renderOptions: { map: map, autoViewport: false } });
+	//    local.searchNearby(Didian, Point, 5000);
+	//    local.setSearchCompleteCallback(function(results){
+	//        if (local.getStatus() == BMAP_STATUS_SUCCESS) {
+	//            for (var i = 0; i < results.getCurrentNumPois() ; i++) {
+	//                alert(JSON.stringify(results.getPoi(i)));
+	//                map.clearOverlays();
+	//                var poi = results.getPoi(i);
+
+	//            }
+	//            //str += '</ul>';
+	//            //$("#result").html(str);
+	//            //$("#s-city").text(results.province + results.city);
+	//            //$("#s-point").text(results.getPoi(0).point.lng + "," + results.getPoi(0).point.lat);
+	//        }
+	//    });
+
+	//}
+
+	
+</script>

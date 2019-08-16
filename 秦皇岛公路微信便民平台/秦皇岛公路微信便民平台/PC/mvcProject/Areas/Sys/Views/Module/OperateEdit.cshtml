@@ -1,0 +1,116 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Index_Create.cshtml"; 
+}
+@model  ZrSoft.Sys_ModuleOperate
+<link href="~/lib/layui/font/iconfont.css" rel="stylesheet" />
+<script>
+    $(function () {
+        var str = "&#x" + '@Model.Icon';
+        $("#Icon").val('@Model.Icon');
+        $("#Icon").attr("data-values","0");
+        $("#ImgSty").html("<span class='tree-icon icon iconfont ' style='text-align:center;float:left;line-height:38px;font-size:30px;margin-right:5px;'>" + str + "</span>");
+    })
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form()
+        , layer = layui.layer;
+        //监听提交 
+        form.on('submit(Accept)', function (data) {
+            var json = data.field;
+            var Num = $("#Icon").attr("data-values");
+            if (Num == '1') {
+                json.Icon = json.Icon.substring(3, json.Icon.length)
+            }
+            json["Id"] = "@Model.Id";
+            $.ajax({
+                url: "@Url.Action("OperateEdit")",
+                type: "Post",
+                data: json,
+                dataType: "json",
+                success: function (data) {
+                    window.parent.callBack_1(data);
+                }
+            });
+            return false;
+        });
+    });
+    function PicClick() {
+        layer.open({
+            type: 2,
+            title: '选择图标',
+            shadeClose: false,
+            shade: 0.8,
+            area: ['380px', '50%'],
+            content: '/Icon/Index?unicode='+ '@Model.Icon'//iframe的url
+        });
+    }
+    function CallBackIcon(json) {
+        layer.closeAll('iframe');
+        $("#Icon").val(json.unicode);
+        $("#Icon").attr("data-values", "1");
+        $("#ImgSty").html("<span class='tree-icon icon iconfont ' style='text-align:center;float:left;line-height:38px;font-size:30px;margin-right:5px;'>" + json.unicode + "</span>");
+    }
+</script>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-icon close" style="padding: 5px; font-size:larger; cursor:pointer" title="@Resource.lang.Back" >&#xe6ff;</a> @Resource.lang.Sys_ModuleOperate </legend>
+</fieldset>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.Sys_ModuleOperate_Name
+        </label>
+        <div class="layui-input-block">
+            <input id='Name' name='Name'  type="text" lay-verify="required" autocomplete="off" placeholder="@Model.Name" class="layui-input"  value='@Model.Name'>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.Sys_ModuleOperate_KeyCode
+        </label>
+        <div class="layui-input-block">
+            <input id='KeyCode' name='KeyCode'  type="text" lay-verify="required" autocomplete="off" placeholder="@Model.KeyCode" class="layui-input"  value='@Model.KeyCode'>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.Sys_ModuleOperate_Sort
+        </label>
+        <div class="layui-input-block">
+            <input id='Sort' name='Sort' type="number" class="layui-input" lay-verify="required"  lay-verify="number"  autocomplete="off" placeholder="@Model.Sort" value='@Model.Sort'>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.Sys_ModuleOperate_Icon
+        </label>
+        <div class="layui-input-block">
+            <div id="ImgSty">
+                <span class="tree-icon icon iconfont" id="JsLog" style="text-align: center; float: left; line-height: 38px; font-size: 30px; margin-right: 5px;"></span>
+            </div>
+            <input id='Icon' name='Icon' type="hidden" />
+            <input type="button" onclick="PicClick()" style="width:20%;" lay-verify="" lay-verify="title" autocomplete="off" placeholder="@Resource.lang.Sys_Module_Icon" class="layui-input" value="选择">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            @Resource.lang.Sys_ModuleOperate_IsBtn
+        </label>
+        <div class="layui-input-block">
+            @*<input id='IsBtn' name='IsBtn' type="number" class="layui-input" lay-verify="required"  lay-verify="number"  autocomplete="off" placeholder="@Model.IsBtn" value='@Model.IsBtn'>*@
+            @if (Model.IsBtn == 1)
+            {
+                <input type="checkbox" name="IsBtn" checked=""  lay-skin="switch" value="1" lay-filter="switchTest" title="@Resource.lang.Sys_ModuleOperate_IsBtn">  
+            }
+            else
+            {
+                <input type="checkbox" name="IsBtn"   lay-skin="switch" value="0" lay-filter="switchTest" title="@Resource.lang.Sys_ModuleOperate_IsBtn">  
+            }
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="Accept">@Resource.lang.Accept</button>
+            <button type="reset" class="layui-btn layui-btn-primary">@Resource.lang.Reset</button>
+        </div>
+    </div>
+</form>

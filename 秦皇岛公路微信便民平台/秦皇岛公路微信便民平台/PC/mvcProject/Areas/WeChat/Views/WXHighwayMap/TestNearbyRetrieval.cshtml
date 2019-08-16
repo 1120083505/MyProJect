@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+            font-size: 14px;
+        }
+
+        #l-map {
+            height: 100%;
+            width: 100%;
+        }
+
+        /*#r-result {
+            width: 100%;
+        }*/
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=KSzPC6Oi5unq6I8TatCvWKoW"></script>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <title>附近检索</title>
+</head>
+<body>
+    <div id="oper_table" style="position:absolute;top:0;left:0;z-index:999;width:100%; ">
+        <div id="r-result" style="position:relative">
+            <input type="text" id="suggestId" tabindex="7" size="20" placeholder="请输入检索地点" style="width: 50%; left:15%; height: 35px;font-size: 18px;margin:10px auto; border: 1px solid #cccccc;line-height: 35px;border-radius: 20px;text-align:center;position:absolute;top:0" value="加油站" @*onkeyup="mysearch(this)*@" />
+            @*<input type="text" id="suggestId2" tabindex="7" size="20" placeholder="请输入检索地点" style="width: 70%;left: 15%; height: 35px;font-size: 18px;margin:10px auto;border: 1px solid #cccccc;line-height: 35px;border-radius: 20px;text-align:center ;visibility: hidden;position:absolute;top:0" />*@
+            <input type="button" onclick="FujinJS();" style="width:20%;left:65%;height: 35px;border-radius: 20px;padding-left:10px;padding-right:10px;margin:10px auto;position:absolute;top:0" value="查找" />
+        </div>
+    </div>
+    <div id="l-map">
+
+    </div>
+
+    <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+    
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能
+	function G(id) {
+		return document.getElementById(id);
+	}
+
+	var map = new BMap.Map("l-map");
+	var Point = new BMap.Point(120.170404, 35.967499);
+	map.centerAndZoom(Point, 16);
+	//map.addControl(new BMap.MapTypeControl({
+	//    mapTypes: [
+    //        BMAP_NORMAL_MAP,
+    //        BMAP_HYBRID_MAP
+	//    ]
+    //}));
+	map.enableScrollWheelZoom(true);
+	var pointArray = new Array();
+	function FujinJS() {
+	    var Didian = $("#suggestId").val();
+	
+
+	    if (Didian=='') {
+	        alert("请输入检索点！");
+	        return false;
+	    }
+	    var local = new BMap.LocalSearch(map);
+	    local.searchNearby(Didian, Point, 5000);
+	    local.setSearchCompleteCallback(function(results){
+	        if (local.getStatus() == BMAP_STATUS_SUCCESS) {
+                alert(JSON.stringify(results));
+	            for (var i = 0; i < results.getCurrentNumPois() ; i++) {
+	                //alert(JSON.stringify(results.getPoi(i)));
+	                //map.clearOverlays();
+	                var poi = results.getPoi(i);
+	                //alert(results.target(i));
+	                
+	                var marker = new BMap.Marker(poi.point);  // 创建标注
+	                map.addOverlay(marker);
+	                //marker.Title = results.getPoi(i).Title//增加点
+	                //alert(JSON.stringify(marker));
+	                //marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+	               
+	                pointArray[i] = new BMap.Point(poi.point);
+	                marker.addEventListener("click", attribute);
+	            }
+	            //str += '</ul>';
+	            //$("#result").html(str);
+	            //$("#s-city").text(results.province + results.city);
+	            //$("#s-point").text(results.getPoi(0).point.lng + "," + results.getPoi(0).point.lat);
+	        }
+	    });
+
+	}
+	//获取覆盖物位置
+	function attribute(e) {
+	    var geoc = new BMap.Geocoder();
+	    var p = e.target;
+	    var pt = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+	    var lng = p.getPosition().lng;
+	    var lat = p.getPosition().lat;
+	    geoc.getLocation(pt, function (rs) {
+	        alert(JSON.stringify(pt));
+	        var addComp = rs.addressComponents;
+	        alert(lng);
+	        //window.location.href = 'http://api.map.baidu.com/direction?origin=latlng:' + 35.967499 + ',' + 120.170404 + '|name:我的位置&destination=' + rs.address + '&mode=driving&region=' + addComp.city + '&output=html&src=yourCompanyName|yourAppName';
+	         window.location.href = '//uri.amap.com/navigation?from=' + 120.170404 + ',' + 35.967499 + ',我的位置&to=' + lng + ',' + lat + ',' + rs.address + '&mode=car&policy=1&src=mypage&coordinate=gaode&callnative=0';
+	        //window.location.href = ' http://apis.map.qq.com/uri/v1/routeplan?type=bus&from=我的位置&fromcoord=' + 35.967499 + ',' + 120.170404 + '&to=' + rs.address + '&tocoord=' + lat + ',' + lng + '&policy=1&referer=myapp'
+	       
+	    });
+	    
+	}
+
+
+	//var geoc = new BMap.Geocoder();
+	//var pt = Point;
+	//function mysearch(e) {
+	//    geoc.getLocation(pt, function (rs) {
+	//        var D = "";
+	//        var addComp = rs.addressComponents;
+	//        L = addComp;
+	//        D = addComp.province + addComp.city + addComp.district + addComp.street;
+	//        $("#suggestId2").val(D + $("#suggestId").val())
+	//    });
+	//}
+	//var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+	//	{
+	//	  "input":"suggestId2"
+	//	, "location": map,
+	//	});
+	//ac.addEventListener("onhighlight", function (e) {  //鼠标放在下拉列表上的事件
+	//var str = "";
+	//var _value = e.fromitem.value;
+	//	var value ="";
+	//	if (e.fromitem.index > -1) {
+	//		value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+	//	}
+	//	str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+	//	value = L + "";
+	//	if (e.toitem.index > -1) {
+	//		_value = e.toitem.value;
+	//		value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+	//	}
+	//	str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+	//	G("searchResultPanel").innerHTML = str;
+
+	//});
+
+	//var myValue;
+	//ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+	//var _value = e.item.value;
+	//	myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+	//	G("searchResultPanel").innerHTML = "onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+	//	//alert("2222");
+	//	setPlace();
+	//});
+
+	//function setPlace(){
+	//	map.clearOverlays();    //清除地图上所有覆盖物
+	//	function myFun(){
+	//		var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+	//		//map.centerAndZoom(pp, 18);
+	//		//map.addOverlay(new BMap.Marker(pp));    //添加标注
+	//		//alert(JSON.stringify(pp));
+	//		var p1 = new BMap.Point(120.168945, 35.969248);
+	//		var driving = new BMap.DrivingRoute(map, { renderOptions: { map: map, autoViewport: true } });
+	//		driving.search(p1, pp);
+	//	}
+	//	var local = new BMap.LocalSearch(map, { //智能搜索
+	//	  onSearchComplete: myFun
+	//	});
+	//	local.search(myValue);
+	//	//alert(myValue);
+	//}
+</script>
