@@ -47,22 +47,22 @@ namespace mvcProject.Areas.CK.Controllers
             List<CK_Warehouse> list = query.Paged(ref total).ExecuteTypedList<CK_Warehouse>();
             var json = new
             {
-                total = total,
-                pager = query.pager,
+                total,
+                query.pager,
                 rows = list.Select((r, i) => new
                 {
                     RowNumber = (i++) + (pager.page - 1) * pager.rows + 1,
                     r.Id,
                     r.Name,
-                    Area = r.Area,
-                    Ardess = r.Ardess,
-                    Stock = r.Stock,
-                    Memo = r.Memo,
+                    r.Area,
+                    r.Ardess,
+                    r.Stock,
+                    r.Memo,
                     AdminId =new Sys_Admin( r.AdminId).RealName,
                     Pubdate = string.Format("{0:yyyy-MM-dd}", r.Pubdate),
-                    Ext1 = r.Ext1,
-                    Ext2 = r.Ext2,
-                    Ext3 = r.Ext3
+                    r.Ext1,
+                    r.Ext2,
+                    r.Ext3
 
                 })
             };
